@@ -1,0 +1,45 @@
+# Python and environments
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.conda/
+build/
+dist/
+.ruff_cache/
+.pytest_cache/
+
+# Jupyter outputs should be cleared before committing notebooks
+.ipynb_checkpoints/
+.jupyter/
+
+# Credentials and machine-specific editor settings
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.vscode/settings.json
+.vscode/*.local.json
+.DS_Store
+
+# Data, caches, checkpoints, predictions and run outputs
+data/**
+!data/README.md
+!data/raw/
+!data/raw/.gitkeep
+!data/processed/
+!data/processed/.gitkeep
+artifacts/**
+!artifacts/README.md
+!artifacts/.gitkeep
+.cache/
+wandb/
+mlruns/
+*.pt
+*.pth
+*.safetensors
+*.ckpt
+*.log

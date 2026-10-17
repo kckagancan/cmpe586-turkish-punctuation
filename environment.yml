@@ -1,0 +1,9 @@
+name: cmpe586
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.11
+  - pip
+# Install PyTorch for the target hardware, then install this project.
+# See README.md; environment creation alone does not install project dependencies.
