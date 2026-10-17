@@ -2,7 +2,8 @@
 
 Status: the released CSV files are downloaded locally and structurally audited.
 Dataset licensing and exact corpus/split provenance remain unresolved. No training,
-model evaluation, preprocessing or noise augmentation has been performed.
+model evaluation, cleaned split generation or noise augmentation has been performed.
+Read-only tokenizer/alignment diagnostics were added after the initial CSV audit.
 
 ## Release and reproducibility
 
@@ -137,6 +138,74 @@ empty-token locations and summary counts. The audit script and
 `notebooks/01_data_inspection.ipynb` use the same reader. Structural errors stop the
 read with their source row ID; labeled empty strings are preserved and reported.
 
-Next, choose the empty-token modeling policy and verify word-to-subword alignment
-before adding noise or running the published model. Implementation is handled by
-the assistant, with explanations of code, design decisions and failure modes.
+Word-to-subword alignment has now been inspected as described below. Choose the
+empty-token modeling policy before preparing model batches or adding noise.
+Implementation is handled by the assistant, with explanations of code, design
+decisions and failure modes.
+
+## Tokenizer and alignment audit
+
+The initial BERT candidate uses the tokenizer released with
+[`uygarkurt/bert-restore-punctuation-turkish`](https://huggingface.co/uygarkurt/bert-restore-punctuation-turkish),
+pinned at revision `dd8b9481ed3b3c05110d7e041ecbeb6a1c23b8b0`.
+Its source configuration identifies `dbmdz/bert-base-turkish-cased`, preserves
+casing, maps `O/PERIOD/COMMA/QUESTION_MARK` to `0/1/2/3`, and specifies a 512-position
+limit. The current candidate base-model revision is recorded separately; the exact
+original fine-tuning initialization revision has not been established.
+
+Only tokenizer assets were downloaded. No neural model weights were downloaded,
+and no inference or training was run. The reproducible settings are in
+`configs/tokenizer.json`; the measurement script is `scripts/inspect_tokenizer.py`.
+Complete aggregate measurements and an invented illustration are in
+`docs/tokenization-audit.json`. Run the script with `--download-tokenizer` on first
+use, or without that flag for an offline run from the existing cache.
+
+`src/turkish_punctuation/tokenization.py` assigns each word's label to its first
+subword, matching the inspected upstream code and the
+[Hugging Face token-classification recipe](https://huggingface.co/docs/transformers/tasks/token_classification).
+Other subwords and special/padding positions get `-100`. The other subwords still
+enter the encoder; they simply do not receive an additional supervised target.
+`O` remains a real supervised class. Alignment rejects missing or reordered word
+IDs instead of silently dropping target labels.
+
+All 146,606 records were tokenized with no truncation or padding:
+
+| Split | Fully covered rows | Rows with missing words | Missing nonempty words | Max input length | 95th percentile | Rows over 512 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Train | 116,969 | 462 | 0 | 227 | 43 | 0 |
+| Validation | 14,453 | 61 | 0 | 196 | 42 | 0 |
+| Test | 14,600 | 61 | 0 | 153 | 44 | 0 |
+
+Lengths include `[CLS]` and `[SEP]`. Percentiles use the nearest-rank definition.
+The missing word positions are exactly the 651 empty strings from the CSV audit.
+Four `[UNK]` pieces occur in train; none in validation or test. Unknown pieces still
+represent their source words and do not trigger missing-word exclusion.
+Every fully covered, in-limit row passes an exact check that its supervised label
+IDs reproduce the original word-label sequence once each.
+
+These measurements apply to clean inputs only. Character noise can increase the
+number of subwords, so noisy variants must be checked again. No sequence length
+has been selected for training; 512 here is the verified candidate model limit.
+
+### Candidate policy simulation — not applied
+
+One defensible option is to exclude an entire record when a word has no tokenizer
+representation, keeping every retained word-label association unchanged. The
+diagnostic also flags over-limit rows, though none occur in this clean release.
+
+| Split | Rows excluded | Row percentage | Eligible rows | Question labels removed | Question-label percentage removed |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Train | 462 | 0.393% | 116,969 | 183 | 1.864% |
+| Validation | 61 | 0.420% | 14,453 | 26 | 2.168% |
+| Test | 61 | 0.416% | 14,600 | 27 | 2.151% |
+
+This is a simulation, not a finalized cleaning policy. Entire-row exclusion removes
+additional nonempty words and labels from affected records; the JSON report counts
+all of those labels. The question-class impact is larger than the row percentage,
+so the exclusion cannot be described as negligible for every class.
+
+If this option is adopted, retain source row IDs, apply one fixed eligibility rule
+before generating noise, and compare every model on the same eligible test rows.
+Scores on that subset must not be presented as directly reproducing the paper's
+full-test scores. Do not exclude different rows separately for each noise condition;
+handle any later noise-induced coverage/length failures explicitly.

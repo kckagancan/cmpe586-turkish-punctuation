@@ -99,5 +99,15 @@ Checked on 2026-10-17:
 - Shared pandas reader and structural validation now live in
   `src/turkish_punctuation/data.py`; the inspection notebook imports those functions.
   Empty tokens are preserved and reported, with no modeling cleanup applied yet.
-- Next milestone: choose an explicit empty-token modeling policy, then check
-  tokenizer alignment. Continue clarifying source and license.
+- BERT tokenizer candidate inspected at pinned Hugging Face revision
+  `dd8b9481ed3b3c05110d7e041ecbeb6a1c23b8b0`. Only tokenizer assets were
+  downloaded; no model weights or training. Config is in `configs/tokenizer.json`.
+- First-subword label alignment is implemented with complete word-coverage checks.
+  Special/additional subword positions get `-100`, distinct from the real `O` class.
+- Actual tokenizer audit: only the 651 empty slots disappear; all nonempty words
+  have coverage. Clean input max length is 227 including special tokens, below 512.
+- Excluding whole affected rows was simulated only: 462/61/61 rows across splits.
+  This is about 0.4% of rows but removes around 1.86–2.17% of question labels.
+  No processed split was saved and no exclusion policy is finalized.
+- Next milestone: agree on an explicit empty-token modeling policy and create
+  reproducible eligible splits/model batches. Continue clarifying source and license.

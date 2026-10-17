@@ -1,0 +1,203 @@
+{
+  "model_id": "uygarkurt/bert-restore-punctuation-turkish",
+  "tokenizer_revision": "dd8b9481ed3b3c05110d7e041ecbeb6a1c23b8b0",
+  "data_revision": "7ede7a4ba9e51dad085a7f0d9b6c0a9c32622397",
+  "max_input_length": 512,
+  "alignment": "first_subword",
+  "do_lower_case": false,
+  "synthetic_example": {
+    "words": [
+      "Çocuklarımızla",
+      "İstanbul'da",
+      "buluşabilecek",
+      "miyiz"
+    ],
+    "tags": [
+      "O",
+      "O",
+      "O",
+      "QUESTION_MARK"
+    ],
+    "subwords": [
+      "[CLS]",
+      "Çocukları",
+      "##mız",
+      "##la",
+      "İstanbul",
+      "'",
+      "da",
+      "buluş",
+      "##abilecek",
+      "miyiz",
+      "[SEP]"
+    ],
+    "word_ids": [
+      null,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      2,
+      2,
+      3,
+      null
+    ],
+    "input_ids": [
+      2,
+      25619,
+      4666,
+      1971,
+      2673,
+      11,
+      2054,
+      4806,
+      4585,
+      12043,
+      3
+    ],
+    "labels": [
+      -100,
+      0,
+      -100,
+      -100,
+      0,
+      -100,
+      -100,
+      0,
+      -100,
+      3,
+      -100
+    ]
+  },
+  "policy_status": "Row exclusion is simulated only; no processed split was saved.",
+  "splits": {
+    "train": {
+      "records": 117431,
+      "word_slots": 1471806,
+      "missing_word_slots": 511,
+      "missing_nonempty_word_slots": 0,
+      "rows_with_missing_words": 462,
+      "rows_over_limit": 0,
+      "unknown_subword_tokens": 4,
+      "fully_aligned_rows": 116969,
+      "candidate_excluded_rows": 462,
+      "candidate_excluded_row_percent": 0.39342252045882264,
+      "missing_word_label_counts": {
+        "O": 0,
+        "PERIOD": 86,
+        "COMMA": 270,
+        "QUESTION_MARK": 155
+      },
+      "candidate_excluded_label_counts": {
+        "O": 6567,
+        "PERIOD": 433,
+        "COMMA": 726,
+        "QUESTION_MARK": 183
+      },
+      "length_including_special_tokens": {
+        "max": 227,
+        "p50": 16,
+        "p95": 43,
+        "p99": 65
+      },
+      "first_affected_row_ids": [
+        446,
+        573,
+        667,
+        749,
+        761,
+        1000,
+        1347,
+        1437,
+        1441,
+        2217
+      ]
+    },
+    "validation": {
+      "records": 14514,
+      "word_slots": 180326,
+      "missing_word_slots": 68,
+      "missing_nonempty_word_slots": 0,
+      "rows_with_missing_words": 61,
+      "rows_over_limit": 0,
+      "unknown_subword_tokens": 0,
+      "fully_aligned_rows": 14453,
+      "candidate_excluded_rows": 61,
+      "candidate_excluded_row_percent": 0.4202838638555877,
+      "missing_word_label_counts": {
+        "O": 0,
+        "PERIOD": 10,
+        "COMMA": 36,
+        "QUESTION_MARK": 22
+      },
+      "candidate_excluded_label_counts": {
+        "O": 996,
+        "PERIOD": 54,
+        "COMMA": 86,
+        "QUESTION_MARK": 26
+      },
+      "length_including_special_tokens": {
+        "max": 196,
+        "p50": 16,
+        "p95": 42,
+        "p99": 63
+      },
+      "first_affected_row_ids": [
+        249,
+        458,
+        865,
+        1086,
+        1719,
+        1790,
+        1799,
+        2122,
+        2582,
+        2679
+      ]
+    },
+    "test": {
+      "records": 14661,
+      "word_slots": 182487,
+      "missing_word_slots": 72,
+      "missing_nonempty_word_slots": 0,
+      "rows_with_missing_words": 61,
+      "rows_over_limit": 0,
+      "unknown_subword_tokens": 0,
+      "fully_aligned_rows": 14600,
+      "candidate_excluded_rows": 61,
+      "candidate_excluded_row_percent": 0.41606984516745105,
+      "missing_word_label_counts": {
+        "O": 0,
+        "PERIOD": 12,
+        "COMMA": 35,
+        "QUESTION_MARK": 25
+      },
+      "candidate_excluded_label_counts": {
+        "O": 838,
+        "PERIOD": 59,
+        "COMMA": 78,
+        "QUESTION_MARK": 27
+      },
+      "length_including_special_tokens": {
+        "max": 153,
+        "p50": 16,
+        "p95": 44,
+        "p99": 65
+      },
+      "first_affected_row_ids": [
+        23,
+        105,
+        420,
+        532,
+        1715,
+        2833,
+        3174,
+        3218,
+        3318,
+        3507
+      ]
+    }
+  }
+}

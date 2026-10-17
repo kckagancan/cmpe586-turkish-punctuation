@@ -55,6 +55,19 @@ Ortak okuyucu ve doğrulama kodu `src/turkish_punctuation/data.py` içindedir;
 notebook ve genel inceleme aracı aynı kodu kullanır.
 Tarayıcı tabanlı Jupyter tercih edilirse `jupyter lab` çalıştırılabilir.
 
+Tokenizer ve kelime–alt parça hizalaması incelemesi:
+
+```bash
+python scripts/inspect_tokenizer.py --download-tokenizer
+```
+
+Bu komut sabit sürümdeki BERT tokenizer dosyalarını `.cache/huggingface/` içine
+indirir; model ağırlığı indirmez. Sonraki çalıştırmalarda çevrimdışı önbelleği
+kullanmak için `--download-tokenizer` seçeneğini çıkar.
+Sonuçlar `docs/tokenization-audit.json` içinde; yorumları
+[veri inceleme raporunun tokenizer bölümünde](docs/data-audit.md#tokenizer-and-alignment-audit).
+İnceleme hiçbir temizlenmiş eğitim/test bölümü oluşturmaz.
+
 ## Colab
 
 GPU runtime açıldıktan sonra yeni oturumda repo ve proje kurulumu:

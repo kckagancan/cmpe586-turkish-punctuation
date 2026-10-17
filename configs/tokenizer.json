@@ -1,0 +1,17 @@
+{
+  "model_id": "uygarkurt/bert-restore-punctuation-turkish",
+  "revision": "dd8b9481ed3b3c05110d7e041ecbeb6a1c23b8b0",
+  "base_model_id": "dbmdz/bert-base-turkish-cased",
+  "base_model_revision": "b6e1de16c983e0f2c70664591ea3f22810072608",
+  "cache_directory": ".cache/huggingface",
+  "max_input_length": 512,
+  "label_to_id": {
+    "O": 0,
+    "PERIOD": 1,
+    "COMMA": 2,
+    "QUESTION_MARK": 3
+  },
+  "alignment": "first_subword",
+  "ignore_index": -100,
+  "status": "BERT candidate for tokenizer diagnostics; model training has not started"
+}
