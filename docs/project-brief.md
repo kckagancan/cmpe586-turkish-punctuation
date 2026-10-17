@@ -68,6 +68,8 @@ Checked on 2026-10-17:
 - Explain architecture and first steps before large implementations.
 - Explain every stage, its purpose and decisions as we go; the student wants to
   build practical project and AI/LLM expertise through the work.
+- Default to function-level overviews, important lines and research implications.
+  Explain individual syntax or line-by-line mechanics only when the student asks.
 - Updated preference: the assistant implements and debugs the project. Do not
   assign coding exercises or quizzes. Explain the code, unfamiliar APIs, design
   choices and failure modes so the student can read, critique and defend the work.
