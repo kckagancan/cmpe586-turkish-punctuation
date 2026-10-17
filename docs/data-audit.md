@@ -130,9 +130,13 @@ The current repository publishes original project code, source links, file hashe
 and aggregate audit statistics. It does not redistribute the CSVs or modified texts.
 No confirmed permission conclusion is recorded for the released dataset.
 
-## Next learning step
+## Reader implementation and next step
 
-Build a small data reader together: parse one row, pair tokens with labels, and
-detect empty tokens. Then agree on the empty-token policy and verify word-to-subword
-alignment before adding any noise or running the published model. Keep this work
-small enough for the student to implement and explain the reader.
+`src/turkish_punctuation/data.py` provides the shared pandas reader, record validation,
+empty-token locations and summary counts. The audit script and
+`notebooks/01_data_inspection.ipynb` use the same reader. Structural errors stop the
+read with their source row ID; labeled empty strings are preserved and reported.
+
+Next, choose the empty-token modeling policy and verify word-to-subword alignment
+before adding noise or running the published model. Implementation is handled by
+the assistant, with explanations of code, design decisions and failure modes.

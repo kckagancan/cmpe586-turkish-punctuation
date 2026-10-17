@@ -68,8 +68,12 @@ Checked on 2026-10-17:
 - Explain architecture and first steps before large implementations.
 - Explain every stage, its purpose and decisions as we go; the student wants to
   build practical project and AI/LLM expertise through the work.
-- Let the student implement some modules and review them together.
-- Assist directly with implementation/debugging when the student is stuck.
+- Updated preference: the assistant implements and debugs the project. Do not
+  assign coding exercises or quizzes. Explain the code, unfamiliar APIs, design
+  choices and failure modes so the student can read, critique and defend the work.
+- Keep notebooks concise and oriented toward real project inspection and results.
+  Put reusable reading, validation, noise, training and evaluation logic in Python
+  modules; notebooks import that logic for inspection, plots and Colab execution.
 - Lead report drafting while ensuring the student understands and can defend the work.
 - AI use is allowed according to the student's account of course rules.
 - Proceed incrementally and agree on research-stage transitions together.
@@ -84,5 +88,8 @@ Checked on 2026-10-17:
 - Environment and public repository setup completed; local package imports and
   starter notebook execution verified. Candidate data downloaded and audited;
   no model weights downloaded or training performed.
-- Next milestone: jointly implement the reader, choose an explicit empty-token
-  policy, and check tokenizer alignment. Continue clarifying source and license.
+- Shared pandas reader and structural validation now live in
+  `src/turkish_punctuation/data.py`; the inspection notebook imports those functions.
+  Empty tokens are preserved and reported, with no modeling cleanup applied yet.
+- Next milestone: choose an explicit empty-token modeling policy, then check
+  tokenizer alignment. Continue clarifying source and license.

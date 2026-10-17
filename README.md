@@ -47,9 +47,10 @@ Notebook açınca sağ üstteki kernel seçiminde aynı ortamı kullan.
 Python ve Jupyter VS Code eklentileri önerilen eklentiler arasında tanımlı.
 
 `notebooks/00_environment_check.ipynb` ilk ortam kontrolü içindir.
-Veri okuma aşamasını hücre hücre öğrenmek için
-`notebooks/01_read_one_record.ipynb`: pandas ile ilk beş train kaydını açma,
-liste dönüşümü, kelime–etiket eşleştirme ve iki küçük kontrol alıştırması.
+`notebooks/01_data_inspection.ipynb` veri setinin tüm bölümlerini okur;
+yapı kontrollerini, etiket dağılımlarını ve boş token'ları gösterir.
+Ortak okuyucu ve doğrulama kodu `src/turkish_punctuation/data.py` içindedir;
+notebook ve genel inceleme aracı aynı kodu kullanır.
 Tarayıcı tabanlı Jupyter tercih edilirse `jupyter lab` çalıştırılabilir.
 
 ## Colab
@@ -106,6 +107,12 @@ git switch -c feature/short-description
 ```bash
 ruff check .
 ruff format .
+```
+
+Veri okuyucunun otomatik kontrolleri:
+
+```bash
+python -m unittest discover -s tests -v
 ```
 
 ## Tekrarlanabilirlik

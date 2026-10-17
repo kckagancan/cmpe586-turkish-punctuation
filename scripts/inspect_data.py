@@ -1,15 +1,14 @@
 """Audit released CSV files without modifying them or training a model."""
 
-import ast
-import csv
 import hashlib
 import json
 from collections import Counter
 from itertools import combinations
 from pathlib import Path
 
+from turkish_punctuation.data import read_split
+
 ROOT = Path(__file__).resolve().parents[1]
-LABELS = {"O", "PERIOD", "COMMA", "QUESTION_MARK"}
 
 
 def fingerprint(value: object) -> str:
@@ -22,44 +21,33 @@ def inspect_file(path: Path) -> tuple[dict, dict]:
     empty_token_labels = Counter()
     input_lengths, label_variants = {}, {}
     counts = Counter()
-    with path.open(encoding="utf-8", newline="") as stream:
-        reader = csv.DictReader(stream)
-        if reader.fieldnames != ["sentence", "tags"]:
-            raise ValueError(f"Unexpected columns in {path.name}: {reader.fieldnames}")
-        for index, row in enumerate(reader):
-            tokens, tags = ast.literal_eval(row["sentence"]), ast.literal_eval(row["tags"])
-            if not isinstance(tokens, list) or not isinstance(tags, list):
-                raise ValueError(f"Expected lists in {path.name}, data row {index}")
-            if not tokens or len(tokens) != len(tags):
-                raise ValueError(f"Empty/misaligned row in {path.name}, data row {index}")
-            if not all(isinstance(token, str) for token in tokens):
-                raise ValueError(f"Invalid token in {path.name}, data row {index}")
-            if not all(isinstance(tag, str) and tag in LABELS for tag in tags):
-                raise ValueError(f"Unknown label in {path.name}, data row {index}")
-            labels.update(tags)
-            lengths[len(tokens)] += 1
-            counts["rows"] += 1
-            counts["word_tokens"] += len(tokens)
-            counts["empty_token_entries"] += tokens.count("")
-            counts["rows_with_empty_tokens"] += "" in tokens
-            empty_token_labels.update(tag for token, tag in zip(tokens, tags) if token == "")
-            counts["rows_with_uppercase"] += any(any(c.isupper() for c in t) for t in tokens)
-            counts["tokens_with_uppercase"] += sum(any(c.isupper() for c in t) for t in tokens)
-            counts["tokens_with_turkish_diacritics"] += sum(
-                any(c in "çğıöşüÇĞİÖŞÜ" for c in t) for t in tokens
-            )
-            counts["tokens_with_internal_whitespace"] += sum(
-                any(c.isspace() for c in t) for t in tokens
-            )
-            counts["rows_with_question_mark"] += "QUESTION_MARK" in tags
-            counts["rows_with_multiple_period_labels"] += tags.count("PERIOD") > 1
-            counts["rows_over_128_words"] += len(tokens) > 128
-            counts["rows_over_256_words"] += len(tokens) > 256
-            text_key, row_key = fingerprint(tokens), fingerprint([tokens, tags])
-            texts[text_key] += 1
-            rows[row_key] += 1
-            input_lengths[text_key] = len(tokens)
-            label_variants.setdefault(text_key, set()).add(fingerprint(tags))
+    records = read_split(path)
+    for row in records.itertuples(index=False):
+        tokens, tags = row.tokens, row.tags
+        labels.update(tags)
+        lengths[len(tokens)] += 1
+        counts["rows"] += 1
+        counts["word_tokens"] += len(tokens)
+        counts["empty_token_entries"] += tokens.count("")
+        counts["rows_with_empty_tokens"] += "" in tokens
+        empty_token_labels.update(tag for token, tag in zip(tokens, tags) if token == "")
+        counts["rows_with_uppercase"] += any(any(c.isupper() for c in t) for t in tokens)
+        counts["tokens_with_uppercase"] += sum(any(c.isupper() for c in t) for t in tokens)
+        counts["tokens_with_turkish_diacritics"] += sum(
+            any(c in "çğıöşüÇĞİÖŞÜ" for c in t) for t in tokens
+        )
+        counts["tokens_with_internal_whitespace"] += sum(
+            any(c.isspace() for c in t) for t in tokens
+        )
+        counts["rows_with_question_mark"] += "QUESTION_MARK" in tags
+        counts["rows_with_multiple_period_labels"] += tags.count("PERIOD") > 1
+        counts["rows_over_128_words"] += len(tokens) > 128
+        counts["rows_over_256_words"] += len(tokens) > 256
+        text_key, row_key = fingerprint(tokens), fingerprint([tokens, tags])
+        texts[text_key] += 1
+        rows[row_key] += 1
+        input_lengths[text_key] = len(tokens)
+        label_variants.setdefault(text_key, set()).add(fingerprint(tags))
     stats = {
         **dict(counts),
         "label_counts": dict(sorted(labels.items())),
