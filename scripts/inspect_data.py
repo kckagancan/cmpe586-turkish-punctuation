@@ -22,8 +22,8 @@ def inspect_file(path: Path) -> tuple[dict, dict]:
     input_lengths, label_variants = {}, {}
     counts = Counter()
     records = read_split(path)
-    for row in records.itertuples(index=False):
-        tokens, tags = row.tokens, row.tags
+    columns = records[["tokens", "tags"]]
+    for tokens, tags in columns.itertuples(index=False, name=None):
         labels.update(tags)
         lengths[len(tokens)] += 1
         counts["rows"] += 1
