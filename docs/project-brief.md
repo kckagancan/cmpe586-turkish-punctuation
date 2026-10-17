@@ -66,6 +66,8 @@ Checked on 2026-10-17:
 ## Collaboration preferences
 
 - Explain architecture and first steps before large implementations.
+- Explain every stage, its purpose and decisions as we go; the student wants to
+  build practical project and AI/LLM expertise through the work.
 - Let the student implement some modules and review them together.
 - Assist directly with implementation/debugging when the student is stuck.
 - Lead report drafting while ensuring the student understands and can defend the work.

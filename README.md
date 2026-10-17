@@ -47,6 +47,9 @@ Notebook açınca sağ üstteki kernel seçiminde aynı ortamı kullan.
 Python ve Jupyter VS Code eklentileri önerilen eklentiler arasında tanımlı.
 
 `notebooks/00_environment_check.ipynb` ilk ortam kontrolü içindir.
+Veri okuma aşamasını hücre hücre öğrenmek için
+`notebooks/01_read_one_record.ipynb`: pandas ile ilk beş train kaydını açma,
+liste dönüşümü, kelime–etiket eşleştirme ve iki küçük kontrol alıştırması.
 Tarayıcı tabanlı Jupyter tercih edilirse `jupyter lab` çalıştırılabilir.
 
 ## Colab
