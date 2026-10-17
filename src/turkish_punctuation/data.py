@@ -66,10 +66,11 @@ def read_split(path: str | Path, *, nrows: int | None = None) -> pd.DataFrame:
 def find_empty_tokens(records: pd.DataFrame) -> pd.DataFrame:
     """Locate empty slots in validated records, retaining their attached labels."""
     findings = []
-    for row in records.itertuples(index=False):
-        for token_index, (token, tag) in enumerate(zip(row.tokens, row.tags, strict=True)):
+    columns = records[["row_id", "tokens", "tags"]]
+    for row_id, tokens, tags in columns.itertuples(index=False, name=None):
+        for token_index, (token, tag) in enumerate(zip(tokens, tags, strict=True)):
             if token == "":
-                findings.append({"row_id": row.row_id, "token_index": token_index, "tag": tag})
+                findings.append({"row_id": row_id, "token_index": token_index, "tag": tag})
     return pd.DataFrame(findings, columns=["row_id", "token_index", "tag"])
 
 

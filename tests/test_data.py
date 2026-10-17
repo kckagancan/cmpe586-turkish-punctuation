@@ -63,6 +63,16 @@ class ReaderTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "Row 7"):
                     parse_record(sentence, tags, row_id=7)
 
+    def test_empty_slot_report_uses_named_columns_with_extra_metadata(self):
+        self.write_csv([("['Merhaba', '']", "['O', 'PERIOD']")])
+        records = read_split(self.path)
+        records["split"] = "train"
+        records = records[["split", "tags", "tokens", "row_id"]]
+        self.assertEqual(
+            find_empty_tokens(records).to_dict("records"),
+            [{"row_id": 0, "token_index": 1, "tag": "PERIOD"}],
+        )
+
     def test_invalid_later_row_is_not_silently_dropped(self):
         self.write_csv(
             [
