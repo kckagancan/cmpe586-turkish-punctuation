@@ -74,6 +74,10 @@ Checked on 2026-10-17:
 - Keep notebooks concise and oriented toward real project inspection and results.
   Put reusable reading, validation, noise, training and evaluation logic in Python
   modules; notebooks import that logic for inspection, plots and Colab execution.
+- After every request that changes files, list every created, modified, renamed
+  or deleted file, including local-only settings. Explain each file's purpose and
+  change. Walk through the code with the student before advancing research stages;
+  use code reading and review, not coding exercises, as the learning workflow.
 - Lead report drafting while ensuring the student understands and can defend the work.
 - AI use is allowed according to the student's account of course rules.
 - Proceed incrementally and agree on research-stage transitions together.
@@ -88,6 +92,8 @@ Checked on 2026-10-17:
 - Environment and public repository setup completed; local package imports and
   starter notebook execution verified. Candidate data downloaded and audited;
   no model weights downloaded or training performed.
+- The one-off environment-check notebook was retired after setup; use
+  `scripts/check_setup.py` for repeatable environment checks.
 - Shared pandas reader and structural validation now live in
   `src/turkish_punctuation/data.py`; the inspection notebook imports those functions.
   Empty tokens are preserved and reported, with no modeling cleanup applied yet.

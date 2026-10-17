@@ -44,9 +44,11 @@ code .
 
 VS Code'da **Python: Select Interpreter** üzerinden `cmpe586` ortamını seç.
 Notebook açınca sağ üstteki kernel seçiminde aynı ortamı kullan.
+Terminalde `conda activate` çalıştırmak editörün Python seçimini değiştirmeyebilir;
+import uyarısı varsa seçili interpreter'ı ayrıca kontrol et.
 Python ve Jupyter VS Code eklentileri önerilen eklentiler arasında tanımlı.
 
-`notebooks/00_environment_check.ipynb` ilk ortam kontrolü içindir.
+Ortamı yeniden kontrol etmek için `python scripts/check_setup.py` çalıştırılabilir.
 `notebooks/01_data_inspection.ipynb` veri setinin tüm bölümlerini okur;
 yapı kontrollerini, etiket dağılımlarını ve boş token'ları gösterir.
 Ortak okuyucu ve doğrulama kodu `src/turkish_punctuation/data.py` içindedir;
