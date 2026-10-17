@@ -53,8 +53,15 @@ Checked on 2026-10-17:
   lists BERT/ELECTRA/ConvBERT checkpoints and train/validation/test data.
 - [BERT model card](https://huggingface.co/uygarkurt/bert-restore-punctuation-turkish)
   declares MIT for that model. This does not establish the dataset license.
-- Dataset origin, license, exact file paths, split provenance, casing and label
-  format still need source-level verification. No dataset has been downloaded.
+- Three original CSV files downloaded locally from pinned revision
+  `7ede7a4ba9e51dad085a7f0d9b6c0a9c32622397`; hashes and URLs recorded in
+  `docs/data-manifest.json`. Format, counts and casing inspected across all rows.
+- Dataset license and exact source/split provenance remain unresolved. The folder
+  name suggests Multitarget TED, whose original source states BY-NC-ND terms;
+  derivation of these specific CSVs is not yet verified.
+- Audit found 651 empty tokens carrying punctuation labels and short repeated
+  inputs across splits. Raw data is unchanged. See `docs/data-audit.md` for counts
+  and decisions needed before modeling.
 
 ## Collaboration preferences
 
@@ -73,5 +80,7 @@ Checked on 2026-10-17:
 - Thin notebooks for inspection, plots and Colab execution.
 - Local CPU development; plan Colab GPU training.
 - Environment and public repository setup completed; local package imports and
-  starter notebook execution verified. No model/data downloads or training yet.
-- Next milestone: verify dataset source, license, schema and split provenance.
+  starter notebook execution verified. Candidate data downloaded and audited;
+  no model weights downloaded or training performed.
+- Next milestone: jointly implement the reader, choose an explicit empty-token
+  policy, and check tokenizer alignment. Continue clarifying source and license.

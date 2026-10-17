@@ -36,6 +36,7 @@ artifacts/**
 !artifacts/README.md
 !artifacts/.gitkeep
 .cache/
+work/
 wandb/
 mlruns/
 *.pt

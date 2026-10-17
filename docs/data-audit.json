@@ -1,0 +1,127 @@
+{
+  "source_revision": "7ede7a4ba9e51dad085a7f0d9b6c0a9c32622397",
+  "splits": {
+    "train": {
+      "rows": 117431,
+      "word_tokens": 1471806,
+      "empty_token_entries": 511,
+      "rows_with_empty_tokens": 462,
+      "rows_with_uppercase": 113735,
+      "tokens_with_uppercase": 196416,
+      "tokens_with_turkish_diacritics": 615543,
+      "tokens_with_internal_whitespace": 0,
+      "rows_with_question_mark": 9129,
+      "rows_with_multiple_period_labels": 15251,
+      "rows_over_128_words": 0,
+      "rows_over_256_words": 0,
+      "label_counts": {
+        "COMMA": 98194,
+        "O": 1238979,
+        "PERIOD": 124817,
+        "QUESTION_MARK": 9816
+      },
+      "empty_token_label_counts": {
+        "COMMA": 270,
+        "PERIOD": 86,
+        "QUESTION_MARK": 155
+      },
+      "min_words": 1,
+      "max_words": 97,
+      "mean_words": 12.533368531307747,
+      "unique_input_sequences": 116490,
+      "duplicate_input_rows_beyond_first": 941,
+      "duplicate_labeled_rows_beyond_first": 908,
+      "inputs_with_multiple_label_sequences": 32,
+      "word_label_alignment": "all token/tag list lengths match; empty tokens counted separately"
+    },
+    "validation": {
+      "rows": 14514,
+      "word_tokens": 180326,
+      "empty_token_entries": 68,
+      "rows_with_empty_tokens": 61,
+      "rows_with_uppercase": 14048,
+      "tokens_with_uppercase": 24044,
+      "tokens_with_turkish_diacritics": 75465,
+      "tokens_with_internal_whitespace": 0,
+      "rows_with_question_mark": 1107,
+      "rows_with_multiple_period_labels": 1834,
+      "rows_over_128_words": 0,
+      "rows_over_256_words": 0,
+      "label_counts": {
+        "COMMA": 11980,
+        "O": 151841,
+        "PERIOD": 15306,
+        "QUESTION_MARK": 1199
+      },
+      "empty_token_label_counts": {
+        "COMMA": 36,
+        "PERIOD": 10,
+        "QUESTION_MARK": 22
+      },
+      "min_words": 1,
+      "max_words": 92,
+      "mean_words": 12.42428000551192,
+      "unique_input_sequences": 14426,
+      "duplicate_input_rows_beyond_first": 88,
+      "duplicate_labeled_rows_beyond_first": 83,
+      "inputs_with_multiple_label_sequences": 5,
+      "word_label_alignment": "all token/tag list lengths match; empty tokens counted separately"
+    },
+    "test": {
+      "rows": 14661,
+      "word_tokens": 182487,
+      "empty_token_entries": 72,
+      "rows_with_empty_tokens": 61,
+      "rows_with_uppercase": 14189,
+      "tokens_with_uppercase": 24534,
+      "tokens_with_turkish_diacritics": 76129,
+      "tokens_with_internal_whitespace": 0,
+      "rows_with_question_mark": 1164,
+      "rows_with_multiple_period_labels": 1890,
+      "rows_over_128_words": 0,
+      "rows_over_256_words": 0,
+      "label_counts": {
+        "COMMA": 12242,
+        "O": 153466,
+        "PERIOD": 15524,
+        "QUESTION_MARK": 1255
+      },
+      "empty_token_label_counts": {
+        "COMMA": 35,
+        "PERIOD": 12,
+        "QUESTION_MARK": 25
+      },
+      "min_words": 1,
+      "max_words": 87,
+      "mean_words": 12.447104563126663,
+      "unique_input_sequences": 14590,
+      "duplicate_input_rows_beyond_first": 71,
+      "duplicate_labeled_rows_beyond_first": 70,
+      "inputs_with_multiple_label_sequences": 1,
+      "word_label_alignment": "all token/tag list lengths match; empty tokens counted separately"
+    }
+  },
+  "cross_split_overlap": {
+    "train__validation": {
+      "shared_unique_inputs": 66,
+      "shared_unique_inputs_at_least_10_words": 1,
+      "shared_unique_labeled_rows": 64,
+      "train_rows_with_shared_input": 721,
+      "validation_rows_with_shared_input": 151
+    },
+    "train__test": {
+      "shared_unique_inputs": 78,
+      "shared_unique_inputs_at_least_10_words": 0,
+      "shared_unique_labeled_rows": 70,
+      "train_rows_with_shared_input": 725,
+      "test_rows_with_shared_input": 148
+    },
+    "validation__test": {
+      "shared_unique_inputs": 26,
+      "shared_unique_inputs_at_least_10_words": 0,
+      "shared_unique_labeled_rows": 24,
+      "validation_rows_with_shared_input": 110,
+      "test_rows_with_shared_input": 91
+    }
+  }
+}

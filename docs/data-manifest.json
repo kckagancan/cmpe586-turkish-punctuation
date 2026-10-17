@@ -1,0 +1,31 @@
+{
+  "dataset": "Kurt & Çayır (2023) Turkish punctuation restoration CSV release",
+  "repository": "https://github.com/uygarkurt/Turkish-Punctuation-Restoration",
+  "revision": "7ede7a4ba9e51dad085a7f0d9b6c0a9c32622397",
+  "retrieved_on": "2026-10-17",
+  "local_directory": "data/raw/kurt_cayir_2023",
+  "license_status": "No explicit dataset license found in the release repository at this revision; provenance and permissions unresolved.",
+  "files": [
+    {
+      "split": "train",
+      "filename": "ted_train_tr.csv",
+      "source_url": "https://raw.githubusercontent.com/uygarkurt/Turkish-Punctuation-Restoration/7ede7a4ba9e51dad085a7f0d9b6c0a9c32622397/multitarget-ted/ted_train_tr.csv",
+      "bytes": 25302750,
+      "sha256": "721348f5a47c33e4b4cea265ab9fea3ccec54751442ab75379343682b89b7e4a"
+    },
+    {
+      "split": "validation",
+      "filename": "ted_valid_tr.csv",
+      "source_url": "https://raw.githubusercontent.com/uygarkurt/Turkish-Punctuation-Restoration/7ede7a4ba9e51dad085a7f0d9b6c0a9c32622397/multitarget-ted/ted_valid_tr.csv",
+      "bytes": 3101635,
+      "sha256": "5b275daea819fb92c1b758afc09a497b6e6ba338b86fbcf3003b51ffc6ad05c2"
+    },
+    {
+      "split": "test",
+      "filename": "ted_test_tr.csv",
+      "source_url": "https://raw.githubusercontent.com/uygarkurt/Turkish-Punctuation-Restoration/7ede7a4ba9e51dad085a7f0d9b6c0a9c32622397/multitarget-ted/ted_test_tr.csv",
+      "bytes": 3139306,
+      "sha256": "8890aac1db401299afe7c00f3cb04ea1df4bf03b96b748f2c958429d5836a52f"
+    }
+  ]
+}

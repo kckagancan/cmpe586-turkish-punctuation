@@ -6,8 +6,9 @@ CMPE 586 Transformer/NLP ders projesi. Türkçe noktalama geri yükleme modeller
 büyük/küçük harf kaybı, Türkçe karakterlerin sadeleştirilmesi ve yazım hataları
 altındaki dayanıklılığı incelenecek.
 
-**Durum:** Yerel geliştirme ortamı ve public GitHub reposu hazır. Henüz deney yapılmadı;
-veri kaynağı ve veri lisansı incelemesi sıradaki adım.
+**Durum:** Yerel ortam ve public repo hazır. Aday veri seti yerelde indirildi ve
+ilk yapısal inceleme tamamlandı. Veri lisansı ve kesin kaynak/split geçmişi henüz
+doğrulanmadı. Henüz deney yapılmadı.
 
 ## Çalışma düzeni
 
@@ -131,4 +132,5 @@ aynı mimarinin sentetik noise ile artırılmış veriyle fine-tune sürümü.
 Araştırma soruları ve alınmış kararlar için [proje notları](docs/project-brief.md).
 
 Başlangıç kaynağı: [Kurt & Çayır (2023) resmi deposu](https://github.com/uygarkurt/Turkish-Punctuation-Restoration).
-Model lisansı ile veri lisansı ayrı ayrı doğrulanacak.
+İndirme, sınıf dağılımı, boş token'lar ve tekrarlarla ilgili bulgular:
+[ilk veri incelemesi](docs/data-audit.md). Model lisansı ile veri lisansı ayrı ele alınır.
