@@ -82,7 +82,9 @@ def seed_everything(seed: int) -> None:
 
 def capture_rng() -> dict:
     """Use tensors/primitives so torch.load(weights_only=True) can read all state."""
-    numpy_state = np.random.get_state()
+    numpy_state = np.random.get_state(legacy=True)
+    if not isinstance(numpy_state, tuple):
+        raise TypeError("Expected the legacy NumPy MT19937 state tuple.")
     return {
         "python": random.getstate(),
         "numpy": {

@@ -160,15 +160,19 @@ def load_shared_initialization(
                 "classifier_dropout",
             ):
                 setattr(base, key, config["model"][key])
-            model, loading = BertForTokenClassification.from_pretrained(
-                source["base_model_id"],
-                config=base,
-                output_loading_info=True,
-                use_safetensors=False,
-                weights_only=True,
-                torch_dtype=torch.float32,
-                attn_implementation=config["model"]["attention_implementation"],
-                **options,
+            # Transformers returns a pair with this flag; its annotation omits that case.
+            model, loading = cast(
+                tuple[BertForTokenClassification, dict],
+                BertForTokenClassification.from_pretrained(
+                    source["base_model_id"],
+                    config=base,
+                    output_loading_info=True,
+                    use_safetensors=False,
+                    weights_only=True,
+                    torch_dtype=torch.float32,
+                    attn_implementation=config["model"]["attention_implementation"],
+                    **options,
+                ),
             )
             if set(loading["missing_keys"]) != {"classifier.weight", "classifier.bias"}:
                 raise ValueError(f"Expected only a fresh classifier: {loading}")

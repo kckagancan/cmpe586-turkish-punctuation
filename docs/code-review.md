@@ -62,3 +62,26 @@ No remaining blocker was found for the next local CPU validation-evaluation step
 This does not establish GPU/Colab behavior, training convergence, noise severity
 choices or model quality. Dataset provenance/license questions and exact published
 training provenance remain open as recorded in `project-brief.md`.
+
+## Training type-check follow-up — 2026-10-18
+
+The three reported training files reproduced **7 errors** in Pyright 1.1.414,
+basic mode, using the local `cmpe586` environment:
+
+- `training_data.py`: the initial metadata dictionary inferred string-only values.
+  Explicit `dict[str, object]` metadata and `dict[str, Dataset]` split types now
+  describe the heterogeneous contents correctly.
+- `training_io.py`: NumPy's `get_state` annotation permits a dictionary or a legacy
+  tuple. Capture explicitly requests legacy state and checks for a tuple before
+  indexing its five fields.
+- `training_model.py`: Transformers annotates `from_pretrained` as a model even
+  though `output_loading_info=True` returns `(model, loading_info)`. The installed
+  implementation confirms that branch; a cast describes the pair without changing
+  the call or disabling diagnostics.
+
+After the fixes, the same **3 files report 0 errors / 0 warnings** and Ruff passes.
+A focused CPU check saved Python/NumPy/PyTorch RNG state, loaded it with
+`weights_only=True`, restored it and reproduced the next draws exactly. No full
+test suite, GPU calibration or training was rerun for this follow-up. The existing
+calibration remains tied to its archived source snapshot; these edits do not
+alter its recorded measurements or the training hyperparameters.

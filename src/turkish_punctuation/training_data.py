@@ -17,7 +17,7 @@ def load_training_data(
     base_tokenizer: PreTrainedTokenizerFast,
     *,
     root: Path,
-) -> tuple[Dataset, Dataset, dict]:
+) -> tuple[Dataset, Dataset, dict[str, object]]:
     """Hash raw/prepared train and validation and compare all re-encoded columns.
 
     Load split subdirectories directly: never load/iterate the parent DatasetDict,
@@ -30,7 +30,10 @@ def load_training_data(
         raise ValueError("Prepared source/tokenizer identity differs from project manifests.")
     if manifest["preprocessing"]["empty_token_policy"] != "quarantine_whole_row":
         raise ValueError("Expected the clean-v1 whole-row quarantine policy.")
-    datasets, inputs = {}, {"prepared_manifest_sha256": sha256(prepared / "manifest.json")}
+    datasets: dict[str, Dataset] = {}
+    inputs: dict[str, object] = {
+        "prepared_manifest_sha256": sha256(prepared / "manifest.json")
+    }
     for split in ("train", "validation"):
         item = next(item for item in release["files"] if item["split"] == split)
         raw_path = root / release["local_directory"] / item["filename"]
