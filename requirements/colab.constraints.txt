@@ -1,0 +1,10 @@
+# Observed Colab 2026.07 preparation environment; not a complete environment lock.
+# Keep Colab's GPU PyTorch installation. Do not use the local CPU lock on Colab.
+transformers==4.57.6
+datasets==4.0.0
+numpy==2.0.2
+scikit-learn==1.6.1
+tokenizers==0.22.2
+safetensors==0.8.0
+pandas==2.2.2
+accelerate==1.14.0
