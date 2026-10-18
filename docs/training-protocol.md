@@ -1,10 +1,11 @@
 # Fine-tuning protocol: controlled clean versus augmented BERT
 
 Specified **2026-10-18**, version **training-v1**. Settings are in
-[configs/training.json](../configs/training.json). The **clean training runner,
-checkpoint/resume path and Colab notebook are implemented but unexecuted**.
-Train augmentation preparation is still planned. No fine-tuning, GPU timing
-or test evaluation has run.
+[configs/training.json](../configs/training.json). The clean runner completed a
+**30-update T4 calibration**; see [observations](training-calibration.md).
+Full fine-tuning, full-epoch validation/selection and checkpoint/resume remain
+unexecuted. Train augmentation preparation is still planned. No test evaluation
+has run as part of this training work.
 
 ## 1. What the comparison measures
 
@@ -227,8 +228,9 @@ tune one arm after seeing a favorable/unfavorable augmentation score.
 Start on a single Colab GPU with FP32, TF32 disabled and batch 8/accumulation 4.
 Use a short, separately named calibration run from the common initialization to
 measure peak allocated/reserved GPU memory and seconds per optimizer update.
-Exclude startup/warmup from the steady-state timing and include evaluation and
-checkpoint overhead separately in the full-run estimate. Calibration is not a
+Exclude the first five startup updates from the steady-state timing and include
+evaluation and checkpoint overhead separately in a full-run estimate. This timing
+exclusion does not skip the LR warmup. Calibration is not a
 quality result; discard its trained weights before formal runs.
 
 If memory requires batch 4/accumulation 8 or batch 2/accumulation 16, resolve it
@@ -236,7 +238,10 @@ before formal runs, save the resolved configuration and use it for both arms.
 The effective batch and update count stay the same, but dropout/numerical behavior
 can differ; do not switch midway and call the runs identical. Mixed precision
 is a possible later runtime revision after GPU measurement, with its dtype and
-scaling behavior recorded for both arms. No speedup or training time is known yet.
+scaling behavior recorded for both arms. The observed clean calibration retained
+8/4 at 2.430 GiB peak allocated memory and 0.476 s/update mean; projected update
+work is about 87 minutes, excluding validation/checkpoint overhead. Full training
+time and noisy-input memory remain unobserved.
 Nonfinite loss/gradients stop the run with diagnostic state.
 
 The first implementation uses eager BERT attention, disables TF32 and requests
@@ -276,17 +281,22 @@ shared output paths. It is not a lock across independent Drive mounts/VMs.
 | `scripts/train.py` | Resolve configuration, archive provenance, orchestrate calibration/full training, checkpoints, selection and resume. |
 | `02_clean_training_colab.ipynb` | Thin environment/data/Drive setup and commands for the same Python pipeline. |
 
-No training or calibration was executed during implementation. Static checks do
-not establish runtime correctness, GPU memory fit or deterministic resumption.
-The next observed run is the GPU calibration after code review.
+The first reviewed clean calibration completed on 2026-10-18 using the clean
+GitHub commit `fc17d41`, runtime 2026.07, Python 3.12.13 and a T4 GPU. Its 30
+updates established clean GPU fit and exercised the update path; they do not
+establish full-epoch validation/selection or deterministic resumption. See the
+[calibration report](training-calibration.md) for measurements and remaining work.
 
 The notebook clones the public repository, so the reviewed files need to be
-synced to GitHub before that checkout can run them. This implementation stage
-does not commit or push. Notebook commands download/prepare only train and
+synced to GitHub before that checkout can run them. The reviewed files were
+committed and pushed before calibration. Notebook commands download/prepare only train and
 validation using the new `--splits train validation` option. Existing all-split
 commands keep their defaults and existing clean-v1 outputs are not rewritten.
-Prepared inputs are cached byte-for-byte on Drive to preserve input hashes
-across Colab sessions; raw train/validation files are reverified by source hash.
+Prepared inputs are cached byte-for-byte in the selected storage root; use Drive
+for formal runs to preserve hashes across sessions. Raw train/validation files
+are reverified by source hash. Calibration defaults to temporary storage and has
+a report-download cell. Drive mounting failed during the first session with a
+credential propagation error; resolve durable storage before formal training.
 
 ```bash
 # CUDA required. Default mode is calibration, not a full experiment.

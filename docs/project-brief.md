@@ -206,7 +206,8 @@ Checked on 2026-10-17:
   This is consistent with contextual casing cues, not proof of an internal causal
   mechanism. All completely unedited records retained their predictions.
 - `training-v1` specified on 2026-10-18 in [training-protocol.md](training-protocol.md)
-  and `configs/training.json`. The clean pipeline is implemented but unexecuted. Shared pinned
+  and `configs/training.json`. The clean pipeline completed a short GPU calibration;
+  full training is pending. Shared pinned
   BERTurk encoder plus one saved fresh four-class head per training seed;
   full fine-tuning, AdamW at 2e-5, weight decay 0.01 excluding bias/LayerNorm,
   dropout 0.1, 3 epochs, batch 8 × accumulation 4 = effective 32, word-normalized
@@ -230,16 +231,30 @@ Checked on 2026-10-17:
   state and source/data/environment snapshots. CLI requires CUDA/FP32; default
   mode is a separate 30-update calibration, not full training. Eager attention
   and strict deterministic operations are explicit runtime choices.
-- `notebooks/02_clean_training_colab.ipynb` prepares train/validation only, caches
-  exact prepared files and shared initialization on Drive, and invokes the same
-  CLI. Full training is a separate inactive-by-default cell. Download/preparation
+- `notebooks/02_clean_training_colab.ipynb` prepares train/validation only and invokes
+  the same CLI. It defaults to temporary storage for calibration and offers report
+  export. Formal training requires explicit Drive storage for exact prepared files,
+  shared initialization and checkpoints. Full training is a separate
+  inactive-by-default cell. Download/preparation
   scripts accept optional `--splits`; existing defaults and outputs are preserved.
   The notebook requires the reviewed training code to be synced to GitHub first.
 - Candidate epoch exports are retained along with two rolling resumable states
   (roughly 4 GB per full run plus shared initialization). Resume requires matching
   source/config/input/package/GPU identity; the lock is scoped to one host.
-- Next milestone: review the implementation, sync reviewed code for Colab, then
-  run GPU calibration before full clean training. Base-tokenizer compatibility,
-  GPU fit and actual training/resume behavior have not been observed yet. Prepare
-  augmented views after the clean path is reviewed. Continue clarifying source
-  and license. No training or test evaluation performed.
+- Clean GPU calibration completed on 2026-10-18, code commit `fc17d41`, seed 586,
+  T4, runtime 2026.07, Python 3.12.13, PyTorch 2.11.0+cu128, FP32/eager. All
+  train/validation re-encoding, tokenizer compatibility and base loading checks
+  passed; 30 updates/960 records completed. Mean 0.475685 s/update after five
+  startup updates, peak allocated 2.430 GiB, peak reserved 2.838 GiB. Projected
+  10,968-update work is 86.96 min excluding validation/checkpoint I/O. Retain
+  batch 8/accumulation 4 for clean training. Updated calibration weights discarded.
+  See [training-calibration.md](training-calibration.md); raw reports/source snapshots
+  are saved under ignored `artifacts/training/training-v1/calibration-clean-seed-586-v1/`.
+- Drive mount returned `credential propagation was unsuccessful`, including after
+  the user reported granting file/document access; the missing permission category
+  is not known. Calibration used temporary Colab storage and reports were retrieved
+  locally. Before full training, resolve persistent storage and save/verify the
+  shared initialization and exact prepared inputs there. Full-epoch validation,
+  checkpoint/resume, augmented training and noisy-input memory remain unobserved.
+  No formal training or new model-quality/test score was produced. Continue
+  clarifying source/license and prepare augmented views after the clean path.

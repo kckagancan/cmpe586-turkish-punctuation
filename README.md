@@ -19,7 +19,8 @@ Pilot macro-F1: case loss **%81,23**, Türkçe karakter kaybı **%83,43**, harf 
 [pilot raporu](docs/noise-pilot.md).
 Kontrollü fine-tuning için başlangıç ayarları ve karşılaştırma kuralları belirlendi:
 [eğitim protokolü](docs/training-protocol.md). Clean training pipeline ve Colab
-notebook'u yazıldı; GPU calibration ve fine-tuning henüz çalıştırılmadı.
+notebook'u hazır. T4 üzerinde 30 update'lik GPU calibration tamamlandı;
+[ölçümler ve sınırlar](docs/training-calibration.md). Tam fine-tuning henüz başlamadı.
 
 ## Çalışma düzeni
 
@@ -220,8 +221,12 @@ Augmented kolda aynı kayıtların yarısı her epoch yenilenen combined-medium
 noisy input olarak sunulacak; veri boyutu ve kelime hedefi sayısı sabit kalacak.
 
 Clean training kodu ve [Colab notebook'u](notebooks/02_clean_training_colab.ipynb)
-hazır. Henüz training veya GPU calibration çalıştırılmadı; train augmentation
-hazırlayıcısı sonraki aşama. Yeni komut varsayılan olarak yalnızca 30 update'lik
+hazır. T4 üzerinde 30 update'lik calibration başarıyla tamamlandı: batch 8 ×
+accumulation 4, ortalama 0,476 s/update, peak allocated 2,43 GiB. Üç epoch için
+yalnızca update işi yaklaşık 87 dakika tahmin ediliyor; validation ve checkpoint
+I/O buna dahil değil. [Ayrıntılı rapor](docs/training-calibration.md).
+Tam training henüz başlamadı; train augmentation hazırlayıcısı sonraki aşama.
+Komut varsayılan olarak yalnızca 30 update'lik
 calibration yapar ve CUDA ister:
 
 ```bash
@@ -235,9 +240,12 @@ python scripts/train.py --mode train --download-model
 python scripts/train.py --mode train --download-model --resume
 ```
 
-Colab notebook'u initialization, prepared input cache ve training çıktılarını
-Drive'da saklar. Colab'da bu kodun kullanılabilmesi için güncel dosyaların GitHub
-checkout'una aktarılmış olması gerekir; henüz bu aşamanın commit/push işlemi yapılmadı.
+Colab notebook'u calibration için varsayılan olarak geçici disk kullanır
+(`USE_DRIVE=False`); rapor arşivini oturum kapanmadan indir. Formal training için
+`USE_DRIVE=True` ile initialization, prepared input cache ve checkpoint'leri
+Drive'da sakla. İlk calibration sırasında Drive mount yetki aktarımı hatası verdi;
+tam eğitimden önce kalıcı depolama bağlantısı çözülmeli. İncelenmiş training kodu
+GitHub'a aktarıldı; calibration `fc17d41` commit'inin temiz checkout'unda çalıştı.
 Calibration ve tam training ayrı çıktı klasörleri kullanır. Calibration modelinin
 güncellenmiş ağırlıkları saklanmaz; formal training ortak initialization'dan başlar.
 Resume, aynı kod/config/girdi/paket/GPU kimliğini ve checkpoint hash'lerini ister.
@@ -257,9 +265,11 @@ GPU runtime açıldıktan sonra yeni oturumda repo ve proje kurulumu:
 
 Colab'ın hazır GPU PyTorch kurulumunu kullan; yerel CPU kurulum komutunu Colab'da
 çalıştırma. Bağımlılık kurulumu yüklü paketleri değiştirirse runtime'ı yeniden
-başlatmak gerekebilir. Colab üzerinde çalıştırma henüz yapılmadı.
-Yeni training notebook'u train/validation indirme-hazırlama, Drive'da kalıcı
-initialization/input cache/checkpoint, calibration ve isteğe bağlı tam training
+başlatmak gerekebilir. İlk calibration, runtime **2026.07**, Python **3.12.13**,
+PyTorch **2.11.0+cu128** ve **T4** ile çalıştı. Proje Python 3.11/3.12 destekler;
+runtime'ın gerçek sürümünü kontrol et.
+Training notebook'u train/validation indirme-hazırlama, geçici calibration veya
+Drive'da kalıcı initialization/input cache/checkpoint ve isteğe bağlı tam training
 akışını içerir. Test split'ini indirmez veya hazırlamaz. Kullanım ve kod haritası:
 [training protocol](docs/training-protocol.md#9-implementation-and-first-colab-run).
 

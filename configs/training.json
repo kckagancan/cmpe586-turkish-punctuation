@@ -1,6 +1,6 @@
 {
   "version": "training-v1",
-  "status": "clean_pipeline_implemented_execution_pending",
+  "status": "clean_gpu_calibration_complete_full_training_pending",
   "specified_on": "2026-10-18",
   "protocol": "docs/training-protocol.md",
   "model": {

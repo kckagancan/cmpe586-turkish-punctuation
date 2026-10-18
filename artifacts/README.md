@@ -46,13 +46,19 @@ tamamlanmadan durdurulan ilk girişimin kod/ayarlarını ve kesinti nedenini sak
 Padding hesabına göre alınan hızlandırma kararı noisy aggregate skorlar hesaplanmadan
 verildi; tamamlanmış sonuçlar v2 klasöründedir.
 
-## Training (kod hazır, henüz çalıştırılmadı)
+## Training ve GPU calibration
 
 - `initializations/training-v1/seed-586/`: pinned BERTurk encoder ve yeni head'in
-  ortak başlangıç ağırlıkları, tokenizer ve hash manifesti. Henüz oluşturulmadı.
+  ortak başlangıç ağırlıkları, tokenizer ve hash manifesti için yerel varsayılan yol.
+  İlk calibration bu dosyaları Colab'ın geçici diskinde oluşturdu; ağırlıklar yerel
+  rapor arşivine dahil edilmedi. Formal training öncesi kalıcı depolamaya alınmalı.
 - `training/training-v1/calibrate-clean-seed-586/`: kısa GPU denemesinin ayarları,
   kaynak kopyaları, loss/LR/timing event'leri ve `calibration.json`. Güncellenmiş
   calibration ağırlıkları saklanmaz; süre tahmini validation/checkpoint I/O'yu kapsamaz.
+- `training/training-v1/calibration-clean-seed-586-v1/`: 2026-10-18'de tamamlanan
+  T4 denemesinden indirilen gerçek raporlar: `calibration.json`, `run.json`,
+  `events.jsonl`, `progress.json` ve `source_snapshot/`. Tam olarak 30 update;
+  kaynak snapshot hash'leri ve run identity yerelde doğrulandı.
 - `training/training-v1/train-clean-seed-586/`: `run.json`, `events.jsonl`,
   `progress.json`, `source_snapshot/`, `checkpoints/`, `models/epoch-XX/` ve
   `validation/epoch-XX/`. `summary.json` yalnızca tam training bittiğinde yazılır.
@@ -60,6 +66,9 @@ verildi; tamamlanmış sonuçlar v2 klasöründedir.
   next-row cursor ve epoch/selection geçmişini saklar. İki son sağlam state ve
   üç epoch model export'u korunur; yaklaşık 4 GB/koşu ve 0,44 GB/ortak başlangıç.
 
-Colab notebook'u bu yolları Drive'a yönlendirir; yerel varsayılanlar burada kalır.
-Model export'ları Hugging Face formatında yüklenebilir. Bu bölüm planlanan çıktı
-yapısını açıklar; mevcut bir training sonucu veya başarı doğrulaması değildir.
+Colab notebook'u calibration için varsayılan olarak geçici disk kullanır ve rapor
+indirme bağlantısı oluşturur. `USE_DRIVE=True` formal training çıktılarını Drive'a
+yönlendirir; bu oturumda Drive mount yetki aktarımı hatası verdi. Kalıcı depolama,
+full-epoch validation ve checkpoint/resume henüz çalıştırılarak doğrulanmadı.
+Model export'ları Hugging Face formatında yüklenebilir. Tam training sonucu yok;
+gözlenen kısa denemenin özeti [calibration raporunda](../docs/training-calibration.md).
