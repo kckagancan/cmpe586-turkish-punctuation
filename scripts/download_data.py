@@ -1,5 +1,6 @@
 """Download the pinned upstream CSV files and verify their recorded SHA-256 hashes."""
 
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -14,11 +15,21 @@ def sha256(path: Path) -> str:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--splits",
+        nargs="+",
+        choices=("train", "validation", "test"),
+        default=["train", "validation", "test"],
+    )
+    args = parser.parse_args()
     manifest = json.loads((ROOT / "docs/data-manifest.json").read_text())
     directory = ROOT / manifest["local_directory"]
     directory.mkdir(parents=True, exist_ok=True)
     print("Release license remains unresolved; see docs/data-audit.md.")
     for item in manifest["files"]:
+        if item["split"] not in args.splits:
+            continue
         target = directory / item["filename"]
         if target.exists():
             if target.stat().st_size != item["bytes"] or sha256(target) != item["sha256"]:

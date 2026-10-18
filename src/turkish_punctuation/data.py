@@ -1,6 +1,7 @@
 """Read and validate punctuation records while preserving their original token slots."""
 
 import ast
+import warnings
 from collections import Counter
 from pathlib import Path
 
@@ -43,14 +44,22 @@ def read_split(path: str | Path, *, nrows: int | None = None) -> pd.DataFrame:
     """
     if nrows is not None and nrows < 1:
         raise ValueError("nrows must be positive or None.")
-    raw = pd.read_csv(
-        path,
-        encoding="utf-8",
-        dtype=str,
-        keep_default_na=False,
-        skip_blank_lines=False,
-        nrows=nrows,
-    )
+    # Without index_col=False, pandas may silently treat an extra field as an index.
+    # With it, extra fields can be discarded with a warning; turn that into an error.
+    try:
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", pd.errors.ParserWarning)
+            raw = pd.read_csv(
+                path,
+                encoding="utf-8",
+                dtype=str,
+                keep_default_na=False,
+                skip_blank_lines=False,
+                index_col=False,
+                nrows=nrows,
+            )
+    except (pd.errors.ParserWarning, pd.errors.ParserError) as error:
+        raise ValueError(f"Invalid CSV field structure: {path}") from error
     if raw.columns.tolist() != ["sentence", "tags"]:
         raise ValueError(f"Expected sentence/tags columns in that order: {path}")
     if raw.empty:

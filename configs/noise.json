@@ -1,0 +1,103 @@
+{
+  "version": "noise-v1",
+  "status": "implemented",
+  "specified_on": "2026-10-18",
+  "prepared_directory": "data/processed/clean-v1",
+  "development_split": "validation",
+  "output_directory": "data/processed/noise-v1",
+  "audit": {
+    "tokenizer_batch_size": 256,
+    "examples_per_condition": 6
+  },
+  "sampling": {
+    "method": "lowest_sha256_rank_among_eligible_clean_word_positions",
+    "selection_scope": "whole_split",
+    "rate_denominator": "all_original_word_positions_in_eligible_split",
+    "target_count_formula": "total_words * coverage_percent // 100",
+    "eligible_pool": "clean_source_words_for_each_family",
+    "nested_severity_prefixes": true,
+    "key_fields": ["version", "seed", "split", "row_id", "word_index", "family", "purpose"],
+    "selection_purpose": "select",
+    "key_serialization": "JSON array; ensure_ascii=False; separators=(',', ':'); UTF-8",
+    "digest": "sha256_full_digest_bytes",
+    "tie_break": ["row_id", "word_index"],
+    "excluded_key_fields": ["severity", "condition_name", "model_id", "labels"],
+    "insufficient_eligible_words": "fail_condition_without_lowering_budget"
+  },
+  "levels": {
+    "mild": {"coverage_percent": 2},
+    "medium": {"coverage_percent": 5},
+    "heavy": {"coverage_percent": 10}
+  },
+  "families": {
+    "case_loss": {
+      "operation": "lowercase_entire_selected_word_with_Turkish_I_rules",
+      "eligible_when": "operation_changes_clean_word",
+      "turkish_overrides": {"I": "ı", "İ": "i"},
+      "remaining_casing": "Python_str_lower",
+      "normalize_source": false
+    },
+    "diacritic_loss": {
+      "operation": "translate_all_listed_characters_in_selected_word",
+      "eligible_when": "operation_changes_clean_word",
+      "mapping": {
+        "ç": "c", "ğ": "g", "ı": "i", "ö": "o", "ş": "s", "ü": "u",
+        "Ç": "C", "Ğ": "G", "İ": "I", "Ö": "O", "Ş": "S", "Ü": "U"
+      },
+      "other_characters": "preserve"
+    },
+    "typo_swap": {
+      "operation": "one_adjacent_internal_character_swap",
+      "alphabet": "abcdefghijklmnopqrstuvwxyzçğıöşüABCDEFGHIJKLMNOPQRSTUVWXYZÇĞİÖŞÜ",
+      "minimum_word_length": 4,
+      "preserve_first_and_last_character": true,
+      "require_unequal_adjacent_characters": true,
+      "candidate_left_indices": "range(1, len(word) - 2)",
+      "position_choice": "lowest_sha256_of_base_key_with_purpose_swap_position_plus_left_index",
+      "position_tie_break": "lowest_left_index",
+      "maximum_swaps_per_selected_word": 1
+    }
+  },
+  "combined": {
+    "apply_order": ["typo_swap", "case_loss", "diacritic_loss"],
+    "plans": "reuse_each_single_family_plan_at_same_level_and_seed",
+    "final_noops_or_cancellations": "record_without_resampling",
+    "report_union_and_overlap": true,
+    "cross_family_equal_budget_claim": false
+  },
+  "full_stress_conditions": [
+    {"name": "case_loss_full", "family": "case_loss", "selection": "all_eligible_words"},
+    {"name": "diacritic_loss_full", "family": "diacritic_loss", "selection": "all_eligible_words"}
+  ],
+  "evaluation_seeds": [586, 587, 588],
+  "pilot": {
+    "seed": 586,
+    "level": "medium",
+    "families": ["case_loss", "diacritic_loss", "typo_swap", "combined"]
+  },
+  "optional_input_ablations": {
+    "level": "medium",
+    "conditions": ["combined_without_case_loss", "combined_without_diacritic_loss", "combined_without_typo_swap"],
+    "reuse_remaining_component_plans": true,
+    "enabled_by_default": false
+  },
+  "invariants": {
+    "preserve_raw_files": true,
+    "preserve_split_row_ids_and_word_order": true,
+    "preserve_word_count_and_tags": true,
+    "allow_whitespace_or_punctuation_edits": false,
+    "allow_empty_output_words": false,
+    "source_unicode_form": "NFC",
+    "non_nfc_input_policy": "fail_audit_without_silent_normalization",
+    "retokenize_and_realign_each_variant": true,
+    "missing_word_or_overlength_policy": "fail_before_model_scoring_no_condition_specific_row_drops"
+  },
+  "training_augmentation": "to_be_specified_separately_with_matched_initialization_and_optimizer_budget",
+  "sources": [
+    "https://arxiv.org/abs/1711.02173",
+    "https://aclanthology.org/D19-5506/",
+    "https://aclanthology.org/2021.wnut-1.38/",
+    "https://aclanthology.org/2021.acl-demo.41/",
+    "https://www.unicode.org/Public/17.0.0/ucd/SpecialCasing.txt"
+  ]
+}

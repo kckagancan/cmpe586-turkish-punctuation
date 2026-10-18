@@ -1,9 +1,12 @@
 # Initial dataset audit — 2026-10-17
 
 Status: the released CSV files are downloaded locally and structurally audited.
-Dataset licensing and exact corpus/split provenance remain unresolved. No training,
-model evaluation, cleaned split generation or noise augmentation has been performed.
-Read-only tokenizer/alignment diagnostics were added after the initial CSV audit.
+Dataset licensing and exact corpus/split provenance remain unresolved. The original
+audit below records the pre-preprocessing findings; tokenizer diagnostics and the
+subsequent clean-v1 modeling policy are documented in later sections. The later
+published-model clean-validation measurement is recorded in
+[clean-validation.md](clean-validation.md); training, noise augmentation and test
+evaluation have not been performed.
 
 ## Release and reproducibility
 
@@ -209,3 +212,32 @@ before generating noise, and compare every model on the same eligible test rows.
 Scores on that subset must not be presented as directly reproducing the paper's
 full-test scores. Do not exclude different rows separately for each noise condition;
 handle any later noise-induced coverage/length failures explicitly.
+
+## Applied modeling preparation: clean-v1
+
+After the diagnostics above, whole-row quarantine was adopted for the initial
+modeling subset. `scripts/prepare_data.py` uses `configs/preprocessing.json` and
+the pinned tokenizer. The raw reader still preserves every source record.
+
+- Eligible train/validation/test counts: **116,969 / 14,453 / 14,600**.
+- Quarantined row counts: **462 / 61 / 61**, matching the earlier simulation.
+- No word/label merging, lowercasing, deduplication, split mixing or truncation.
+- Hugging Face datasets preserve original split-local `row_id` alongside model
+  inputs and aligned labels. The DataLoader removes row IDs from model arguments.
+- Local quarantine JSONL files retain the affected records, their original IDs
+  and the reason. The local preparation manifest records all eligible/excluded IDs,
+  source hashes, settings, package versions, class support and preview batch shapes.
+- Prepared data, quarantine texts and manifests stay under Git-ignored
+  `data/processed/clean-v1/`. The versioned output cannot be overwritten in place.
+
+Tokenization and label alignment completed for every eligible row. A first batch
+from each split was collated with dynamic padding using the ready-made Hugging Face
+token-classification collator and PyTorch DataLoader. Padding labels are `-100`.
+This establishes prepared inputs, not model correctness or predictive performance.
+No model weights, training or evaluation were used in this step.
+
+All model comparisons must share these eligible test IDs. Scores describe the
+filtered subset, not a direct reproduction of the published full test benchmark.
+Future noise must be generated from this fixed subset; new missing words or
+overlong sequences stop encoding instead of silently removing condition-specific
+rows. The question-label losses in the earlier table remain a reporting limitation.

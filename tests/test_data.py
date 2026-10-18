@@ -105,6 +105,18 @@ class ReaderTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Expected sentence/tags"):
             read_split(self.path)
 
+    def test_extra_csv_fields_are_not_used_as_an_index_or_silently_discarded(self):
+        cases = [
+            [("UNEXPECTED_PREFIX", "['word']", "['PERIOD']")],
+            [("['word']", "['PERIOD']", "UNEXPECTED_SUFFIX")],
+            [("['good']", "['O']"), ("['bad']", "['O']", "EXTRA")],
+        ]
+        for rows in cases:
+            with self.subTest(rows=rows):
+                self.write_csv(rows)
+                with self.assertRaisesRegex(ValueError, "CSV field structure"):
+                    read_split(self.path)
+
 
 if __name__ == "__main__":
     unittest.main()

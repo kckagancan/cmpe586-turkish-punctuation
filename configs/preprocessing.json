@@ -1,0 +1,8 @@
+{
+  "version": "clean-v1",
+  "empty_token_policy": "quarantine_whole_row",
+  "output_directory": "data/processed/clean-v1",
+  "tokenizer_batch_size": 256,
+  "preview_batch_size": 8,
+  "seed": 586
+}

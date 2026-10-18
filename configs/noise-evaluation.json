@@ -1,0 +1,24 @@
+{
+  "run_name": "published-bert-noise-pilot-v2",
+  "split": "validation",
+  "prepared_directory": "data/processed/noise-v1",
+  "clean_reference_directory": "artifacts/evaluations/published-bert-clean-validation-v1",
+  "output_directory": "artifacts/evaluations/published-bert-noise-pilot-v2",
+  "batch_order": "clean_length_ascending",
+  "recompute_clean_anchor": true,
+  "conditions": [
+    "case_loss-medium-seed586",
+    "diacritic_loss-medium-seed586",
+    "typo_swap-medium-seed586",
+    "combined-medium-seed586"
+  ],
+  "batch_size": 16,
+  "device": "cpu",
+  "cpu_threads": 4,
+  "seed": 586,
+  "progress_every_records": 500,
+  "error_examples_per_category_and_class": 2,
+  "primary_metric": "punctuation_macro.f1",
+  "punctuation_labels": ["PERIOD", "COMMA", "QUESTION_MARK"],
+  "zero_division": 0
+}

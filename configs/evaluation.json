@@ -1,0 +1,16 @@
+{
+  "run_name": "published-bert-clean-validation-v1",
+  "split": "validation",
+  "condition": "clean",
+  "prepared_directory": "data/processed/clean-v1",
+  "output_directory": "artifacts/evaluations/published-bert-clean-validation-v1",
+  "batch_size": 16,
+  "device": "cpu",
+  "cpu_threads": 4,
+  "seed": 586,
+  "progress_every_records": 1000,
+  "error_examples_per_reference_class": 3,
+  "primary_metric": "punctuation_macro.f1",
+  "punctuation_labels": ["PERIOD", "COMMA", "QUESTION_MARK"],
+  "zero_division": 0
+}

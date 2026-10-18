@@ -6,9 +6,20 @@ CMPE 586 Transformer/NLP ders projesi. Türkçe noktalama geri yükleme modeller
 büyük/küçük harf kaybı, Türkçe karakterlerin sadeleştirilmesi ve yazım hataları
 altındaki dayanıklılığı incelenecek.
 
-**Durum:** Yerel ortam ve public repo hazır. Aday veri seti yerelde indirildi ve
-ilk yapısal inceleme tamamlandı. Veri lisansı ve kesin kaynak/split geçmişi henüz
-doğrulanmadı. Henüz deney yapılmadı.
+**Durum:** Yerel ortam ve public repo hazır. Veri incelendi; `clean-v1` model
+girdileri hazırlandı ve yayımlanmış BERT üç elle yazılmış örnekte çalıştırıldı.
+Veri lisansı ve kesin kaynak/split geçmişi henüz doğrulanmadı.
+Hazır modelin temiz validation ölçümü tamamlandı: noktalama macro-F1 **%83,64**.
+Hazır modelin dört medium koşulluk validation pilotu tamamlandı; fine-tuning ve test değerlendirmesi yapılmadı.
+Temiz ölçümün yöntemi ve sınıf sonuçları: [clean validation raporu](docs/clean-validation.md).
+Gürültü kuralları, dönüşümler ve model çalıştırmadan veri hazırlama komutu hazır.
+38 validation varyantının veri/hizalama kontrolü geçti: [noise veri raporu](docs/noise-audit.md).
+Pilot macro-F1: case loss **%81,23**, Türkçe karakter kaybı **%83,43**, harf takası
+**%82,90**, combined **%80,34**. Yöntem, sınıf skorları ve hata analizi:
+[pilot raporu](docs/noise-pilot.md).
+Kontrollü fine-tuning için başlangıç ayarları ve karşılaştırma kuralları belirlendi:
+[eğitim protokolü](docs/training-protocol.md). Clean training pipeline ve Colab
+notebook'u yazıldı; GPU calibration ve fine-tuning henüz çalıştırılmadı.
 
 ## Çalışma düzeni
 
@@ -68,6 +79,171 @@ Sonuçlar `docs/tokenization-audit.json` içinde; yorumları
 [veri inceleme raporunun tokenizer bölümünde](docs/data-audit.md#tokenizer-and-alignment-audit).
 İnceleme hiçbir temizlenmiş eğitim/test bölümü oluşturmaz.
 
+Model girdilerini hazırlamak için, tokenizer önbellekteyken:
+
+```bash
+python scripts/prepare_data.py
+```
+
+`configs/preprocessing.json` içindeki `clean-v1` politikası, boş kelime içeren
+kaydın tamamını ayrı tutar. Ham dosyalar değişmez. Yerel çıktı
+`data/processed/clean-v1/` altında oluşur: `dataset/` token ID'lerini ve hizalanmış
+etiketleri; `quarantine/` ayrılan orijinal kayıtları; `manifest.json` kaynakları,
+ayarları, kayıt ID'lerini ve sınıf sayılarını saklar. Mevcut çıktı üzerine yazılmaz.
+Bu alt kümedeki skorlar, yayımlanmış tam test skorlarıyla doğrudan eşdeğer değildir.
+Tüm modeller ve noise koşulları aynı uygun kayıtları kullanacak; noise sonrasında
+yeni hizalama/uzunluk sorunu oluşursa kayıt sessizce atılmayacak, işlem duracak.
+
+Ortak hazırlama ve DataLoader kodu `src/turkish_punctuation/preprocessing.py`
+içindedir. Hugging Face `Dataset`/`DataCollatorForTokenClassification` ve PyTorch
+`DataLoader` kullanılır. Padding batch içinde dinamik yapılır; padding etiketleri
+`-100` olur. `row_id` hata analizi için saklanır ve model girdilerinden çıkarılır.
+Hazırlama komutu her split'in ilk sıralı batch'ini oluşturup boyutlarını kaydeder;
+bu adım model çalıştırmaz veya eğitim yapmaz. Önizlemedeki batch size 8, gelecekteki
+GPU eğitimi için verilmiş bir batch size kararı değildir.
+
+Yayımlanmış BERT modelini ilk kez indirip üç elle yazılmış örnekte çalıştırmak için:
+
+```bash
+python scripts/inspect_model.py --download-model
+```
+
+Sabit sürümdeki ağırlık dosyası yaklaşık 440 MB'tır ve `.cache/huggingface/` altında
+saklanır. Sonraki çalıştırmalarda `--download-model` olmadan yerel önbellek kullanılır.
+`src/turkish_punctuation/inference.py`, checkpoint'in sınıf eşlemesini ve ağırlıkların
+eksiksiz yüklenmesini kontrol eder; tahmini `eval()` ve `torch.inference_mode()` ile
+yapar. Kelime başına ilk subword'ün dört sınıf skoru (logits) arasından en büyüğü
+seçilir. Model girdilerine referans etiketler gönderilmez.
+
+Örnek tahminler, kelime düzeyindeki logits ve mimari bilgileri yerel
+`artifacts/model-preview.json` dosyasına yazılır. Bu küçük örnekler veri setinden
+seçilmemiştir ve model başarımını ölçmez. Gerçek validation ölçümü aşağıdaki
+değerlendirme komutuyla yapılır. Tamamlanan noise pilotu aşağıda ayrıca açıklanır;
+fine-tuning henüz yapılmadı.
+
+Hazırlanmış clean validation bölümünü yayımlanmış modelle değerlendirmek için:
+
+```bash
+python scripts/evaluate.py
+```
+
+Bu komut yalnızca validation bölümünü değerlendirir ve yerel tokenizer/model
+önbelleğini kullanır. Ayarlar `configs/evaluation.json` içindedir. Ana skor,
+period/comma/question mark sınıflarının eşit ağırlıklı macro-F1'ıdır; micro-P/R/F1,
+sınıf bazında P/R/F1 ve dört sınıflı confusion matrix de kaydedilir. `O` konumları
+sayımda korunur: noktalama olmayan bir konuma işaret eklemek yanlış pozitiftir.
+Sıfır paydalarda skor 0'dır; padding ve devam subword'leri sayılmaz.
+
+Çıktılar `artifacts/evaluations/published-bert-clean-validation-v1/` altına yazılır:
+`metrics.json`, `predictions.jsonl`, `error_examples.json`. Mevcut çıktı üzerine
+yazılmaz; tekrar ölçüm için ayarlarda yeni run adı ve çıktı yolu kullan.
+Sonuçları anlamlandırırken bu ölçümün uygun validation alt kümesine ait olduğunu,
+hazır checkpoint'in geçmişte aynı validation ile seçilmiş olabileceğini dikkate al.
+Bu çalışma fine-tuning veya yayımlanmış tam test skorunun yeniden üretimi değildir.
+
+## Gürültü protokolü
+
+[Noise protokolü](docs/noise-protocol.md) ve [ayarları](configs/noise.json),
+literatürden esinlenerek bu görevin kelime–etiket hizalamasına göre tasarlandı.
+Tekil koşullar: Türkçe kurallarla küçük harfe çevirme, belirli Türkçe harfleri
+sadeleştirme ve kelimenin içindeki iki komşu harfi bir kez takas etme.
+Mild/medium/heavy seviyelerinde her tür için **tüm kelimelerin %2/%5/%10'u**
+değiştirilir; oran yalnızca uygun kelimeler üzerinden hesaplanmaz.
+
+Birleşik koşul aynı bileşen seçimlerini kullanır; daha fazla kelimeyi etkileyebilir.
+Tam küçük harf ve tam Türkçe karakter sadeleştirme ayrıca değerlendirilir.
+Seed'ler ve seçim kuralları ayarlarda kaydedilir. Kelime konumları ve etiketler
+korunur; her varyant yeniden tokenize edilip hizalanır. Hazırlama komutu:
+
+```bash
+python scripts/prepare_noise.py
+```
+
+Bu komut yalnızca sabit uygun validation kayıtlarından 36 seed'li koşul ve iki
+full koşul üretir. Tokenizer yerel önbellekten yüklenir; model ağırlığı yüklenmez.
+Çıktı `data/processed/noise-v1/` altında kalır: her koşulun kelimeleri, dönüşüm
+günlüğü, model girdileri, küçük örnekleri ve veri kontrolü raporu saklanır.
+Manifest ayarları, kaynak/kod hash'lerini ve kullanılan kodun kopyalarını tanımlar.
+Hizalama/uzunluk sorunu olursa işlem durur; yeni kayıt atılmaz veya kırpılmaz.
+
+Tekrar denemek için JSON ayarını kopyala, yeni çıktı yolu belirle ve
+`python scripts/prepare_noise.py --config configs/yeni-noise-ayari.json` kullan.
+Desteklenmeyen kurallar ve uygulanamayacak oranlar açık hata verir.
+Küçük validation pilotu tamamlandı; sonuçlar [pilot raporunda](docs/noise-pilot.md).
+Eğitimdeki noise karışımı ayrıca planlanacak.
+Tamamlanan veri kontrolünde kayıp kelime, `[UNK]` veya uzunluk aşımı bulunmadı;
+en uzun girdi 218 token oldu. Ayrıntılar: [noise veri raporu](docs/noise-audit.md).
+
+## Gürültülü model değerlendirmesi
+
+```bash
+python scripts/evaluate_noise.py
+```
+
+`configs/noise-evaluation.json`, dört medium/seed-586 koşulunu seçer. Komut temiz
+tahmin dosyasının hash'ini doğrular ve skorlarını yeniden hesaplar; her noise
+koşulunu yeniden tokenize edip kaydedilmiş girdilerle karşılaştırır. Model/tokenizer,
+kayıtlar, hedefler, paket sürümleri ve çıkarım ayarları temiz referansla eşleşir.
+Model yerel önbellekten bir kez yüklenir; eğitim veya test değerlendirmesi yapılmaz.
+Padding maliyetini azaltmak için kayıtlar temiz token uzunluğuna göre sıralanır;
+bütün koşullar aynı sıralamayı kullanır. Önce temiz kontrol aynı sırayla yeniden
+ölçülür ve eski temiz tahminlerle karşılaştırılır. Noise farkları bu eşleşen temiz
+kontrole göre hesaplanır; hiçbir kayıt atılmaz veya kırpılmaz.
+
+Sonuçlar `artifacts/evaluations/published-bert-noise-pilot-v2/` altında tutulur:
+her koşulun tahminleri, metrikleri, temize göre yüzde puan farkları ve eşleştirilmiş
+hata örnekleri kaydedilir. `summary.json` bütün koşulları bir araya getirir.
+`conditions/clean-anchor/` yeni temiz kontrolü saklar. Tahmin dosyaları değerlendirme
+sırasındadır; her satırın kaynak `row_id` değeri korunur.
+Örnekler, temizken doğru olup bozulan, yanlışken düzelen ve farklı bir yanlış
+tahmine dönüşen konumları içerir; kaynak sırasından seçilir ve temsilî örneklem değildir.
+
+Tamamlanmış çıktı üzerine yazılmaz. Kesilmiş aynı koşuya devam etmek için
+`python scripts/evaluate_noise.py --resume` kullanılır; kod/ayar/veri değiştiyse
+yeni çıktı yolu gerekir. `progress.json` devam eden koşulu ve tamamlanan kayıtları
+gösterir. Bu ölçüm aynı yayımlanmış checkpoint'in validation dayanıklılığıdır;
+augmentation eğitiminin katkısı daha sonra kontrollü eğitimlerle ölçülecek.
+
+Tamamlanmış pilotun eşleştirilmiş hata analizini üretmek için
+`python scripts/analyze_noise.py` kullanılır. Model yeniden çalışmaz; yerel
+`analysis/` altında sayımlar, karşılaştırma tablosu ve analiz kodunun kopyası
+saklanır. Mevcut analiz üzerine yazılmaz; yeni analiz için `--output-directory`
+seçilir. Temiz kontrolün 179.164 kelime tahmini eski referansla aynı çıktı.
+
+## Fine-tuning planı
+
+[Eğitim protokolü](docs/training-protocol.md) ve [training.json](configs/training.json),
+clean/augmented karşılaştırmasının başlangıç ayarlarını tanımlar: pinned BERTurk
+temel ağırlıkları ve yeni dört sınıflı head, LR 2e-5, 3 epoch, effective batch 32
+(8 × 4 accumulation), AdamW ve temiz validation macro-F1 ile checkpoint seçimi.
+Augmented kolda aynı kayıtların yarısı her epoch yenilenen combined-medium
+noisy input olarak sunulacak; veri boyutu ve kelime hedefi sayısı sabit kalacak.
+
+Clean training kodu ve [Colab notebook'u](notebooks/02_clean_training_colab.ipynb)
+hazır. Henüz training veya GPU calibration çalıştırılmadı; train augmentation
+hazırlayıcısı sonraki aşama. Yeni komut varsayılan olarak yalnızca 30 update'lik
+calibration yapar ve CUDA ister:
+
+```bash
+python scripts/train.py --mode calibrate --download-model
+```
+
+Tam clean training ve kesilmiş aynı koşuya devam etmek için:
+
+```bash
+python scripts/train.py --mode train --download-model
+python scripts/train.py --mode train --download-model --resume
+```
+
+Colab notebook'u initialization, prepared input cache ve training çıktılarını
+Drive'da saklar. Colab'da bu kodun kullanılabilmesi için güncel dosyaların GitHub
+checkout'una aktarılmış olması gerekir; henüz bu aşamanın commit/push işlemi yapılmadı.
+Calibration ve tam training ayrı çıktı klasörleri kullanır. Calibration modelinin
+güncellenmiş ağırlıkları saklanmaz; formal training ortak initialization'dan başlar.
+Resume, aynı kod/config/girdi/paket/GPU kimliğini ve checkpoint hash'lerini ister.
+Kesintiden sonra son sağlam checkpoint'ten sonraki update'ler tekrar yürütülür.
+Notebook'ta tam training ayrı bir hücrede varsayılan olarak kapalıdır.
+
 ## Colab
 
 GPU runtime açıldıktan sonra yeni oturumda repo ve proje kurulumu:
@@ -81,8 +257,11 @@ GPU runtime açıldıktan sonra yeni oturumda repo ve proje kurulumu:
 
 Colab'ın hazır GPU PyTorch kurulumunu kullan; yerel CPU kurulum komutunu Colab'da
 çalıştırma. Bağımlılık kurulumu yüklü paketleri değiştirirse runtime'ı yeniden
-başlatmak gerekebilir. Colab uyumluluğu ve eğitim henüz denenmedi.
-Uzun eğitimlerde çıktıları Drive gibi kalıcı depolamaya kaydetmeyi ayarlayacağız.
+başlatmak gerekebilir. Colab üzerinde çalıştırma henüz yapılmadı.
+Yeni training notebook'u train/validation indirme-hazırlama, Drive'da kalıcı
+initialization/input cache/checkpoint, calibration ve isteğe bağlı tam training
+akışını içerir. Test split'ini indirmez veya hazırlamaz. Kullanım ve kod haritası:
+[training protocol](docs/training-protocol.md#9-implementation-and-first-colab-run).
 
 ## Klasörler
 
@@ -90,7 +269,7 @@ Uzun eğitimlerde çıktıları Drive gibi kalıcı depolamaya kaydetmeyi ayarla
 src/turkish_punctuation/  Ortak Python kodu
 scripts/                 Çalıştırılabilir yardımcı dosyalar
 notebooks/               İnceleme ve Colab notebook'ları
-configs/                 Daha sonra eklenecek deney ayarları
+configs/                 Tokenizer, hazırlama ve deney ayarları
 data/raw/                Yerel orijinal veri (Git dışında)
 data/processed/          İşlenmiş veri (Git dışında)
 artifacts/               Model ve deney çıktıları (Git dışında)
@@ -124,11 +303,15 @@ ruff check .
 ruff format .
 ```
 
-Veri okuyucunun otomatik kontrolleri:
+Veri okuyucu, hizalama, hazırlama ve inference akışının çevrimdışı testleri:
 
 ```bash
 python -m unittest discover -s tests -v
 ```
+
+Testler küçük yerel tokenizer ve rastgele ağırlıklı küçük BERT fixture'ları kullanır;
+veri/model indirme veya GPU gerektirmez. Bunlar araştırma deneyleri değildir.
+Tam dosya ve çıktı kontrolünün bulguları: [kod incelemesi](docs/code-review.md).
 
 ## Tekrarlanabilirlik
 
