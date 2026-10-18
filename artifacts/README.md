@@ -51,7 +51,8 @@ verildi; tamamlanmış sonuçlar v2 klasöründedir.
 - `initializations/training-v1/seed-586/`: pinned BERTurk encoder ve yeni head'in
   ortak başlangıç ağırlıkları, tokenizer ve hash manifesti için yerel varsayılan yol.
   İlk calibration bu dosyaları Colab'ın geçici diskinde oluşturdu; ağırlıklar yerel
-  rapor arşivine dahil edilmedi. Formal training öncesi kalıcı depolamaya alınmalı.
+  rapor arşivine dahil edilmedi. Hazırlık komutu bu ortak initialization'ı Drive'daki
+  proje klasörüne kopyalar ve tensor/file hash'lerini doğrular.
 - `training/training-v1/calibrate-clean-seed-586/`: kısa GPU denemesinin ayarları,
   kaynak kopyaları, loss/LR/timing event'leri ve `calibration.json`. Güncellenmiş
   calibration ağırlıkları saklanmaz; süre tahmini validation/checkpoint I/O'yu kapsamaz.
@@ -66,9 +67,13 @@ verildi; tamamlanmış sonuçlar v2 klasöründedir.
   next-row cursor ve epoch/selection geçmişini saklar. İki son sağlam state ve
   üç epoch model export'u korunur; yaklaşık 4 GB/koşu ve 0,44 GB/ortak başlangıç.
 
-Colab notebook'u calibration için varsayılan olarak geçici disk kullanır ve rapor
-indirme bağlantısı oluşturur. `USE_DRIVE=True` formal training çıktılarını Drive'a
-yönlendirir; bu oturumda Drive mount yetki aktarımı hatası verdi. Kalıcı depolama,
-full-epoch validation ve checkpoint/resume henüz çalıştırılarak doğrulanmadı.
+`preparation/training-v1/seed-586/`, `readiness.json` ve `pip-freeze.txt` hazırlık
+kayıtları için yerel rapor kopyasıdır. Gerçek Colab hazırlığı ve input/init cache'i
+`MyDrive/cmpe586-turkish-punctuation` altında tutulur. Hazırlık training update'i
+veya resumable training checkpoint'i üretmez.
+
+Colab notebook'unda bir mount-if-needed hücresi kalır; eski izin denemeleri ve
+calibration tekrar hücreleri kaldırılmıştır. Drive mount başarıyla gözlendi.
+Full-epoch validation ve checkpoint/resume henüz çalıştırılarak doğrulanmadı.
 Model export'ları Hugging Face formatında yüklenebilir. Tam training sonucu yok;
 gözlenen kısa denemenin özeti [calibration raporunda](../docs/training-calibration.md).

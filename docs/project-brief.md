@@ -231,11 +231,14 @@ Checked on 2026-10-17:
   state and source/data/environment snapshots. CLI requires CUDA/FP32; default
   mode is a separate 30-update calibration, not full training. Eager attention
   and strict deterministic operations are explicit runtime choices.
-- `notebooks/02_clean_training_colab.ipynb` prepares train/validation only and invokes
-  the same CLI. It defaults to temporary storage for calibration and offers report
-  export. Formal training requires explicit Drive storage for exact prepared files,
-  shared initialization and checkpoints. Full training is a separate
-  inactive-by-default cell. Download/preparation
+- `notebooks/02_clean_training_colab.ipynb` prepares train/validation only through
+  `scripts/prepare_training.py`, with one Drive mount-if-needed cell and a
+  separate inactive-by-default training cell. Old permission retries, calibration
+  rerun and export cells were removed. Preparation preserves exact input files,
+  shared initialization and calibration reports in the designated Drive project
+  folder, recording hashes and actual dependencies with zero optimizer updates.
+  `requirements/colab.constraints.txt` pins the main observed dependencies while
+  retaining the Colab GPU PyTorch installation. Download/preparation
   scripts accept optional `--splits`; existing defaults and outputs are preserved.
   The notebook requires the reviewed training code to be synced to GitHub first.
 - Candidate epoch exports are retained along with two rolling resumable states
@@ -253,8 +256,18 @@ Checked on 2026-10-17:
 - Drive mount returned `credential propagation was unsuccessful`, including after
   the user reported granting file/document access; the missing permission category
   is not known. Calibration used temporary Colab storage and reports were retrieved
-  locally. Before full training, resolve persistent storage and save/verify the
-  shared initialization and exact prepared inputs there. Full-epoch validation,
+  locally. A successful Drive mount was later observed after the user completed
+  authorization. This does not identify a minimum sufficient permission subset.
+  Persistent-asset preparation is a separate step from training. Full-epoch validation,
   checkpoint/resume, augmented training and noisy-input memory remain unobserved.
   No formal training or new model-quality/test score was produced. Continue
   clarifying source/license and prepare augmented views after the clean path.
+- Persistent preparation completed on 2026-10-18 using code `a121194`, with a clean
+  checkout, exit code 0 and 102.444 seconds elapsed. Train/validation inputs,
+  the original shared initialization and the previous calibration reports were
+  copied to the designated Drive project folder and verified by hash. Preparation
+  performed zero optimizer updates and did not access test data. Drive writes
+  were subsequently flushed successfully and the mount was closed.
+  See [preparation-status.md](preparation-status.md) for the observed record.
+- The user requested stopping at preparation in this session. Keep the full
+  training switch false; clean training will be started together in a later session.

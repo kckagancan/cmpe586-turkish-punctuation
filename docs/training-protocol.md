@@ -279,7 +279,8 @@ shared output paths. It is not a lock across independent Drive mounts/VMs.
 | `training.py` | AdamW groups, schedule, deterministic row permutations, summed-word gradient accumulation, clean validation loss/metrics. |
 | `training_io.py` | Tensor hashes, atomic JSON/checkpoint publication, RNG save/restore, restricted `weights_only=True` loading. |
 | `scripts/train.py` | Resolve configuration, archive provenance, orchestrate calibration/full training, checkpoints, selection and resume. |
-| `02_clean_training_colab.ipynb` | Thin environment/data/Drive setup and commands for the same Python pipeline. |
+| `scripts/prepare_training.py` | Copy/verify persistent inputs, initialization and calibration metadata; save preparation provenance with zero training updates. |
+| `02_clean_training_colab.ipynb` | Thin setup/storage/preparation cells and a separate disabled full-training switch. |
 
 The first reviewed clean calibration completed on 2026-10-18 using the clean
 GitHub commit `fc17d41`, runtime 2026.07, Python 3.12.13 and a T4 GPU. Its 30
@@ -292,11 +293,20 @@ synced to GitHub before that checkout can run them. The reviewed files were
 committed and pushed before calibration. Notebook commands download/prepare only train and
 validation using the new `--splits train validation` option. Existing all-split
 commands keep their defaults and existing clean-v1 outputs are not rewritten.
-Prepared inputs are cached byte-for-byte in the selected storage root; use Drive
-for formal runs to preserve hashes across sessions. Raw train/validation files
-are reverified by source hash. Calibration defaults to temporary storage and has
-a report-download cell. Drive mounting failed during the first session with a
-credential propagation error; resolve durable storage before formal training.
+Prepared inputs are cached byte-for-byte in the designated Drive project folder.
+Raw train/validation files are reverified by source hash. Initial authorization
+attempts failed; a successful mount was later observed. The cleaned notebook has
+one mount-if-needed cell and removes the old retry, calibration rerun and report
+export cells. Preparation preserves the existing calibration report, restores
+cached inputs, checks every eligible encoding and verifies the saved shared
+initialization on CPU. It performs no forward/backward or optimizer update.
+
+`requirements/colab.constraints.txt` pins the main observed dependencies while
+retaining Colab's GPU PyTorch installation. Preparation saves source/config
+hashes, input identities, the initialization hash, actual package versions and
+`pip-freeze.txt` under `preparation/training-v1/seed-586/`. This is a preparation
+record, not evidence of training-checkpoint recovery or full-epoch validation.
+All persistent writes are confined to `MyDrive/cmpe586-turkish-punctuation`.
 
 ```bash
 # CUDA required. Default mode is calibration, not a full experiment.

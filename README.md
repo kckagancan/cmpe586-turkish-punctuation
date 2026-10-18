@@ -240,17 +240,26 @@ python scripts/train.py --mode train --download-model
 python scripts/train.py --mode train --download-model --resume
 ```
 
-Colab notebook'u calibration için varsayılan olarak geçici disk kullanır
-(`USE_DRIVE=False`); rapor arşivini oturum kapanmadan indir. Formal training için
-`USE_DRIVE=True` ile initialization, prepared input cache ve checkpoint'leri
-Drive'da sakla. İlk calibration sırasında Drive mount yetki aktarımı hatası verdi;
-tam eğitimden önce kalıcı depolama bağlantısı çözülmeli. İncelenmiş training kodu
-GitHub'a aktarıldı; calibration `fc17d41` commit'inin temiz checkout'unda çalıştı.
+Colab notebook'u artık yalnızca setup, tek Drive bağlantısı, kalıcı hazırlık,
+hazırlık durumu ve ayrı kapalı training hücresini içerir. Drive zaten bağlıysa
+yeniden `drive.mount()` çağırmaz. İlk calibration sırasındaki bağlantı sorunu
+sonrasında başarılı mount gözlendi. Dosya işlemleri yalnızca
+`MyDrive/cmpe586-turkish-punctuation` altında yapılır.
+
+`scripts/prepare_training.py`, geçici oturumdaki initialization, input cache ve
+calibration raporunu bu klasöre hash kontrolüyle kopyalar; farklı mevcut
+klasörleri ezmez. Yeni oturumda kalıcı cache'i geri yükler ve train/validation ile
+başlangıç ağırlıklarını yeniden doğrular. **Hazırlık sıfır training update'i yapar**;
+bir optimizer veya training checkpoint'i oluşturmaz. `readiness.json` ve gerçek
+paket sürümleri kaydedilir. Calibration `fc17d41` commit'inde çalışmıştır; önceki
+ölçümün kaynak snapshot'ı korunur. Yeni notebook calibration'ı tekrar başlatmaz.
 Calibration ve tam training ayrı çıktı klasörleri kullanır. Calibration modelinin
 güncellenmiş ağırlıkları saklanmaz; formal training ortak initialization'dan başlar.
 Resume, aynı kod/config/girdi/paket/GPU kimliğini ve checkpoint hash'lerini ister.
 Kesintiden sonra son sağlam checkpoint'ten sonraki update'ler tekrar yürütülür.
 Notebook'ta tam training ayrı bir hücrede varsayılan olarak kapalıdır.
+Kalıcı hazırlık, training update'i çalıştırılmadan tamamlandı:
+[hazırlık durumu](docs/preparation-status.md).
 
 ## Colab
 
@@ -268,9 +277,11 @@ Colab'ın hazır GPU PyTorch kurulumunu kullan; yerel CPU kurulum komutunu Colab
 başlatmak gerekebilir. İlk calibration, runtime **2026.07**, Python **3.12.13**,
 PyTorch **2.11.0+cu128** ve **T4** ile çalıştı. Proje Python 3.11/3.12 destekler;
 runtime'ın gerçek sürümünü kontrol et.
-Training notebook'u train/validation indirme-hazırlama, geçici calibration veya
-Drive'da kalıcı initialization/input cache/checkpoint ve isteğe bağlı tam training
-akışını içerir. Test split'ini indirmez veya hazırlamaz. Kullanım ve kod haritası:
+Notebook kurulumu `requirements/colab.constraints.txt` ile gözlenen ana paket
+sürümlerini kullanır; bu tam bir environment lock değildir ve Colab'ın GPU
+PyTorch kurulumunu değiştirmez. Hazırlık raporu ayrıca tam `pip freeze` çıktısını
+saklar. Notebook test split'ini indirmez/hazırlamaz ve training anahtarı varsayılan
+olarak kapalıdır. Kullanım ve kod haritası:
 [training protocol](docs/training-protocol.md#9-implementation-and-first-colab-run).
 
 ## Klasörler

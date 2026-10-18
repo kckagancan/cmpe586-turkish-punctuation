@@ -105,6 +105,16 @@ These files are ignored by Git. The archive contains metadata/logs/source, no
 dataset or model weights. The temporary runtime's shared initialization and
 prepared-input cache are not part of that archive and will not survive runtime
 deletion. Create or copy and verify the initialization and input cache in durable
-storage before formal training. The notebook now defaults to temporary calibration
-storage, offers report export, and blocks its full-training cell until Drive
-storage is explicitly enabled. `RUN_FULL_TRAINING` remains `False`.
+storage before formal training.
+
+### Later storage preparation
+
+After the user completed the authorization flow, `Mounted at /content/drive`
+was observed. This does not establish which subset of requested permissions is
+the minimum required by Colab. The original calibration measurements and source
+snapshot above remain unchanged.
+
+The cleaned notebook now uses one mount-if-needed cell and a separate preparation
+command for persistent assets. Old permission retry, calibration rerun and export
+cells were removed. It does not run a new calibration; `RUN_FULL_TRAINING`
+remains `False`. Preparation verifies assets without any optimizer update.
