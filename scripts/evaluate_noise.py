@@ -1,4 +1,4 @@
-"""Evaluate saved validation noise variants against a verified clean reference."""
+"""Evaluate published or fine-tuned weights on fixed paired validation variants."""
 
 import argparse
 import fcntl
@@ -18,6 +18,7 @@ from datasets import Dataset, disable_progress_bars, load_from_disk
 from transformers import AutoTokenizer, PreTrainedTokenizerFast
 
 from turkish_punctuation.data import read_split
+from turkish_punctuation.evaluation_model import load_exported_model, training_reference
 from turkish_punctuation.inference import load_published_model
 from turkish_punctuation.metrics import PUNCTUATION_LABELS
 from turkish_punctuation.preprocessing import encode_records, partition_records
@@ -27,6 +28,8 @@ from turkish_punctuation.tokenization import LABEL_TO_ID
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PATHS = (
     "scripts/evaluate_noise.py",
+    "src/turkish_punctuation/evaluation_model.py",
+    "src/turkish_punctuation/training_io.py",
     "src/turkish_punctuation/robustness.py",
     "src/turkish_punctuation/inference.py",
     "src/turkish_punctuation/metrics.py",
@@ -101,23 +104,50 @@ def main() -> None:
     prepared = ROOT / config["prepared_directory"]
     preparation_path = prepared / "manifest.json"
     preparation = json.loads(preparation_path.read_text())
-    clean_directory = ROOT / config["clean_reference_directory"]
-    clean_report_path = clean_directory / "metrics.json"
-    clean_report = json.loads(clean_report_path.read_text())
-    baseline_path = clean_directory / "predictions.jsonl"
     tokenizer_config = json.loads(executed_sources["configs/tokenizer.json"])
     packages = {
         name: version(name)
         for name in ("torch", "transformers", "datasets", "scikit-learn", "numpy")
     }
-    if packages != clean_report["packages"]:
-        raise ValueError(
-            "Runtime packages differ from clean reference; establish a matching clean run."
-        )
-    for key in ("batch_size", "device", "cpu_threads", "seed"):
-        if config[key] != clean_report["run"][key]:
-            raise ValueError(f"Inference setting differs from clean reference: {key}")
-    if clean_report["run"]["split"] != "validation" or preparation["split"] != "validation":
+    trained = None
+    comparison = None
+    if "trained_model" in config:
+        trained = training_reference(ROOT, config["trained_model"])
+        clean_report_path = trained["report_path"]
+        clean_report = trained["report"]
+        baseline_path = trained["prediction_path"]
+        reference_tokenizer = trained["tokenizer_config"]
+        validation_source_sha256 = trained["validation_source_sha256"]
+        model_provenance = trained["metadata"]
+        comparison_path = ROOT / config["published_comparison_directory"] / "summary.json"
+        comparison = json.loads(comparison_path.read_text())
+        if (
+            packages != comparison["identity"]["packages"]
+            or sha256(preparation_path) != comparison["identity"]["noise_manifest_sha256"]
+            or names != comparison["run"]["conditions"]
+        ):
+            raise ValueError("Published comparison has different runtime or noise preparation.")
+        for key in ("batch_size", "device", "cpu_threads", "seed", "batch_order"):
+            if config[key] != comparison["run"][key]:
+                raise ValueError(f"Inference setting differs from published comparison: {key}")
+    else:
+        clean_directory = ROOT / config["clean_reference_directory"]
+        clean_report_path = clean_directory / "metrics.json"
+        clean_report = json.loads(clean_report_path.read_text())
+        baseline_path = clean_directory / "predictions.jsonl"
+        reference_tokenizer = clean_report["model"]
+        validation_source_sha256 = clean_report["validation_source_sha256"]
+        model_provenance = tokenizer_config
+        if packages != clean_report["packages"]:
+            raise ValueError("Runtime packages differ from clean reference.")
+        for key in ("batch_size", "device", "cpu_threads", "seed"):
+            if config[key] != clean_report["run"][key]:
+                raise ValueError(f"Inference setting differs from clean reference: {key}")
+        if clean_report["run"]["split"] != "validation":
+            raise ValueError("Clean reference must belong to validation.")
+        if preparation["clean_manifest_sha256"] != clean_report["prepared_manifest_sha256"]:
+            raise ValueError("Noise variants and clean scores have different clean preparation.")
+    if preparation["split"] != "validation":
         raise ValueError("All comparison inputs must belong to validation.")
     if tokenizer_config["label_to_id"] != LABEL_TO_ID:
         raise ValueError("Tokenizer label mapping differs from the implemented mapping.")
@@ -131,14 +161,12 @@ def main() -> None:
     ):
         if (
             not tokenizer_config[key]
-            == clean_report["model"][key]
+            == reference_tokenizer[key]
             == preparation["tokenizer_config"][key]
         ):
             raise ValueError(f"Clean/noisy/current model-tokenizer identities differ: {key}")
     if sha256(baseline_path) != clean_report["predictions_sha256"]:
         raise ValueError("Saved clean predictions differ from their recorded hash.")
-    if preparation["clean_manifest_sha256"] != clean_report["prepared_manifest_sha256"]:
-        raise ValueError("Noise variants and clean scores derive from different clean preparation.")
     source = json.loads(executed_sources["docs/data-manifest.json"])
     item = next(item for item in source["files"] if item["split"] == "validation")
     raw_path = ROOT / source["local_directory"] / item["filename"]
@@ -146,7 +174,7 @@ def main() -> None:
         sha256(raw_path) != item["sha256"]
         or raw_path.stat().st_size != item["bytes"]
         or item != preparation["raw_source"]
-        or item["sha256"] != clean_report["validation_source_sha256"]
+        or item["sha256"] != validation_source_sha256
     ):
         raise ValueError("Validation source provenance differs between comparisons.")
     eligible, _ = partition_records(read_split(raw_path))
@@ -266,6 +294,8 @@ def main() -> None:
             dataset.select(order),
             {row_id: records[row_id] for row_id in ordered_ids},
         )
+    if comparison is not None and batching != comparison["identity"]["batching"]:
+        raise ValueError("Published comparison uses different row order or batch membership.")
     identity = {
         "config_sha256": hashlib.sha256(config_bytes).hexdigest(),
         "source_sha256": {
@@ -278,6 +308,9 @@ def main() -> None:
         "batching": batching,
         "packages": packages,
     }
+    if trained is not None:
+        identity["trained_model"] = model_provenance
+        identity["published_comparison_summary_sha256"] = sha256(comparison_path)
     if not destination.exists():
         destination.parent.mkdir(parents=True, exist_ok=True)
         with TemporaryDirectory(prefix=".noise-evaluation-", dir=destination.parent) as temporary:
@@ -293,7 +326,7 @@ def main() -> None:
                 {
                     "identity": identity,
                     "run": config,
-                    "model": tokenizer_config,
+                    "model": model_provenance,
                     "original_clean_reference_metrics": clean_metrics,
                     "created_at_utc": datetime.now(timezone.utc).isoformat(),
                     "python": platform.python_version(),
@@ -320,7 +353,11 @@ def main() -> None:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError as error:
             raise RuntimeError("Another evaluator is already using this run directory.") from error
-        model = load_published_model(tokenizer_config, root=ROOT)
+        model = (
+            load_exported_model(trained, tokenizer, max_length=tokenizer_config["max_input_length"])
+            if trained is not None
+            else load_published_model(tokenizer_config, root=ROOT)
+        )
         reports = {}
         for name in ["clean-anchor", *names]:
             output = destination / "conditions" / name
@@ -406,14 +443,21 @@ def main() -> None:
                 )
         summary = {
             "run": config,
-            "model": tokenizer_config,
+            "model": model_provenance,
             "identity": identity,
             "clean_reference_metrics": clean_metrics,
             "original_clean_reference_metrics": clean_report["metrics"],
             "clean_anchor": reports["clean-anchor"],
             "conditions": {name: reports[name] for name in names},
             "completed_at_utc": datetime.now(timezone.utc).isoformat(),
-            "scope": "Published checkpoint on fixed clean-v1 validation; one corruption seed in the pilot; not independent final-test evidence or a training-augmentation comparison.",
+            "scope": (
+                "Selected fine-tuned checkpoint on fixed clean-v1 validation; one training seed "
+                "and one corruption seed. Clean scores are recomputed in the matched published "
+                "pilot runtime. Not independent final-test evidence or an augmentation comparison."
+                if trained is not None else
+                "Published checkpoint on fixed clean-v1 validation; one corruption seed in the "
+                "pilot; not independent final-test evidence or a training-augmentation comparison."
+            ),
             "training_performed": False,
             "test_evaluated": False,
         }

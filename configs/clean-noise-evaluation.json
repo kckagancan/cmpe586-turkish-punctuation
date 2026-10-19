@@ -1,0 +1,30 @@
+{
+  "run_name": "finetuned-clean-seed586-noise-pilot-v1",
+  "split": "validation",
+  "prepared_directory": "data/processed/noise-v1",
+  "trained_model": {
+    "run_directory": "artifacts/training/training-v1/train-clean-seed-586-v1/completed-archive/run",
+    "run_identity": "5ddecc9b8bfaf0b9442a7942caa45a64173e037b0ea7309692c12e5767603f37",
+    "arm": "clean",
+    "model_tensors_sha256": "487a8c7c38d05787f8527eca642b4d2a80bb94a814b960479b9668a87492cd96"
+  },
+  "published_comparison_directory": "artifacts/evaluations/published-bert-noise-pilot-v2",
+  "output_directory": "artifacts/evaluations/finetuned-clean-seed586-noise-pilot-v1",
+  "batch_order": "clean_length_ascending",
+  "recompute_clean_anchor": true,
+  "conditions": [
+    "case_loss-medium-seed586",
+    "diacritic_loss-medium-seed586",
+    "typo_swap-medium-seed586",
+    "combined-medium-seed586"
+  ],
+  "batch_size": 16,
+  "device": "cpu",
+  "cpu_threads": 4,
+  "seed": 586,
+  "progress_every_records": 1000,
+  "error_examples_per_category_and_class": 2,
+  "primary_metric": "punctuation_macro.f1",
+  "punctuation_labels": ["PERIOD", "COMMA", "QUESTION_MARK"],
+  "zero_division": 0
+}
