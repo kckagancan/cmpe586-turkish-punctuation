@@ -318,3 +318,24 @@ Checked on 2026-10-17:
   about 0.16 GB free (Google One: 98% used). The user's reported 12–13 GB free and
   an earlier mount estimate disagree with this. Do not start another large run
   until capacity is confirmed; the local selected-model archive is verified.
+
+### Latest storage decision — 2026-10-19
+
+- The user subsequently reported about 9.6 GB free after manually clearing Trash.
+  This latest capacity report has not been independently rechecked. Existing
+  clean-run models/checkpoints should stay in place for now; no cleanup is
+  requested in this step.
+- After every completed training run, transfer required models/results/provenance
+  to ignored local storage, verify hashes and model loading, then clean up the
+  corresponding unnecessary Drive copies. Preserve shared initialization/input
+  assets needed by subsequent arms. Retain resumable state locally when needed;
+  do not keep obsolete optimizer states just because they exist. Full checklist:
+  [training-protocol.md](training-protocol.md#completed-run-storage-policy-agreed-2026-10-19).
+- The existing 449 MB clean-model ZIP is not yet a complete run archive. Future
+  cleanup must use project/run identity, never blanket Trash deletion. Automated
+  permanent cleanup has been discussed but **has not been implemented or run**.
+  Address active-run checkpoint Trash accumulation before the next training.
+- Do not promise 13.5 GB free after every cleanup: measure actual usage, including
+  retained shared assets and other account storage. A hypothetical 25-epoch run
+  also needs bounded model retention during training; archiving only at the end
+  would not prevent filling Drive. Current training remains three epochs.

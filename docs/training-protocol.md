@@ -262,13 +262,43 @@ optimizer states require roughly 4 GB per completed arm with this retention,
 plus approximately 0.44 GB for the shared initialization per seed.
 Mid-epoch resumable checkpoints are not extra model-selection candidates.
 
-For limited Drive capacity, archive completed runs locally before removing their
-Drive copies. Verify archive hashes and included files first; preserve all epoch
-exports/predictions/provenance for auditable selection, and include full optimizer
-states when training continuation must remain possible. A selected-model-only
-backup does not preserve the other epoch weights or resumable state. Keep active
-run checkpoints durable and leave room for temporary checkpoint publication and
-archives. See [the first run's storage audit](backup-verification.md).
+### Completed-run storage policy (agreed 2026-10-19)
+
+Use Drive for the active run and local storage as the archive for completed runs.
+After **each completed training run**:
+
+1. Copy the necessary artifacts into that run's ignored local artifact directory:
+   selected/best and final models with tokenizer/configuration, all candidate
+   exports for the current three-epoch protocol, validation predictions/metrics,
+   run/summary/event metadata, source/config snapshots and environment records.
+   Preserve the shared initialization by seed for matched training arms. Include
+   the latest complete optimizer/scheduler/RNG/sampler checkpoint when retaining
+   resumable training state is required; obsolete intermediate states need not be
+   archived once completion and the retained artifacts have been verified.
+2. Verify transferred file hashes and archive contents against the run manifests;
+   check that the selected model reloads locally. Do not count an unconfirmed
+   browser download or a temporary Colab copy as a local backup. Build transfer
+   archives on the Colab VM rather than consuming extra Drive quota.
+3. Remove the corresponding completed-run Drive copies only after the necessary
+   local backup passes verification. Cleanup must target identified project/run
+   files; never empty the account-wide Trash. Moving files to Drive Trash alone
+   does not reclaim their storage. Retain shared input/initialization assets
+   needed by upcoming arms, and verify actual free space before another run.
+
+The existing clean-run files stay in place for now at the user's request. Its
+449 MB recovery ZIP is selected-model-only and does not yet satisfy the full
+archive checklist. This is an agreed workflow, **not an implemented automatic
+Drive cleanup hook**. Safe checkpoint cleanup must be addressed before the next
+training because discarded active-run checkpoints can also accumulate in Trash.
+
+For a future longer run (for example, 25 epochs), end-of-run archiving alone is
+insufficient: 25 FP32 epoch exports would use about 11 GB before resumable state,
+shared assets and temporary writes. Plan bounded retention during training and/or
+transfer intermediate exports before filling Drive, preserving the best model
+even if it comes from an early epoch. Such a change needs its own recorded
+implementation/protocol update; the current three-epoch settings are unchanged.
+Post-cleanup free space is measured, not guaranteed to be a fixed 13.5 GB.
+See [the first run's storage audit](backup-verification.md).
 
 Use a new local directory under `artifacts/training/training-v1/` per seed/arm;
 persist Colab checkpoints to configured durable storage. Resume only the same
