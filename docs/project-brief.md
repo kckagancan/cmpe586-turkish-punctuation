@@ -339,3 +339,16 @@ Checked on 2026-10-17:
   retained shared assets and other account storage. A hypothetical 25-epoch run
   also needs bounded model retention during training; archiving only at the end
   would not prevent filling Drive. Current training remains three epochs.
+- The user has now asked to archive the completed clean run rather than leaving
+  it on Drive. Clarified that completed-run optimizer checkpoints are optional:
+  models/tokenizers/configuration and results suffice for inference/evaluation.
+  Prepared `clean-seed586-models-5ddecc9b8bfa.zip` with all three epoch exports,
+  shared initialization and results/provenance; both `state.pt` files are excluded.
+  Package size 1,772,093,748 bytes; SHA-256
+  `e9483c84e3e43bd57a1c8cf88f8a4bbf813b2159759cd8e8a3ba9ceb741023a4`.
+  Created with `scripts/archive_training.py`, which validates sources and can
+  verify/extract a transferred package without deleting anything. A temporary
+  project-scoped Drive copy enables the browser download route. The large-file
+  transfer is pending a normal-browser download by the user; the selected-model
+  backup from earlier remains verified locally. No cleanup has been performed.
+  See [backup-verification.md](backup-verification.md) for exact scope/status.

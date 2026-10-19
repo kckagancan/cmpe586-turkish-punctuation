@@ -151,3 +151,37 @@ integrity. A local model copy cannot confirm every Drive upload has completed.
 Actual optimizer updates after recovering an interrupted run have not been
 performed. The verification logs and scripts are stored with ignored artifacts;
 model weights are not committed to Git.
+
+## Completed-run model archive — prepared 2026-10-19
+
+The user requested moving the completed clean run's necessary artifacts locally.
+Optimizer states are not needed for the planned inference/evaluation; both final
+`state.pt` files are deliberately excluded from the archival payload. Removing
+those states later would give up exact optimizer/RNG continuation, without
+removing the trained model or its evaluation results.
+
+`scripts/archive_training.py` created a package after verifying source manifests:
+
+- Name: `clean-seed586-models-5ddecc9b8bfa.zip`.
+- Size: **1,772,093,748 bytes** (approximately 1.77 decimal GB / 1.65 GiB).
+- SHA-256: `e9483c84e3e43bd57a1c8cf88f8a4bbf813b2159759cd8e8a3ba9ceb741023a4`.
+- Contents: 49 source files plus `archive-manifest.json`.
+- `run/models/epoch-{01,02,03}/`: all three model exports, each with its own
+  configuration/tokenizer/manifest.
+- `initialization/`: the exact shared initialization, configuration and tokenizer.
+- `run/validation/`, `run/source_snapshot/`, run/summary/progress metadata and events.
+- No optimizer checkpoints and no raw dataset or held-out test access.
+
+The package was built on the Colab VM. Because the in-app Colab download route
+did not previously save a file, a temporary verified copy was made under the
+project's Drive `archives/` folder to use Drive's browser download route. A small
+`summary.json` download succeeded and matched the original file byte-for-byte.
+The large archive download has not yet produced a confirmed local file; the
+user was asked to download it through a normal browser. The existing selected
+epoch-03 local backup remains verified. Do not treat this new full-model package
+as locally preserved until its transfer and extracted manifests pass checks.
+
+The visible Drive storage summary now shows 5.41 GB of 15 GB used, consistent with
+the user's report of approximately 9.6 GB free before the temporary archive copy.
+This supersedes the earlier low-space observation for that point in time;
+the temporary archive itself consumes additional Drive space until cleaned up.

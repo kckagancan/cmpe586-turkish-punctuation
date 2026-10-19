@@ -272,9 +272,11 @@ After **each completed training run**:
    exports for the current three-epoch protocol, validation predictions/metrics,
    run/summary/event metadata, source/config snapshots and environment records.
    Preserve the shared initialization by seed for matched training arms. Include
-   the latest complete optimizer/scheduler/RNG/sampler checkpoint when retaining
-   resumable training state is required; obsolete intermediate states need not be
-   archived once completion and the retained artifacts have been verified.
+   the latest complete optimizer/scheduler/RNG/sampler checkpoint only when
+   explicitly retaining exact training continuation is required. For a completed
+   run whose purpose is inference/evaluation, optimizer states are disposable
+   after models/results have been verified and archived; they are not needed to
+   load the trained model. This applies to the completed clean baseline.
 2. Verify transferred file hashes and archive contents against the run manifests;
    check that the selected model reloads locally. Do not count an unconfirmed
    browser download or a temporary Colab copy as a local backup. Build transfer
@@ -285,9 +287,12 @@ After **each completed training run**:
    does not reclaim their storage. Retain shared input/initialization assets
    needed by upcoming arms, and verify actual free space before another run.
 
-The existing clean-run files stay in place for now at the user's request. Its
-449 MB recovery ZIP is selected-model-only and does not yet satisfy the full
-archive checklist. This is an agreed workflow, **not an implemented automatic
+The user has now requested archiving the completed clean run. Its initial 449 MB
+recovery ZIP is selected-model-only; the additional archive prepared by
+`scripts/archive_training.py` includes all three epoch exports, shared
+initialization and run results/provenance, with optimizer states deliberately
+excluded. Source files remain intact until local transfer verification and
+scoped cleanup are completed. This is an agreed workflow, **not an implemented automatic
 Drive cleanup hook**. Safe checkpoint cleanup must be addressed before the next
 training because discarded active-run checkpoints can also accumulate in Trash.
 
@@ -299,6 +304,15 @@ even if it comes from an early epoch. Such a change needs its own recorded
 implementation/protocol update; the current three-epoch settings are unchanged.
 Post-cleanup free space is measured, not guaranteed to be a fixed 13.5 GB.
 See [the first run's storage audit](backup-verification.md).
+
+`scripts/archive_training.py` creates the archive only after verifying completed
+run identity/counters, epoch selection, model exports, validation outputs and the
+shared initialization. Its `--verify` mode checks a source-provided archive
+SHA-256, every member's hash/size and safe paths; `--extract-to` publishes verified
+contents into a new local directory and revalidates run manifests. It performs
+no source or Drive deletion. Keep standard `model.safetensors` filenames and
+distinguish them by their epoch/initialization directories, retaining each
+model's configuration and tokenizer alongside its weights.
 
 Use a new local directory under `artifacts/training/training-v1/` per seed/arm;
 persist Colab checkpoints to configured durable storage. Resume only the same
