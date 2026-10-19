@@ -212,13 +212,30 @@ Models/results plus those shared data/code assets are the preservation scope;
 the archive is not an exact optimizer-resume backup.
 
 The user prefers one manual ZIP download after each successful training. Prepare,
-download, verify locally, then clean only identified run files. Proposed cleanup
-for this run: both optimizer checkpoints, epoch-01/02 Drive model exports and the
-temporary transfer ZIP. Keep the selected epoch-03 model ready for the upcoming
-validation, alongside shared initialization/input assets and small reports.
-**No Drive cleanup has yet been performed.**
+download, verify locally, then clean only identified run files.
 
-The visible Drive storage summary now shows 5.41 GB of 15 GB used, consistent with
-the user's report of approximately 9.6 GB free before the temporary archive copy.
-This supersedes the earlier low-space observation for that point in time;
-the temporary archive itself consumes additional Drive space until cleaned up.
+## Scoped Drive cleanup completed — 2026-10-19
+
+After local verification and the user's action-time confirmation, these four
+identified project items were moved to Trash and permanently deleted:
+
+- The run's `checkpoints/`, containing `checkpoint-000027` and `checkpoint-000028`.
+- The run's `models/epoch-01/` and `models/epoch-02/` exports.
+- `archives/clean-seed586-models-5ddecc9b8bfa.zip`, the temporary transfer copy.
+
+Drive confirmed **4 items deleted forever**; none of those four remained in the
+Trash listing. The original local ZIP and verified extracted models/results
+remain. Optimizer/RNG continuation states were deliberately not archived: this
+completed run can be evaluated, but cannot resume from those exact states.
+
+The selected epoch-03 model was verified in its Drive model folder, and the run's
+validation, source snapshot and four metadata files remain visible. Shared
+`initializations/`, `inputs/` and `preparation/` folders also remain. Account-wide
+Trash was not emptied; other existing Trash items were left untouched.
+
+The post-cleanup Drive summary displays **5 GB of 15 GB used**, approximately
+10 GB free. This is the observed UI reading, not a guarantee about subsequent
+quota updates or other account usage. The earlier 5.41 GB and 7.06 GB readings
+describe previous stages. Local `drive-cleanup-plan.json`,
+`drive-cleanup-result.json` and screenshots record the exact IDs and outcome.
+No training or noisy evaluation was started during cleanup.

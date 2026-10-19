@@ -78,8 +78,9 @@ Full-epoch validation ve checkpoint yazımı çalıştı; checkpoint'ten resume 
 çalıştırılarak doğrulanmadı.
 Model export'ları Hugging Face formatında yüklenebilir. Clean training 3 epoch /
 10.968 update ile tamamlandı; metadata kopyaları
-`training/training-v1/train-clean-seed-586-v1/` altında tutulur, ağırlıklar Drive'daki
-proje klasöründedir. Epoch skorları ve süre [training raporunda](../docs/clean-training-status.md),
+`training/training-v1/train-clean-seed-586-v1/` altında tutulur. Üç epoch ağırlıkları
+yerelde arşivlidir; seçili epoch-03 ayrıca Drive'da kalır. Epoch skorları ve süre
+[training raporunda](../docs/clean-training-status.md),
 önceki kısa denemenin özeti [calibration raporunda](../docs/training-calibration.md).
 
 Kullanıcının normal tarayıcıyla indirdiği `clean-seed586-5ddecc9b8bfa.zip` ayrıca
@@ -98,3 +99,10 @@ doğrulandı. Optimizer `state.pt` dosyaları ve ham veri bu ZIP'e dahil değild
 Ham veri zaten ayrı yerel data klasöründedir. Her başarılı training sonrası tek
 ZIP hazırlanır, kullanıcı manuel indirir, yerel doğrulamadan sonra belirlenen
 Drive kopyaları temizlenir. Ağırlıklar ve arşiv Git'e eklenmez.
+
+Bu koşunun Drive temizliği tamamlandı: iki optimizer checkpoint'i, epoch-01/02
+kopyaları ve geçici transfer ZIP'i onay sonrası kalıcı silindi. Epoch-03, raporlar
+ve ortak girdiler/initialization korundu. Drive yaklaşık 10 GB boş gösteriyor.
+`drive-cleanup-plan.json`, `drive-cleanup-result.json` ve `drive-cleanup-*.jpg`
+dosyaları kimlikleri ve sonucu kaydeder. Bunlar da yerel, Git dışında kalan
+artifact dosyalarıdır; hesabın genel çöp kutusu boşaltılmadı.

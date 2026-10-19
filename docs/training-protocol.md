@@ -298,10 +298,14 @@ recovery ZIP is selected-model-only; the additional archive prepared by
 `scripts/archive_training.py` includes all three epoch exports, shared
 initialization and run results/provenance, with optimizer states deliberately
 excluded. Its local transfer, all 49 source-file hashes, extracted run manifests
-and reloads of all four models have now passed verification. Source Drive files
-remain intact pending scoped cleanup. There is **no automatic Drive cleanup
-hook**. Safe checkpoint cleanup must be addressed before the next
-training because discarded active-run checkpoints can also accumulate in Trash.
+and reloads of all four models have now passed verification. Scoped Drive cleanup
+is complete: both optimizer checkpoints, epoch-01/02 exports and the temporary
+transfer ZIP were permanently deleted after user confirmation. The selected
+epoch-03 export, shared input/initialization assets and small run reports remain.
+The Drive UI subsequently showed 5 GB of 15 GB used (about 10 GB free).
+There is **no automatic Drive cleanup hook**. Safe checkpoint cleanup must be
+addressed before the next training because discarded active-run checkpoints can
+also accumulate in Trash.
 
 For a future longer run (for example, 25 epochs), end-of-run archiving alone is
 insufficient: 25 FP32 epoch exports would use about 11 GB before resumable state,

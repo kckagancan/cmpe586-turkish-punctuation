@@ -323,15 +323,16 @@ Checked on 2026-10-17:
 
 - The user subsequently reported about 9.6 GB free after manually clearing Trash.
   Drive subsequently displayed 5.41 GB of 15 GB used, consistent with that report
-  before adding the temporary transfer ZIP. Preserve source files until local
-  archive verification and scoped cleanup are completed.
+  before adding the temporary transfer ZIP. Local archive verification and the
+  identified four-item cleanup have now completed; current usage is recorded below.
 - After every completed training run, transfer required models/results/provenance
   to ignored local storage, verify hashes and model loading, then clean up the
   corresponding unnecessary Drive copies. Preserve shared initialization/input
   assets needed by subsequent arms. Retain resumable state locally when needed;
   do not keep obsolete optimizer states just because they exist. Full checklist:
   [training-protocol.md](training-protocol.md#completed-run-storage-policy-agreed-2026-10-19).
-- The existing 449 MB clean-model ZIP is not yet a complete run archive. Future
+- The initial 449 MB clean-model ZIP is selected-model-only; the additional full
+  model/results archive described below is verified locally. Future
   cleanup must use project/run identity, never blanket Trash deletion. Automated
   permanent cleanup has been discussed but **has not been implemented or run**.
   Address active-run checkpoint Trash accumulation before the next training.
@@ -357,7 +358,12 @@ Checked on 2026-10-17:
   The user prefers a manual ZIP download after every successful training rather
   than an unattended download integration. The archive covers model/results;
   raw data and the full Git repository remain separately preserved locally.
-  Proposed Drive cleanup removes optimizer states, epoch-01/02 exports and the
-  transfer ZIP, keeping epoch-03 for the next validation and shared assets.
-  No Drive cleanup has been performed yet.
+  After action-time confirmation, the identified Drive `checkpoints/` folder
+  (states 000027/000028), epoch-01/02 exports and transfer ZIP were permanently
+  deleted. Drive confirmed four items deleted; the same four were absent from
+  Trash afterward. Epoch-03, validation/source/metadata and shared assets remain.
+  Other Trash items were left untouched. The post-cleanup Drive UI shows 5 GB of
+  15 GB used, approximately 10 GB free. Exact optimizer continuation is intentionally
+  unavailable for this completed run; all archived model/results remain intact.
+  No noisy evaluation or further training was started.
   See [backup-verification.md](backup-verification.md) for exact scope/status.

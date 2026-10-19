@@ -89,9 +89,15 @@ downloaded the ZIP through a normal browser into Downloads. The original ZIP's
 size/SHA-256, all model-file hashes, independent tensor digest and all three
 epochs' metrics recomputed from predictions passed verification. A copy and
 extracted selected model now reside under the ignored project artifact directory.
-**The selected-model local backup is confirmed.** Drive quota/cloud-upload
-completion remains separate. No model/checkpoint deletion is authorized by this
-report. Full scope and limits are in [backup verification](backup-verification.md).
+**The selected-model local backup is confirmed.** A subsequent 1.77 GB archive
+also preserves all three epoch models, shared initialization and run results.
+All 49 source files and four offline model/tokenizer reloads passed verification.
+After explicit user confirmation, the two optimizer states, epoch-01/02 Drive
+exports and temporary transfer ZIP were permanently deleted. The selected
+epoch-03 model, run reports and shared inputs/initialization remain on Drive;
+the UI now shows 5 GB of 15 GB used (about 10 GB free). Exact optimizer-state
+continuation is deliberately no longer preserved for this completed run.
+Full scope and limits are in [backup verification](backup-verification.md).
 
 **Next planned step after storage preservation:** evaluate the selected clean checkpoint on a matched clean
 control and the same four medium/seed-586 validation noise conditions as the
