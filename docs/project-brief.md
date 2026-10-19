@@ -280,3 +280,22 @@ Checked on 2026-10-17:
   finishes. Training is in progress, not a completed result; see
   [clean-training-status.md](clean-training-status.md). The checked-in notebook
   keeps its training switch false; the active Colab copy enables this run.
+- Clean training completion was verified on 2026-10-19: 3 epochs / 10,968 updates,
+  best epoch 3, clean validation punctuation macro-F1 0.8403653366075169 and
+  micro-F1 0.8298740077197582. The loop including validation/checkpoints took
+  72.1855 minutes, excluding initial loading. Metadata identities, source/config
+  hashes, epoch selection and supports agree. Model and validation exports were
+  checked by the runner before its summary was published; checkpoint recovery
+  remains unexercised. Metadata copies are saved locally under ignored artifacts;
+  weights remain in the Drive project folder. Next: matched clean + medium-noise
+  validation of the selected fine-tuned clean model, followed by augmentation
+  implementation/audit/training. No new noisy-model score or test result yet.
+- A post-completion Colab toast reported Drive storage quota exceeded, with
+  approximately 702 MB free in a project-scoped mount check. No personal files
+  or Trash were inspected/deleted. Preserve the selected model before resetting
+  the runtime or starting another run. A 448,623,671-byte recovery archive was
+  created and its six model files verified. In-app download did not produce a
+  confirmed local file; the user was asked to download the ready ZIP through
+  normal Chrome/Firefox. Local model backup is not yet confirmed.
+  See the storage section of `clean-training-status.md`. Resolve durable storage
+  before continuing the planned noisy validation or augmented training.

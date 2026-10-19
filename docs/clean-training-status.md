@@ -1,5 +1,94 @@
 # Clean training status
 
+## Completion verified: 2026-10-19
+
+**The three-epoch clean baseline has completed.** `summary.json` and
+`progress.json` report **10,968 optimizer updates** and **best epoch 3**.
+Completion time: **2026-10-19 04:40:52 Europe/Istanbul**.
+
+Run identity:
+`5ddecc9b8bfaf0b9442a7942caa45a64173e037b0ea7309692c12e5767603f37`.
+
+The measured loop took **72.1855 minutes**, including validation, checkpoint
+writes and model exports; initial input/model loading is excluded. Time inside
+checkpoint calls was 5.0936 minutes. The training cell's wall time also includes
+its initial loading/checks.
+
+| Epoch | Train word loss | Clean validation word loss | Punctuation macro-F1 (%) |
+| --- | ---: | ---: | ---: |
+| 1 | 0.188665 | 0.130181 | 83.2543 |
+| 2 | 0.121353 | 0.129169 | 83.4822 |
+| 3 | 0.107470 | 0.131499 | **84.0365** |
+
+Selection follows the prespecified clean punctuation macro-F1 rule. Epoch 2's
+slightly lower validation cross-entropy does not change that selection.
+
+Best-epoch punctuation macro P/R/F1 is **86.0306 / 82.4744 / 84.0365%**;
+punctuation micro P/R/F1 is **85.6606 / 80.4760 / 82.9874%**.
+
+| Label | Precision (%) | Recall (%) | F1 (%) | Support |
+| --- | ---: | ---: | ---: | ---: |
+| PERIOD | 94.6335 | 97.3512 | 95.9731 | 15,252 |
+| COMMA | 70.3312 | 57.6593 | 63.3680 | 11,894 |
+| QUESTION_MARK | 93.1271 | 92.4126 | 92.7685 | 1,173 |
+
+All epochs evaluated the same 179,164 validation words with fixed class supports.
+Against the published reference's clean validation macro-F1 83.6366%, this run's
+selected checkpoint is higher by **0.39995 percentage points**. This is one
+training seed and a descriptive validation comparison; no significance or noisy
+robustness claim follows from that difference.
+
+The selected model is `models/epoch-03` under the Drive run directory below.
+After verification, the active Colab training switch was returned to `False`;
+the enhanced completion summary remains visible. The runtime was left connected
+for model preservation.
+Original numeric JSON from the visible notebook was preserved and metadata
+copies saved under ignored
+`artifacts/training/training-v1/train-clean-seed-586-v1/`:
+`metadata-bundle.json`, `summary.json`, `run.json` and `progress.json`.
+The run identity was recomputed and matched; recorded source/config hashes match
+the local sources. Update counts, epoch ordering/selection and class supports
+also agree. Before publishing its summary, the runner checked epoch model-file
+and validation-report hashes; weights were not downloaded for a second local
+verification. Checkpoint recovery from an interruption remains unexercised.
+
+### Storage issue observed after completion
+
+At approximately 04:47 Europe/Istanbul, Colab displayed **Google Drive storage
+quota has been exceeded**. A project-scoped check reported total 16,106,127,360
+bytes, used 15,403,937,792 bytes and free 702,189,568 bytes. Active checkpoint
+states were `checkpoint-000027/state.pt` (1,321,522,291 bytes) and
+`checkpoint-000028/state.pt` (1,320,587,955 bytes). No personal files or Drive
+Trash contents were inspected or deleted. The cause of the quota pressure was
+not established. See the [official Colab storage-quota FAQ](https://research.google.com/colaboratory/faq.html#drive-full).
+
+Training completion and successful reads from the mounted Drive do not establish
+that all pending cloud uploads have completed. The runtime has not been reset or
+unmounted. Before another run, resolve storage and durable preservation.
+
+The selected epoch-03 model's six files were verified against `export.json`,
+copied to a temporary recovery folder and verified again. Together with run
+metadata, events, sources and validation outputs, an uncompressed archive was
+created at `/content/cmpe586-recovery/clean-seed586-5ddecc9b8bfa.zip`:
+
+- Size: 448,623,671 bytes.
+- Archive SHA-256: `9a45deb24d8db5e7cf6c0cf99d81ea22c6a0c8119d39e56f5786a35ee680e6d5`.
+- Selected model tensor SHA-256: `487a8c7c38d05787f8527eca642b4d2a80bb94a814b960479b9668a87492cd96`.
+
+The Colab download widget finished transferring its payload, but no saved file
+was found locally and the user confirmed nothing appeared in Downloads. Browser
+download events were not delivered through the in-app automation. A normal
+Chrome/Firefox download of the ready ZIP from Colab's Files panel was requested;
+local model backup is **not yet confirmed**. A temporary Colab copy alone is not
+a durable backup. No model/checkpoint deletion is authorized by this report.
+
+**Next planned step after storage preservation:** evaluate the selected clean checkpoint on a matched clean
+control and the same four medium/seed-586 validation noise conditions as the
+published-reference pilot. Then implement/audit the planned augmentation arm and
+train it from the identical shared initialization. No noisy evaluation of this
+fine-tuned model, augmented training or held-out test evaluation was started as
+part of this completion check.
+
 ## Launch observed: 2026-10-19
 
 The user authorized starting formal clean training after persistent preparation.
@@ -41,9 +130,9 @@ The runner saves a starting checkpoint and then checkpoints every 500 optimizer
 updates and at epoch boundaries. The step-525 log was observed after the runner's
 synchronous step-500 checkpoint returned successfully, so the initial and first
 periodic checkpoint writes have been exercised. No separate file-browser read
-or resume attempt was performed. Full-epoch validation/selection and recovery
-from an interruption remain unobserved. This launch record does not claim that
-the three-epoch run has completed.
+or resume attempt was performed at that handoff. Full-epoch validation/selection
+and recovery from an interruption were still unobserved then. The completion
+verification above supersedes this initial observation.
 
 ## Notebook handoff
 
@@ -56,6 +145,5 @@ and update counts, best epoch, clean validation macro-F1 and model location when
 `summary.json` is present. The summary is only published after the runner's final
 artifact checks pass.
 
-The user will watch the visible notebook and return when execution ends. No
-scheduled monitoring or automatic follow-up was configured. Training continues
-in Colab independently of this chat, while the runtime remains connected.
+At the initial handoff, the user watched the visible notebook and returned after
+execution ended. No scheduled monitoring or automatic follow-up was configured.

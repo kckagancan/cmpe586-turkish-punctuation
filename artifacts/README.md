@@ -74,6 +74,10 @@ veya resumable training checkpoint'i üretmez.
 
 Colab notebook'unda bir mount-if-needed hücresi kalır; eski izin denemeleri ve
 calibration tekrar hücreleri kaldırılmıştır. Drive mount başarıyla gözlendi.
-Full-epoch validation ve checkpoint/resume henüz çalıştırılarak doğrulanmadı.
-Model export'ları Hugging Face formatında yüklenebilir. Tam training sonucu yok;
-gözlenen kısa denemenin özeti [calibration raporunda](../docs/training-calibration.md).
+Full-epoch validation ve checkpoint yazımı çalıştı; checkpoint'ten resume henüz
+çalıştırılarak doğrulanmadı.
+Model export'ları Hugging Face formatında yüklenebilir. Clean training 3 epoch /
+10.968 update ile tamamlandı; metadata kopyaları
+`training/training-v1/train-clean-seed-586-v1/` altında tutulur, ağırlıklar Drive'daki
+proje klasöründedir. Epoch skorları ve süre [training raporunda](../docs/clean-training-status.md),
+önceki kısa denemenin özeti [calibration raporunda](../docs/training-calibration.md).

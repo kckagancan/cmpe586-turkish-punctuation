@@ -10,7 +10,7 @@ altındaki dayanıklılığı incelenecek.
 girdileri hazırlandı ve yayımlanmış BERT üç elle yazılmış örnekte çalıştırıldı.
 Veri lisansı ve kesin kaynak/split geçmişi henüz doğrulanmadı.
 Hazır modelin temiz validation ölçümü tamamlandı: noktalama macro-F1 **%83,64**.
-Hazır modelin dört medium koşulluk validation pilotu tamamlandı; tamamlanmış fine-tuning sonucu ve test değerlendirmesi henüz yok.
+Hazır modelin dört medium koşulluk validation pilotu tamamlandı; held-out test değerlendirmesi henüz yok.
 Temiz ölçümün yöntemi ve sınıf sonuçları: [clean validation raporu](docs/clean-validation.md).
 Gürültü kuralları, dönüşümler ve model çalıştırmadan veri hazırlama komutu hazır.
 38 validation varyantının veri/hizalama kontrolü geçti: [noise veri raporu](docs/noise-audit.md).
@@ -21,7 +21,11 @@ Kontrollü fine-tuning için başlangıç ayarları ve karşılaştırma kuralla
 [eğitim protokolü](docs/training-protocol.md). Clean training pipeline ve Colab
 notebook'u hazır. T4 üzerinde 30 update'lik GPU calibration tamamlandı;
 [ölçümler ve sınırlar](docs/training-calibration.md). İlk clean fine-tuning
-2026-10-19'da başlatıldı ve devam ediyor: [koşu durumu](docs/clean-training-status.md).
+2026-10-19'da tamamlandı: 3 epoch / 10.968 update, seçilen epoch 3,
+clean validation macro-F1 **%84,04**, training loop **72,2 dakika**.
+Sonuçlar ve kapsam: [koşu raporu](docs/clean-training-status.md).
+Koşu sonrası Drive kota uyarısı gözlendi; sonraki deneyden önce model yedeği ve
+kalıcı depolama durumu kesinleştirilmeli. Raporlar yerelde kayıtlıdır.
 
 ## Çalışma düzeni
 
@@ -261,8 +265,8 @@ Kesintiden sonra son sağlam checkpoint'ten sonraki update'ler tekrar yürütül
 Notebook'ta tam training ayrı bir hücrede varsayılan olarak kapalıdır.
 Kalıcı hazırlık, training update'i çalıştırılmadan tamamlandı:
 [hazırlık durumu](docs/preparation-status.md).
-İlk formal clean training koşusu 2026-10-19'da başlatıldı; gözlenen başlangıç
-ve koşu yolları [training durumunda](docs/clean-training-status.md) kayıtlıdır.
+İlk formal clean training koşusu 2026-10-19'da tamamlandı; epoch skorları,
+süre ve model yolları [training raporunda](docs/clean-training-status.md) kayıtlıdır.
 
 ## Colab
 

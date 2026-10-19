@@ -287,8 +287,11 @@ GitHub commit `fc17d41`, runtime 2026.07, Python 3.12.13 and a T4 GPU. Its 30
 updates established clean GPU fit and exercised the update path; they do not
 establish full-epoch validation/selection or deterministic resumption. See the
 [calibration report](training-calibration.md) for measurements and remaining work.
-Formal clean training was subsequently launched on 2026-10-19; the initial
-observation and handoff are recorded in [clean training status](clean-training-status.md).
+Formal clean training subsequently completed on 2026-10-19 with 3 epochs and
+10,968 updates; epoch-end validation/selection and model exports were exercised.
+The best clean validation macro-F1 was 0.8403653 at epoch 3. Checkpoint recovery
+remains unexercised. Results and provenance are in
+[clean training status](clean-training-status.md).
 
 The notebook clones the public repository, so the reviewed files need to be
 synced to GitHub before that checkout can run them. The reviewed files were
