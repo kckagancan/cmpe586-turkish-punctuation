@@ -307,6 +307,9 @@ hashes, input identities, the initialization hash, actual package versions and
 `pip-freeze.txt` under `preparation/training-v1/seed-586/`. This is a preparation
 record, not evidence of training-checkpoint recovery or full-epoch validation.
 All persistent writes are confined to `MyDrive/cmpe586-turkish-punctuation`.
+The training cell streams the CLI's output into the notebook so update/loss
+messages are visible during execution, and forwards a notebook interrupt to the
+child training process. The checked-in training switch remains disabled.
 
 ```bash
 # CUDA required. Default mode is calibration, not a full experiment.
