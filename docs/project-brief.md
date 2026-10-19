@@ -322,9 +322,9 @@ Checked on 2026-10-17:
 ### Latest storage decision — 2026-10-19
 
 - The user subsequently reported about 9.6 GB free after manually clearing Trash.
-  This latest capacity report has not been independently rechecked. Existing
-  clean-run models/checkpoints should stay in place for now; no cleanup is
-  requested in this step.
+  Drive subsequently displayed 5.41 GB of 15 GB used, consistent with that report
+  before adding the temporary transfer ZIP. Preserve source files until local
+  archive verification and scoped cleanup are completed.
 - After every completed training run, transfer required models/results/provenance
   to ignored local storage, verify hashes and model loading, then clean up the
   corresponding unnecessary Drive copies. Preserve shared initialization/input
@@ -349,6 +349,15 @@ Checked on 2026-10-17:
   Created with `scripts/archive_training.py`, which validates sources and can
   verify/extract a transferred package without deleting anything. A temporary
   project-scoped Drive copy enables the browser download route. The large-file
-  transfer is pending a normal-browser download by the user; the selected-model
-  backup from earlier remains verified locally. No cleanup has been performed.
+  transfer was subsequently completed through a normal browser. Download size and
+  SHA-256 matched, all 49 source files and extracted run manifests passed checks,
+  and all four models/tokenizers loaded offline with matching finite tensors and
+  project label mappings. ZIP and extracted `completed-archive/` are saved under
+  the ignored run artifact directory; the earlier selected-model backup remains.
+  The user prefers a manual ZIP download after every successful training rather
+  than an unattended download integration. The archive covers model/results;
+  raw data and the full Git repository remain separately preserved locally.
+  Proposed Drive cleanup removes optimizer states, epoch-01/02 exports and the
+  transfer ZIP, keeping epoch-03 for the next validation and shared assets.
+  No Drive cleanup has been performed yet.
   See [backup-verification.md](backup-verification.md) for exact scope/status.

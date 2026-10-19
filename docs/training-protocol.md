@@ -265,6 +265,10 @@ Mid-epoch resumable checkpoints are not extra model-selection candidates.
 ### Completed-run storage policy (agreed 2026-10-19)
 
 Use Drive for the active run and local storage as the archive for completed runs.
+The agreed workflow is intentionally manual per completed run: the assistant
+prepares one ZIP, the user downloads it through a normal browser, the assistant
+verifies and installs the local copy, then identified Drive copies are cleaned
+up. An unattended transfer/deletion integration is not required for this workflow.
 After **each completed training run**:
 
 1. Copy the necessary artifacts into that run's ignored local artifact directory:
@@ -280,7 +284,9 @@ After **each completed training run**:
 2. Verify transferred file hashes and archive contents against the run manifests;
    check that the selected model reloads locally. Do not count an unconfirmed
    browser download or a temporary Colab copy as a local backup. Build transfer
-   archives on the Colab VM rather than consuming extra Drive quota.
+   archives on the Colab VM. If Colab's download route is unreliable, a temporary
+   project-scoped Drive copy may serve the browser download; account for its
+   extra space and include it in the subsequent cleanup list.
 3. Remove the corresponding completed-run Drive copies only after the necessary
    local backup passes verification. Cleanup must target identified project/run
    files; never empty the account-wide Trash. Moving files to Drive Trash alone
@@ -291,9 +297,10 @@ The user has now requested archiving the completed clean run. Its initial 449 MB
 recovery ZIP is selected-model-only; the additional archive prepared by
 `scripts/archive_training.py` includes all three epoch exports, shared
 initialization and run results/provenance, with optimizer states deliberately
-excluded. Source files remain intact until local transfer verification and
-scoped cleanup are completed. This is an agreed workflow, **not an implemented automatic
-Drive cleanup hook**. Safe checkpoint cleanup must be addressed before the next
+excluded. Its local transfer, all 49 source-file hashes, extracted run manifests
+and reloads of all four models have now passed verification. Source Drive files
+remain intact pending scoped cleanup. There is **no automatic Drive cleanup
+hook**. Safe checkpoint cleanup must be addressed before the next
 training because discarded active-run checkpoints can also accumulate in Trash.
 
 For a future longer run (for example, 25 epochs), end-of-run archiving alone is
@@ -313,6 +320,13 @@ contents into a new local directory and revalidates run manifests. It performs
 no source or Drive deletion. Keep standard `model.safetensors` filenames and
 distinguish them by their epoch/initialization directories, retaining each
 model's configuration and tokenizer alongside its weights.
+
+This is a completed-run model/results archive, not a standalone copy of the
+entire project. Raw datasets remain separately preserved under local `data/raw/`
+and the complete code repository remains in Git/GitHub. Dataset provenance/hashes
+and the recorded training environment are included in the run metadata, but the
+raw dataset itself is not duplicated into each training archive. Keep those
+shared project assets when retiring run-specific Drive outputs.
 
 Use a new local directory under `artifacts/training/training-v1/` per seed/arm;
 persist Colab checkpoints to configured durable storage. Resume only the same

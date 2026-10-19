@@ -87,3 +87,14 @@ Kullanıcının normal tarayıcıyla indirdiği `clean-seed586-5ddecc9b8bfa.zip`
 `recovery/models/epoch-03/` içindedir. Bu yedek büyük optimizer checkpoint'lerini
 ve epoch-01/02 ağırlıklarını içermez. Denetim scriptleri, JSON ve test logları aynı
 artifact klasöründedir: [yedek denetimi](../docs/backup-verification.md).
+
+Tamamlanan clean koşunun ek model/sonuç arşivi
+`training/training-v1/train-clean-seed-586-v1/clean-seed586-models-5ddecc9b8bfa.zip`
+adıyla yerelde doğrulandı. Açılmış kopyası `completed-archive/` altındadır:
+`initialization/` ortak başlangıcı, `run/models/epoch-{01,02,03}/` üç epoch
+modelini; `run/validation/` ve metadata/source dosyaları deney kayıtlarını tutar.
+49 kaynak dosyanın hash'leri, run manifest'leri ve dört modelin offline yüklenmesi
+doğrulandı. Optimizer `state.pt` dosyaları ve ham veri bu ZIP'e dahil değildir.
+Ham veri zaten ayrı yerel data klasöründedir. Her başarılı training sonrası tek
+ZIP hazırlanır, kullanıcı manuel indirir, yerel doğrulamadan sonra belirlenen
+Drive kopyaları temizlenir. Ağırlıklar ve arşiv Git'e eklenmez.

@@ -152,7 +152,7 @@ Actual optimizer updates after recovering an interrupted run have not been
 performed. The verification logs and scripts are stored with ignored artifacts;
 model weights are not committed to Git.
 
-## Completed-run model archive — prepared 2026-10-19
+## Completed-run model archive — locally verified 2026-10-19
 
 The user requested moving the completed clean run's necessary artifacts locally.
 Optimizer states are not needed for the planned inference/evaluation; both final
@@ -176,10 +176,47 @@ The package was built on the Colab VM. Because the in-app Colab download route
 did not previously save a file, a temporary verified copy was made under the
 project's Drive `archives/` folder to use Drive's browser download route. A small
 `summary.json` download succeeded and matched the original file byte-for-byte.
-The large archive download has not yet produced a confirmed local file; the
-user was asked to download it through a normal browser. The existing selected
-epoch-03 local backup remains verified. Do not treat this new full-model package
-as locally preserved until its transfer and extracted manifests pass checks.
+The large in-app download could not be confirmed; the user downloaded the ZIP
+through a normal browser instead. The original Downloads file matched the source
+size and SHA-256. It was copied into the ignored run artifact directory and
+safely extracted under `completed-archive/`:
+
+```text
+artifacts/training/training-v1/train-clean-seed-586-v1/
+  clean-seed586-models-5ddecc9b8bfa.zip
+  completed-archive/
+    initialization/
+    run/models/epoch-{01,02,03}/
+    run/validation/
+    run/source_snapshot/
+    run/{run.json,summary.json,progress.json,events.jsonl}
+    archive-manifest.json
+  models-archive-receipt.json
+  models-archive-verification.json
+  models-archive-model-load.json
+```
+
+All 49 source-file hashes/sizes and ZIP CRC/path/entry checks passed. Extracted
+run identity, completion counters, best-epoch selection, all epoch export and
+validation hashes and shared-initialization manifests passed revalidation.
+All four models then loaded offline with no missing/unexpected/mismatched weights;
+their tensor digests matched, all tensors were finite, label mappings matched
+the project and all tokenizers loaded correctly. No optimizer update or held-out
+test access was performed. **The full intended model/results archive is now
+confirmed locally.** The earlier selected-model recovery backup also remains.
+
+The raw dataset is intentionally absent from this ZIP; it is separately present
+in local `data/raw/kurt_cayir_2023/`. Full project code is retained in Git/GitHub;
+the ZIP also includes the run's training-source snapshots and environment record.
+Models/results plus those shared data/code assets are the preservation scope;
+the archive is not an exact optimizer-resume backup.
+
+The user prefers one manual ZIP download after each successful training. Prepare,
+download, verify locally, then clean only identified run files. Proposed cleanup
+for this run: both optimizer checkpoints, epoch-01/02 Drive model exports and the
+temporary transfer ZIP. Keep the selected epoch-03 model ready for the upcoming
+validation, alongside shared initialization/input assets and small reports.
+**No Drive cleanup has yet been performed.**
 
 The visible Drive storage summary now shows 5.41 GB of 15 GB used, consistent with
 the user's report of approximately 9.6 GB free before the temporary archive copy.
