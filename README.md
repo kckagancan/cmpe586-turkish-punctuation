@@ -24,9 +24,15 @@ notebook'u hazır. T4 üzerinde 30 update'lik GPU calibration tamamlandı;
 2026-10-19'da tamamlandı: 3 epoch / 10.968 update, seçilen epoch 3,
 clean validation macro-F1 **%84,04**, training loop **72,2 dakika**.
 Sonuçlar ve kapsam: [koşu raporu](docs/clean-training-status.md).
-Koşu sonrası Drive kota uyarısı gözlendi. Seçilen modelin indirilen yedeği,
-ağırlıkları ve sonuçları yerelde doğrulandı: [yedek denetimi](docs/backup-verification.md).
-Sonraki büyük koşudan önce Drive depolama/senkron durumu çözülmeli.
+Clean modelin medium/seed-586 noise pilotu da tamamlandı: case loss **%81,23**,
+diacritic loss **%83,80**, typo swap **%83,20**, combined **%80,10** macro-F1.
+Clean control, training sonundaki 179.164 kelime tahminini aynen yeniden üretti.
+Hazır modelle eşleşen kıyas, sınıf skorları ve hata analizi:
+[clean model noise raporu](docs/clean-noise-pilot.md).
+Koşunun bütün epoch modelleri ve sonuçları yerelde arşivlenip doğrulandı;
+gereksiz Drive kopyaları temizlendi: [yedek denetimi](docs/backup-verification.md).
+Drive yaklaşık 10 GB boş gösteriyor. Sonraki aşama augmentation'ın uygulanması;
+yeni training öncesinde eski checkpoint'lerin Trash birikimi de ele alınacak.
 
 ## Çalışma düzeni
 

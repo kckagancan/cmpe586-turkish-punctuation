@@ -99,12 +99,17 @@ the UI now shows 5 GB of 15 GB used (about 10 GB free). Exact optimizer-state
 continuation is deliberately no longer preserved for this completed run.
 Full scope and limits are in [backup verification](backup-verification.md).
 
-**Next planned step after storage preservation:** evaluate the selected clean checkpoint on a matched clean
-control and the same four medium/seed-586 validation noise conditions as the
-published-reference pilot. Then implement/audit the planned augmentation arm and
-train it from the identical shared initialization. No noisy evaluation of this
-fine-tuned model, augmented training or held-out test evaluation was started as
-part of this completion check.
+**Subsequent validation pilot completed:** the selected model's fresh clean
+control reproduced all 179,164 original predictions and metrics. Macro-F1 under
+medium/seed-586 case loss, diacritic loss, typo swap and combined noise is
+81.2344%, 83.7975%, 83.2000% and 80.0965%, respectively. Matched published-model
+comparisons and paired error analysis are in [the noise report](clean-noise-pilot.md).
+No training updates or held-out test evaluation occurred during that evaluation.
+
+**Next planned step:** implement/audit the augmentation arm, address active-run
+checkpoint Trash accumulation, then train from the identical shared initialization
+with the prespecified budget and clean selection rule. Augmented training and
+held-out test evaluation remain unperformed.
 
 ## Launch observed: 2026-10-19
 

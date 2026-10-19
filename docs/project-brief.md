@@ -367,3 +367,33 @@ Checked on 2026-10-17:
   unavailable for this completed run; all archived model/results remain intact.
   No noisy evaluation or further training was started.
   See [backup-verification.md](backup-verification.md) for exact scope/status.
+
+### Clean-model robustness pilot completed — 2026-10-19
+
+- Evaluated the selected clean epoch-03 export on a fresh clean control and the
+  exact four medium/seed-586 validation inputs used by the published pilot.
+  Same CPU packages, inference/metric code, row order and batch membership;
+  14,453 records / 179,164 word targets in every condition. No training updates,
+  Drive writes or held-out test evaluation occurred.
+- Fresh clean inference reproduced all original training-validation predictions
+  and metrics exactly: macro-F1 84.0365%. Case/diacritic/swap/combined macro-F1 is
+  81.2344 / 83.7975 / 83.2000 / 80.0965%; drops are 2.8021 / 0.2390 / 0.8366 /
+  3.9400 percentage points. Successful inference loops including I/O took 27.65
+  minutes, excluding preflight and analysis.
+- Relative to the published reference, clean F1 is +0.4000 pp, case is +0.0088 pp,
+  diacritic is +0.3628 pp, swap is +0.2955 pp and combined is -0.2474 pp. Better
+  clean F1 does not establish better robustness. These are descriptive validation
+  results with one training seed and one corruption seed, not significance or
+  augmentation evidence. Combined edits 14.33% of words, versus 5% per single family.
+- Local outputs: `artifacts/evaluations/finetuned-clean-seed586-noise-pilot-v1/`.
+  Source snapshots, hashes, predictions, metrics, error examples and paired/context
+  analysis are retained outside Git. Aggregate results and reproduction commands:
+  [clean-noise-pilot.md](clean-noise-pilot.md).
+- New `evaluation_model.py` validates a completed training export before inference;
+  the existing noise evaluator now accepts this pinned local model. The analysis
+  CLI optionally compares a second completed run after validating shared inputs,
+  runtime, core source hashes and supports.
+- Next: implement/audit the specified augmentation view. Resolve active-run
+  checkpoint Trash accumulation before another training. Keep shared initial
+  tensors, training budget and clean-validation selection fixed. No augmented
+  training, expanded severity sweep or held-out test evaluation has run yet.

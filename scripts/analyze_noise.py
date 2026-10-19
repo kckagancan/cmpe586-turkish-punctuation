@@ -21,10 +21,84 @@ def read_jsonl(path: Path) -> list[dict]:
         return [json.loads(line) for line in stream]
 
 
+def compare_runs(run: Path, summary: dict, reference_run: Path) -> tuple[dict, str]:
+    """Compare fixed input/runtime measurements; positive deltas favor the current model."""
+    reference_path = reference_run / "summary.json"
+    reference = json.loads(reference_path.read_text())
+    for key in ("noise_manifest_sha256", "condition_input_sha256", "batching", "packages"):
+        if summary["identity"][key] != reference["identity"][key]:
+            raise ValueError(f"Cross-model comparison differs in {key}.")
+    for name in ("inference", "metrics", "preprocessing", "data", "tokenization", "robustness"):
+        source = f"src/turkish_punctuation/{name}.py"
+        if summary["identity"]["source_sha256"][source] != reference["identity"]["source_sha256"][source]:
+            raise ValueError(f"Cross-model inference/metric implementation differs: {source}")
+    for key in (
+        "split", "conditions", "batch_size", "device", "cpu_threads", "seed",
+        "batch_order", "primary_metric", "punctuation_labels", "zero_division",
+    ):
+        if summary["run"][key] != reference["run"][key]:
+            raise ValueError(f"Cross-model comparison uses different settings: {key}")
+    current_reports = {"clean-anchor": summary["clean_anchor"], **summary["conditions"]}
+    reference_reports = {"clean-anchor": reference["clean_anchor"], **reference["conditions"]}
+    result: dict = {
+        "current_run": summary["run"]["run_name"],
+        "reference_run": reference["run"]["run_name"],
+        "current_summary_sha256": sha256(run / "summary.json"),
+        "reference_summary_sha256": sha256(reference_path),
+        "delta_convention": "current minus reference, percentage points; descriptive validation comparison",
+        "conditions": {},
+    }
+    table = [
+        "# Matched model comparison", "",
+        f"Current: `{result['current_run']}`. Reference: `{result['reference_run']}`.", "",
+        "F1 is a percentage; delta is current minus reference in percentage points.", "",
+        "| Condition | Reference macro F1 | Current macro F1 | Delta (pp) | Reference drop | Current drop |",
+        "| --- | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for name, current in current_reports.items():
+        old = reference_reports[name]
+        for directory, report in ((run, current), (reference_run, old)):
+            if sha256(directory / "conditions" / name / "predictions.jsonl") != report["predictions_sha256"]:
+                raise ValueError(f"{directory.name}/{name}: prediction hash differs.")
+        a, b = current["metrics"], old["metrics"]
+        if a["evaluated_words"] != b["evaluated_words"] or any(
+            a["per_class"][label]["support"] != b["per_class"][label]["support"]
+            for label in a["per_class"]
+        ):
+            raise ValueError(f"{name}: cross-model target supports differ.")
+        difference: dict = {
+            average: {key: 100 * (a[average][key] - b[average][key])
+                      for key in ("precision", "recall", "f1")}
+            for average in ("punctuation_macro", "punctuation_micro")
+        }
+        difference["per_class"] = {
+            label: {key: 100 * (a["per_class"][label][key] - b["per_class"][label][key])
+                    for key in ("precision", "recall", "f1")}
+            for label in a["per_class"]
+        }
+        result["conditions"][name] = difference
+        current_drop = 100 * (
+            summary["clean_reference_metrics"]["punctuation_macro"]["f1"]
+            - a["punctuation_macro"]["f1"]
+        )
+        reference_drop = 100 * (
+            reference["clean_reference_metrics"]["punctuation_macro"]["f1"]
+            - b["punctuation_macro"]["f1"]
+        )
+        table.append(
+            f"| {name} | {100*b['punctuation_macro']['f1']:.4f} | "
+            f"{100*a['punctuation_macro']['f1']:.4f} | "
+            f"{difference['punctuation_macro']['f1']:+.4f} | {reference_drop:.4f} | {current_drop:.4f} |"
+        )
+    table.extend(["", "These validation observations do not establish significance or augmentation benefit."])
+    return result, "\n".join(table) + "\n"
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-directory", type=Path)
     parser.add_argument("--output-directory", type=Path)
+    parser.add_argument("--comparison-run-directory", type=Path)
     args = parser.parse_args()
     config = json.loads((ROOT / "configs/noise-evaluation.json").read_text())
     run = (ROOT / (args.run_directory or config["output_directory"])).resolve()
@@ -166,6 +240,12 @@ def main() -> None:
         staging.mkdir()
         (staging / "analysis.json").write_text(json.dumps(analysis, indent=2) + "\n")
         (staging / "comparison.md").write_text("\n".join(table) + "\n")
+        if args.comparison_run_directory is not None:
+            comparison, markdown = compare_runs(
+                run, summary, (ROOT / args.comparison_run_directory).resolve()
+            )
+            (staging / "model-comparison.json").write_text(json.dumps(comparison, indent=2) + "\n")
+            (staging / "model-comparison.md").write_text(markdown)
         shutil.copy2(Path(__file__), staging / "analyze_noise.py")
         staging.rename(destination)
     print(f"Saved verified paired analysis: {destination}")

@@ -59,10 +59,16 @@ kayıt sırası ve optimizer bütçesi kullanılacak. Augmented kolda her epoch 
 yarısı combined-medium noisy input olarak sunulur; bu, kelimelerin %50'sinin bozulduğu
 anlamına gelmez. Karışım için yeni ayarlar `training.json` içindedir; mevcut
 `noise.json` dönüşümleri ve kaydedilmiş validation koşulları değiştirilmedi.
-# Clean fine-tuned model evaluation
+
+## Clean fine-tuned model evaluation
 
 `clean-noise-evaluation.json` selects the verified local epoch export and the
 published medium-noise pilot to match. It reuses existing clean/noisy validation
-inputs. Run it with `python scripts/evaluate_noise.py --config
-configs/clean-noise-evaluation.json`; no training is performed. Protocol and
-results: [clean-noise-pilot.md](../docs/clean-noise-pilot.md).
+inputs. Run it with:
+
+```bash
+python scripts/evaluate_noise.py --config configs/clean-noise-evaluation.json
+```
+
+No training is performed. Protocol and results:
+[clean-noise-pilot.md](../docs/clean-noise-pilot.md).
