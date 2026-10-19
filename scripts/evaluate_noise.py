@@ -179,7 +179,16 @@ def main() -> None:
         raise ValueError("Validation source provenance differs between comparisons.")
     eligible, _ = partition_records(read_split(raw_path))
     clean_records = {row["row_id"]: row for row in eligible.to_dict(orient="records")}
-    clean_predictions, clean_metrics = read_predictions(baseline_path, clean_records)
+    reference_records = clean_records
+    if trained is not None:
+        # Training validation stores its batching order; pair by source IDs and
+        # verify full unique coverage before reading its historical predictions.
+        with baseline_path.open(encoding="utf-8") as stream:
+            reference_ids = [json.loads(line)["row_id"] for line in stream]
+        if len(reference_ids) != len(set(reference_ids)) or set(reference_ids) != set(clean_records):
+            raise ValueError("Training validation does not cover each eligible source row once.")
+        reference_records = {row_id: clean_records[row_id] for row_id in reference_ids}
+    clean_predictions, clean_metrics = read_predictions(baseline_path, reference_records)
     if clean_metrics != clean_report["metrics"]:
         raise ValueError("Recomputed clean metrics differ from the archived reference.")
     torch.set_num_threads(config["cpu_threads"])
