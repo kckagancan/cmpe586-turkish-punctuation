@@ -287,6 +287,8 @@ GitHub commit `fc17d41`, runtime 2026.07, Python 3.12.13 and a T4 GPU. Its 30
 updates established clean GPU fit and exercised the update path; they do not
 establish full-epoch validation/selection or deterministic resumption. See the
 [calibration report](training-calibration.md) for measurements and remaining work.
+Formal clean training was subsequently launched on 2026-10-19; the initial
+observation and handoff are recorded in [clean training status](clean-training-status.md).
 
 The notebook clones the public repository, so the reviewed files need to be
 synced to GitHub before that checkout can run them. The reviewed files were

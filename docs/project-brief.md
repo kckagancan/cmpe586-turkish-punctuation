@@ -269,5 +269,14 @@ Checked on 2026-10-17:
   performed zero optimizer updates and did not access test data. Drive writes
   were subsequently flushed successfully and the mount was closed.
   See [preparation-status.md](preparation-status.md) for the observed record.
-- The user requested stopping at preparation in this session. Keep the full
-  training switch false; clean training will be started together in a later session.
+- During the 2026-10-18 session, the user requested stopping at preparation and
+  leaving full training for a later session.
+- On 2026-10-19, the user authorized the next stage. Formal clean training was
+  launched around 03:27 Europe/Istanbul on a new T4 runtime using code `7351f9f`.
+  Input and shared-initialization checks passed; the first 525 updates ran without
+  an error and execution continued past the synchronous step-500 checkpoint.
+  Full-epoch validation/selection and checkpoint recovery remain unobserved.
+  The user will watch the visible Colab notebook and return after it
+  finishes. Training is in progress, not a completed result; see
+  [clean-training-status.md](clean-training-status.md). The checked-in notebook
+  keeps its training switch false; the active Colab copy enables this run.
