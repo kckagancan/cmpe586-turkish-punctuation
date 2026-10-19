@@ -397,3 +397,33 @@ Checked on 2026-10-17:
   checkpoint Trash accumulation before another training. Keep shared initial
   tensors, training budget and clean-validation selection fixed. No augmented
   training, expanded severity sweep or held-out test evaluation has run yet.
+
+### Augmented preparation — 2026-10-19
+
+- Implemented the prespecified recipe without adjusting severity/mixture after
+  the clean-model pilot. Three training views retain all 116,969 records and
+  1,463,897 word targets per epoch. Exactly 58,484 rows receive a noisy view;
+  actual edited-word coverage is 7.1204 / 7.1817 / 7.1510%, with maximum subword
+  lengths 227 / 230 / 224. Saved words, encodings and original labels passed
+  reload/re-tokenization audit. Prepared data occupies about 221 MB outside Git.
+- The augmented runner verifies the completed clean run, initialization, input
+  hashes, numerical recipe and runtime before optimizer creation. Each epoch
+  uses its own audited view with the same clean-arm row shuffle/update budget.
+- The new checkpoint layout reuses two fixed slots; it protects the last valid
+  slot while the other is overwritten and verifies readback before publication.
+  It performs no Drive directory deletion. A tiny storage probe is separate
+  from actual model/optimizer resume and cloud durability verification.
+- The dedicated augmented Colab notebook separates preparation, tiny storage
+  inspection, 30-update calibration and the disabled full training cell.
+  Current observations: [augmentation-preparation.md](augmentation-preparation.md).
+  No formal augmented training or held-out test evaluation has started.
+- Colab preparation and reloaded epoch audits matched local output exactly.
+  Runtime 2026.07 / T4 matched clean Python/packages/numerics and shared initial
+  tensors. Tiny Drive inspection passed four writes/restricted loads, leaving
+  two 16,643-byte state files with stable slot inodes; actual model resume and
+  cloud durability remain unverified. Calibration completed 30 updates with
+  finite losses, epoch-02's longest prepared batch, 2.434 GiB peak allocated,
+  0.360647 s/update mean after startup and 25.573 seconds loop time. Projected
+  update-only work is 65.93 minutes, excluding validation/checkpoint overhead.
+  Sources and receipts were verified locally; both switches are false and the
+  formal augmented output directory is absent. Drive UI showed 2.34/15 GB used.

@@ -5,8 +5,9 @@ Specified **2026-10-18**, version **training-v1**. Settings are in
 **30-update T4 calibration**; see [observations](training-calibration.md).
 The clean three-epoch run and its medium-noise validation pilot are complete.
 Augmented epoch views and the paired runner are implemented; all three local
-views passed data/tokenization audits. Augmented GPU calibration and storage
-inspection are the next execution step. See [preparation status](augmentation-preparation.md).
+views passed data/tokenization audits locally and on Colab. The separate
+30-update augmented T4 calibration and tiny Drive slot inspection passed;
+full training remains disabled. See [preparation status](augmentation-preparation.md).
 No full augmented training or held-out test evaluation has run.
 
 ## 1. What the comparison measures
@@ -241,8 +242,12 @@ can differ; do not switch midway and call the runs identical. Mixed precision
 is a possible later runtime revision after GPU measurement, with its dtype and
 scaling behavior recorded for both arms. The observed clean calibration retained
 8/4 at 2.430 GiB peak allocated memory and 0.476 s/update mean; projected update
-work is about 87 minutes, excluding validation/checkpoint overhead. Full training
-time and noisy-input memory remain unobserved.
+work is about 87 minutes, excluding validation/checkpoint overhead. The completed
+clean loop subsequently took 72.19 minutes including validation/checkpoints.
+The augmented calibration retained 8/4 at 2.434 GiB peak allocated memory and
+0.361 s/update mean, with the longest noisy batch included; projected update
+work is 65.93 minutes before validation/checkpoint overhead. Full augmented
+training time remains unobserved. See [augmentation observations](augmentation-preparation.md).
 Nonfinite loss/gradients stop the run with diagnostic state.
 
 The first implementation uses eager BERT attention, disables TF32 and requests
@@ -307,8 +312,10 @@ The Drive UI subsequently showed 5 GB of 15 GB used (about 10 GB free).
 There is **no automatic permanent Drive cleanup hook**. New augmented runs use
 two fixed checkpoint slots, rewriting the older slot in place while protecting
 the last verified one. This avoids the legacy directory create/delete cycle;
-the loader rejects incomplete/hash-mismatched writes. Provider-side Drive
-behavior still requires observation before claiming the storage issue resolved.
+the loader rejects incomplete/hash-mismatched writes. A four-write tiny probe
+passed on mounted Drive with two state files and stable slot inodes. This does
+not establish provider-side version retention, VM-loss durability or actual
+model/optimizer resume.
 Details and execution status: [augmentation preparation](augmentation-preparation.md).
 
 For a future longer run (for example, 25 epochs), end-of-run archiving alone is

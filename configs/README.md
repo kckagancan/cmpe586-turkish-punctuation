@@ -9,10 +9,15 @@ Mevcut ayarlar JSON dosyalarında tutuluyor:
 - `training.json`: `training-v1` fine-tuning protokolünün ayarları. Pinned BERTurk
   temel ağırlıkları, ortak başlangıç, optimizer/loss, effective batch, eğitim
   bütçesi, temiz validation ile checkpoint seçimi ve eğitimde noise karışımı
-  tanımlıdır. Durumu `clean_pipeline_implemented_execution_pending`: clean training
-  komutu ve Colab notebook'u yazıldı; henüz çalıştırılmadı. Train augmentation
-  hazırlayıcısı plan aşamasında. Gerekçeler ve uygulama sırası:
+  tanımlıdır. Clean training üç epoch ile tamamlandı; bu tarihsel config'in durum
+  metni koşu kimliğini korumak için değiştirilmedi. Güncel gerçekleşen durum:
+  [clean training raporu](../docs/clean-training-status.md). Gerekçeler:
   [eğitim protokolü](../docs/training-protocol.md).
+- `training-augmented.json`: aynı sayısal training tarifini, tamamlanmış clean
+  koşunun kimliğini, üç epoch'a ait denetlenmiş noisy view konumunu ve iki sabit
+  checkpoint slotunu tanımlar. Kayıtların yarısı noisy view alır; gerçekleşen
+  kelime değişimi yaklaşık %7,12–7,18'dir. Uygulama ve çalıştırma durumu:
+  [augmentation hazırlığı](../docs/augmentation-preparation.md).
 - `evaluation.json`: ilk clean validation ölçümünün model girdisi/çıktı klasörleri,
   inference batch boyutu, cihaz/CPU thread ayarı, seed ve metrik tanımı. Ana skor,
   üç noktalama sınıfının eşit ağırlıklı macro-F1 değeridir; `O` konumları yanlış
@@ -57,7 +62,7 @@ başlangıç ayarı GPU başına 8 kayıt × 4 gradient accumulation = effective
 3 epoch ve learning rate 2e-5'tir. Bütün modellerde aynı başlangıç ağırlıkları,
 kayıt sırası ve optimizer bütçesi kullanılacak. Augmented kolda her epoch kayıtların
 yarısı combined-medium noisy input olarak sunulur; bu, kelimelerin %50'sinin bozulduğu
-anlamına gelmez. Karışım için yeni ayarlar `training.json` içindedir; mevcut
+anlamına gelmez. Augmented komutunun ayarları `training-augmented.json` içindedir; mevcut
 `noise.json` dönüşümleri ve kaydedilmiş validation koşulları değiştirilmedi.
 
 ## Clean fine-tuned model evaluation

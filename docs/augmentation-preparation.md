@@ -73,7 +73,12 @@ the new augmented configuration explicitly selects two reused slots.
 `scripts/inspect_checkpoint_storage.py` exercises tiny writes/restricted loads
 without a model or optimizer update. This checks filesystem behavior, not actual
 model optimizer-resume or provider-side cloud durability/version retention.
-Real Drive behavior and the augmented GPU calibration remain to be observed.
+The tiny probe passed both locally and on the mounted Drive project folder on
+2026-10-19: four serial writes alternated between two slots, restricted loads
+reproduced each payload, and each slot retained its inode. Drive ended with two
+16,643-byte state files. No file was permanently deleted. This observes the
+mounted filesystem; provider-side version retention, VM-loss durability and
+actual model/optimizer resume remain unverified.
 No account-wide Trash cleanup or permanent deletion is implemented here.
 
 ## Execution handoff
@@ -95,10 +100,73 @@ the existing persistent clean input/initialization assets. After a successful
 formal run, the agreed manual ZIP download, local verification and scoped Drive
 cleanup process remains in effect.
 
+## Colab preparation and GPU calibration
+
+Executed on **2026-10-19**, clean code checkout
+`6497e82b226390bf9a4120d55c9e40befd0ff75e`. The working notebook is
+[03_augmented_training_colab](https://colab.research.google.com/drive/1KKuqXRHKn4xr0nA7mXjtZexL4FrKFsV8).
+Select Colab runtime **2026.07 / T4** for the matched arm. Python 3.12.13,
+Torch 2.11.0+cu128, Transformers 4.57.6, datasets 4.0.0, numpy 2.0.2,
+scikit-learn 1.6.1, tokenizers 0.22.2 and safetensors 0.8.0 matched the clean
+training environment. Precision stayed FP32/eager, TF32 off, deterministic Torch
+operations on. The original shared initial tensor hash also matched.
+
+Persistent clean inputs and initialization passed verification. Three noisy
+views were generated on Drive and reloaded/re-tokenized successfully. Their
+preparation identity, every epoch's audit and encoded-content hashes exactly
+matched the local outputs above. View generation/writes before final reload
+took 227.37 seconds; the notebook's complete preparation cell took longer.
+Preparation itself performed zero optimizer updates and did not access test data.
+
+The separately named calibration passed all clean-pair/source/input checks and
+completed **30 optimizer updates / 960 records** from the shared initialization.
+It used epoch-02's view and explicitly put the longest 32 prepared records first
+(maximum length 230 subwords). All 30 recorded losses were finite. Its updated
+weights were discarded; formal training starts fresh from the shared initialization.
+
+| Observation | Value |
+| --- | ---: |
+| Microbatch × accumulation | 8 × 4 = effective 32 |
+| Calibration loop, including startup | 25.573 seconds |
+| Mean update, excluding first five startup updates | 0.360647 seconds |
+| Median update after startup | 0.318099 seconds |
+| Peak allocated GPU memory | 2.434 GiB |
+| Peak reserved GPU memory | 2.838 GiB |
+| Projected 10,968-update work | 65.93 minutes |
+
+The projection excludes data/model preparation, validation and checkpoint/model
+export I/O; it is not a promised full-run duration or a model-quality result.
+No batch/optimizer/noise settings were changed after calibration.
+Calibration identity:
+`e7a0bc7ce94118fae25b48df95ce2e9a33270de3a3e38de2c9f6d74f65f098cf`.
+
+The final preparation-only check exercised the full-training prerequisites
+without entering its training branch: calibration/source/view identities,
+checkpoint implementation hash and finite event count passed. The formal
+`train-augmented-seed-586-v1/` output directory did not exist. Both execution
+switches were set back to **False** and the notebook displayed the completed
+calibration separately from the unstarted full run.
+
+Drive's project-page sidebar displayed **2.34 GB of 15 GB used** at the capacity
+check, approximately 12.66 GB free. This supports the current three-epoch plan
+and a temporary transfer ZIP; capacity can change before launch. No account-wide
+file/Trash cleanup was performed. The existing manual download → local archive
+verification → scoped cleanup agreement remains in effect.
+
+Raw receipts are saved outside Git under
+`artifacts/training/training-v1/augmented-preparation-seed-586/`: calibration
+JSON/events/progress/run metadata, Colab view manifest/readiness, tiny Drive
+inspection report and screenshots. Transferred file hashes, calibration run
+identity, all source hashes and local-versus-Colab epoch audits passed local
+verification. The JSON config's historical `status` string is retained because
+the calibration pins its bytes; this document records the current execution state.
+
 ## Current execution status
 
-- CPU view generation, persistence, reload, tokenization and target audits: passed.
-- Static lint and whitespace checks: passed.
-- Colab preparation, tiny Drive slot inspection and 30-update augmented calibration:
-  pending execution.
-- Full augmented training, actual model-state resume and test evaluation: not run.
+- CPU and Colab view generation, persistence, reload, tokenization/target audits: passed.
+- Matched clean-run inputs, initialization, numerical recipe and runtime: passed.
+- Tiny local and Drive two-slot storage inspection: passed within the stated scope.
+- Separate 30-update augmented T4 calibration and final source/view checks: passed.
+- Both notebook execution switches: **False**; formal augmented training not started.
+- Actual model/optimizer resume, expanded evaluation and held-out test: not run.
+- Static lint and whitespace checks: passed; no unit test suite was added or run.

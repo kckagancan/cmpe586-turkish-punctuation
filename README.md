@@ -31,8 +31,12 @@ Hazır modelle eşleşen kıyas, sınıf skorları ve hata analizi:
 [clean model noise raporu](docs/clean-noise-pilot.md).
 Koşunun bütün epoch modelleri ve sonuçları yerelde arşivlenip doğrulandı;
 gereksiz Drive kopyaları temizlendi: [yedek denetimi](docs/backup-verification.md).
-Drive yaklaşık 10 GB boş gösteriyor. Sonraki aşama augmentation'ın uygulanması;
-yeni training öncesinde eski checkpoint'lerin Trash birikimi de ele alınacak.
+Augmentation uygulandı; üç epoch'un noisy view'ları, kelime hedefleri ve yeniden
+tokenization kontrolleri yerelde ve Colab'da geçti. İki sabit checkpoint slotunun
+küçük Drive kontrolü ve T4 üzerinde 30 update calibration tamamlandı
+(peak allocated 2,434 GiB). Ayrıntılar ve kapsam:
+[augmentation hazırlık raporu](docs/augmentation-preparation.md).
+Asıl augmented training henüz başlamadı; notebook'un iki execution anahtarı kapalı.
 
 ## Çalışma düzeni
 
@@ -132,7 +136,8 @@ seçilir. Model girdilerine referans etiketler gönderilmez.
 `artifacts/model-preview.json` dosyasına yazılır. Bu küçük örnekler veri setinden
 seçilmemiştir ve model başarımını ölçmez. Gerçek validation ölçümü aşağıdaki
 değerlendirme komutuyla yapılır. Tamamlanan noise pilotu aşağıda ayrıca açıklanır;
-fine-tuning henüz yapılmadı.
+bu bölüm yayımlanmış modelin ilk ölçümlerini anlatır. Kendi fine-tuning sonucumuz
+[clean training raporunda](docs/clean-training-status.md).
 
 Hazırlanmış clean validation bölümünü yayımlanmış modelle değerlendirmek için:
 
@@ -183,7 +188,7 @@ Tekrar denemek için JSON ayarını kopyala, yeni çıktı yolu belirle ve
 `python scripts/prepare_noise.py --config configs/yeni-noise-ayari.json` kullan.
 Desteklenmeyen kurallar ve uygulanamayacak oranlar açık hata verir.
 Küçük validation pilotu tamamlandı; sonuçlar [pilot raporunda](docs/noise-pilot.md).
-Eğitimdeki noise karışımı ayrıca planlanacak.
+Eğitimdeki noise karışımı [training protokolünde](docs/training-protocol.md) tanımlıdır.
 Tamamlanan veri kontrolünde kayıp kelime, `[UNK]` veya uzunluk aşımı bulunmadı;
 en uzun girdi 218 token oldu. Ayrıntılar: [noise veri raporu](docs/noise-audit.md).
 
@@ -237,7 +242,9 @@ hazır. T4 üzerinde 30 update'lik calibration başarıyla tamamlandı: batch 8 
 accumulation 4, ortalama 0,476 s/update, peak allocated 2,43 GiB. Üç epoch için
 yalnızca update işi yaklaşık 87 dakika tahmin ediliyor; validation ve checkpoint
 I/O buna dahil değil. [Ayrıntılı rapor](docs/training-calibration.md).
-Tam training henüz başlamadı; train augmentation hazırlayıcısı sonraki aşama.
+Clean training tamamlandı. Augmented hazırlayıcı ve ayrı
+[Colab notebook'u](notebooks/03_augmented_training_colab.ipynb) hazır;
+[güncel hazırlık durumu](docs/augmentation-preparation.md) ayrıca kaydedilir.
 Komut varsayılan olarak yalnızca 30 update'lik
 calibration yapar ve CUDA ister:
 

@@ -106,3 +106,24 @@ ve ortak girdiler/initialization korundu. Drive yaklaşık 10 GB boş gösteriyo
 `drive-cleanup-plan.json`, `drive-cleanup-result.json` ve `drive-cleanup-*.jpg`
 dosyaları kimlikleri ve sonucu kaydeder. Bunlar da yerel, Git dışında kalan
 artifact dosyalarıdır; hesabın genel çöp kutusu boşaltılmadı.
+
+## Augmented hazırlık kayıtları
+
+`training/training-v1/augmented-preparation-seed-586/`, üç noisy epoch view'ın
+yerel manifestini ve Colab hazırlık/calibration/storage kontrolünden alınan
+kanıtları tutar. `local-checkpoint-inspection/` gerçek model yüklemeden dört küçük
+yazma/yükleme yapar; sonunda iki `state.pt` slotu kalır. Bunlar optimizer resume
+veya Drive'ın bulut tarafındaki kalıcılığı için kanıt değildir.
+
+Asıl epoch view'ları `data/processed/training-augmentation-v1/seed-586/` altında
+kalır; toplam yaklaşık 221 MB'tır. Colab kopyası yalnızca projenin Drive input
+klasörüne yazılır. Calibration ayrı çıktı klasörü kullanır ve güncellenen model
+ağırlıklarını saklamaz. Gerçekleşen adımlar ve sınırlar:
+[augmentation hazırlık raporu](../docs/augmentation-preparation.md).
+
+Bu klasördeki `calibration/` Colab'ın gerçek `run.json`, `calibration.json`,
+`events.jsonl` ve `progress.json` dosyalarını tutar. `colab-view-manifest.json`,
+`colab-readiness.json`, `drive-checkpoint-inspection.json` ve transfer receipt'i
+de yerelde hash kontrolünden geçti. GPU calibration 30 update ile tamamlandı;
+full augmented training başlamadı. Bu küçük dosyalar ve ekran görüntüleri de
+Git dışında kalır.
