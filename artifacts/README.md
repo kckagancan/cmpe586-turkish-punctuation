@@ -81,3 +81,9 @@ Model export'ları Hugging Face formatında yüklenebilir. Clean training 3 epoc
 `training/training-v1/train-clean-seed-586-v1/` altında tutulur, ağırlıklar Drive'daki
 proje klasöründedir. Epoch skorları ve süre [training raporunda](../docs/clean-training-status.md),
 önceki kısa denemenin özeti [calibration raporunda](../docs/training-calibration.md).
+
+Kullanıcının normal tarayıcıyla indirdiği `clean-seed586-5ddecc9b8bfa.zip` ayrıca
+`training/training-v1/train-clean-seed-586-v1/` altında saklanır; doğrulanmış model
+`recovery/models/epoch-03/` içindedir. Bu yedek büyük optimizer checkpoint'lerini
+ve epoch-01/02 ağırlıklarını içermez. Denetim scriptleri, JSON ve test logları aynı
+artifact klasöründedir: [yedek denetimi](../docs/backup-verification.md).

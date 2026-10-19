@@ -262,6 +262,14 @@ optimizer states require roughly 4 GB per completed arm with this retention,
 plus approximately 0.44 GB for the shared initialization per seed.
 Mid-epoch resumable checkpoints are not extra model-selection candidates.
 
+For limited Drive capacity, archive completed runs locally before removing their
+Drive copies. Verify archive hashes and included files first; preserve all epoch
+exports/predictions/provenance for auditable selection, and include full optimizer
+states when training continuation must remain possible. A selected-model-only
+backup does not preserve the other epoch weights or resumable state. Keep active
+run checkpoints durable and leave room for temporary checkpoint publication and
+archives. See [the first run's storage audit](backup-verification.md).
+
 Use a new local directory under `artifacts/training/training-v1/` per seed/arm;
 persist Colab checkpoints to configured durable storage. Resume only the same
 run identity and exact saved data/order/state, without silently restarting the

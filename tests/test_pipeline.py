@@ -348,6 +348,7 @@ class PreparationScriptTests(unittest.TestCase):
 
     def run_preparation(self):
         with (
+            patch("sys.argv", ["prepare_data.py"]),
             patch.object(prepare_data, "ROOT", self.root),
             patch.object(
                 prepare_data.AutoTokenizer, "from_pretrained", return_value=self.tokenizer

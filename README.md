@@ -24,8 +24,9 @@ notebook'u hazır. T4 üzerinde 30 update'lik GPU calibration tamamlandı;
 2026-10-19'da tamamlandı: 3 epoch / 10.968 update, seçilen epoch 3,
 clean validation macro-F1 **%84,04**, training loop **72,2 dakika**.
 Sonuçlar ve kapsam: [koşu raporu](docs/clean-training-status.md).
-Koşu sonrası Drive kota uyarısı gözlendi; sonraki deneyden önce model yedeği ve
-kalıcı depolama durumu kesinleştirilmeli. Raporlar yerelde kayıtlıdır.
+Koşu sonrası Drive kota uyarısı gözlendi. Seçilen modelin indirilen yedeği,
+ağırlıkları ve sonuçları yerelde doğrulandı: [yedek denetimi](docs/backup-verification.md).
+Sonraki büyük koşudan önce Drive depolama/senkron durumu çözülmeli.
 
 ## Çalışma düzeni
 

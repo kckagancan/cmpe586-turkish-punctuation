@@ -49,8 +49,12 @@ copies saved under ignored
 The run identity was recomputed and matched; recorded source/config hashes match
 the local sources. Update counts, epoch ordering/selection and class supports
 also agree. Before publishing its summary, the runner checked epoch model-file
-and validation-report hashes; weights were not downloaded for a second local
-verification. Checkpoint recovery from an interruption remains unexercised.
+and validation-report hashes. The selected weights were subsequently downloaded
+and independently verified locally; see [backup verification](backup-verification.md).
+Checkpoint recovery with subsequent optimizer updates remains unexercised.
+The subsequent Colab audit loaded both retained checkpoint states and verified
+all epoch exports. Full validation replay reproduced all 179,164 word predictions
+and metrics exactly, with no training updates or test access.
 
 ### Storage issue observed after completion
 
@@ -63,8 +67,13 @@ Trash contents were inspected or deleted. The cause of the quota pressure was
 not established. See the [official Colab storage-quota FAQ](https://research.google.com/colaboratory/faq.html#drive-full).
 
 Training completion and successful reads from the mounted Drive do not establish
-that all pending cloud uploads have completed. The runtime has not been reset or
-unmounted. Before another run, resolve storage and durable preservation.
+that all pending cloud uploads have completed. A later flush/unmount attempt
+returned an error and left the mount disconnected. Reconnecting succeeded without
+new authorization, and all epoch/checkpoint hashes passed again. The refreshed
+mount reported only about 0.16 GB free with another quota warning; Google One
+independently showed 98% used. Cloud-upload completion is not confirmed. The
+runtime was not reset. Before another large run, confirm adequate actual free
+space; selected-model preservation is already verified locally below.
 
 The selected epoch-03 model's six files were verified against `export.json`,
 copied to a temporary recovery folder and verified again. Together with run
@@ -75,12 +84,14 @@ created at `/content/cmpe586-recovery/clean-seed586-5ddecc9b8bfa.zip`:
 - Archive SHA-256: `9a45deb24d8db5e7cf6c0cf99d81ea22c6a0c8119d39e56f5786a35ee680e6d5`.
 - Selected model tensor SHA-256: `487a8c7c38d05787f8527eca642b4d2a80bb94a814b960479b9668a87492cd96`.
 
-The Colab download widget finished transferring its payload, but no saved file
-was found locally and the user confirmed nothing appeared in Downloads. Browser
-download events were not delivered through the in-app automation. A normal
-Chrome/Firefox download of the ready ZIP from Colab's Files panel was requested;
-local model backup is **not yet confirmed**. A temporary Colab copy alone is not
-a durable backup. No model/checkpoint deletion is authorized by this report.
+The in-app download initially produced no confirmed local file. The user then
+downloaded the ZIP through a normal browser into Downloads. The original ZIP's
+size/SHA-256, all model-file hashes, independent tensor digest and all three
+epochs' metrics recomputed from predictions passed verification. A copy and
+extracted selected model now reside under the ignored project artifact directory.
+**The selected-model local backup is confirmed.** Drive quota/cloud-upload
+completion remains separate. No model/checkpoint deletion is authorized by this
+report. Full scope and limits are in [backup verification](backup-verification.md).
 
 **Next planned step after storage preservation:** evaluate the selected clean checkpoint on a matched clean
 control and the same four medium/seed-586 validation noise conditions as the

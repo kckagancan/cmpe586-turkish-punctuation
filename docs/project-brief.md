@@ -295,7 +295,26 @@ Checked on 2026-10-17:
   or Trash were inspected/deleted. Preserve the selected model before resetting
   the runtime or starting another run. A 448,623,671-byte recovery archive was
   created and its six model files verified. In-app download did not produce a
-  confirmed local file; the user was asked to download the ready ZIP through
-  normal Chrome/Firefox. Local model backup is not yet confirmed.
+  confirmed local file. The user subsequently downloaded it through a normal
+  browser; the original ZIP hash, selected weights/tensors, all epoch metrics
+  and training event counters were verified. A project-local archive/extracted
+  copy is now confirmed; see [backup-verification.md](backup-verification.md).
   See the storage section of `clean-training-status.md`. Resolve durable storage
   before continuing the planned noisy validation or augmented training.
+- The requested comprehensive post-download audit also reproduced 806/806 saved
+  word predictions on CPU across 31 records and re-encoded all validation rows
+  using the archived tokenizer. Local preparation has different package/split
+  metadata, while validation content/alignment is identical. Thirty offline
+  regression tests pass after isolating `sys.argv` in a preparation test helper;
+  production training/model/metric implementations were not changed.
+- The original T4 environment then replayed the entire clean validation set:
+  all 179,164 word predictions and metrics matched, including prediction-file
+  SHA-256. All epoch exports and both retained optimizer states were checked.
+  No training update or held-out test access occurred. Plan roughly 4 GB per arm
+  and archive completed runs locally before selective
+  cleanup. The 449 MB selected-model ZIP excludes other epoch weights and
+  optimizer states. A flush/unmount attempt failed. Reconnection succeeded, with
+  all epoch/checkpoint hashes matching again, but fresh quota readings show only
+  about 0.16 GB free (Google One: 98% used). The user's reported 12–13 GB free and
+  an earlier mount estimate disagree with this. Do not start another large run
+  until capacity is confirmed; the local selected-model archive is verified.
