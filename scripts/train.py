@@ -1,4 +1,4 @@
-"""Run clean BERT fine-tuning or a separate short CUDA calibration; never load test."""
+"""Run paired clean/augmented BERT fine-tuning or CUDA calibration; never load test."""
 
 import argparse
 import copy
@@ -22,6 +22,7 @@ os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 
 import torch
 
+from turkish_punctuation.augmentation import load_epoch_views, verify_clean_pair
 from turkish_punctuation.training import (
     TrainingProgress,
     epoch_permutation,
@@ -40,6 +41,7 @@ from turkish_punctuation.training_io import (
     load_checkpoint,
     restore_rng,
     save_checkpoint,
+    save_rotating_checkpoint,
     seed_everything,
     sha256,
     utc_now,
@@ -63,6 +65,10 @@ SOURCE_PATHS = (
     "src/turkish_punctuation/tokenization.py",
     "src/turkish_punctuation/data.py",
     "src/turkish_punctuation/metrics.py",
+    "src/turkish_punctuation/augmentation.py",
+    "src/turkish_punctuation/noise.py",
+    "src/turkish_punctuation/noise_audit.py",
+    "scripts/prepare_augmentation.py",
 )
 
 
@@ -71,6 +77,10 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("--config", type=Path, default=ROOT / "configs/training.json")
     parser.add_argument("--mode", choices=("calibrate", "train"), default="calibrate")
     parser.add_argument("--seed", type=int, default=586)
+    parser.add_argument("--arm", choices=("clean", "augmented"), default="clean")
+    parser.add_argument("--augmentation-directory", type=Path)
+    parser.add_argument("--paired-clean-run", type=Path)
+    parser.add_argument("--without-family", choices=("case_loss", "diacritic_loss", "typo_swap"))
     parser.add_argument("--output-directory", type=Path)
     parser.add_argument("--initialization-directory", type=Path)
     parser.add_argument("--batch-size", type=int)
@@ -199,12 +209,48 @@ def run(
         directory=initialization_directory,
         allow_download=args.download_model,
     )
+    views, augmentation, paired = {}, None, None
+    augmentation_directory: Path | None = None
+    if args.arm == "augmented":
+        paired_directory = args.paired_clean_run or ROOT / config["paired_clean_run"]["directory"]
+        paired = verify_clean_pair(
+            paired_directory,
+            config,
+            seed=args.seed,
+            inputs=inputs,
+            initialization=initialization,
+            hardware=hardware,
+            budget=budget,
+        )
+        suffix = "" if args.without_family is None else f"-without-{args.without_family}"
+        augmentation_directory = args.augmentation_directory or (
+            ROOT / config["augmentation"]["prepared_directory"] / f"seed-{args.seed}{suffix}"
+        )
+        views, augmentation = load_epoch_views(
+            augmentation_directory,
+            train,
+            base_tokenizer,
+            config,
+            seed=args.seed,
+            without_family=args.without_family,
+        )
+        inputs["augmentation"] = {
+            "identity": augmentation["identity"],
+            "manifest_sha256": sha256(augmentation_directory / "manifest.json"),
+            "epochs": {
+                k: v["audit"]["encoded_content_sha256"] for k, v in augmentation["epochs"].items()
+            },
+        }
+    elif args.without_family is not None or args.augmentation_directory is not None:
+        raise ValueError("Augmentation directory/ablation flags require --arm augmented.")
     snapshot = {name: (ROOT / name).read_bytes() for name in SOURCE_PATHS}
     snapshot["training-config.json"] = args.config.read_bytes()
     snapshot["tokenizer-config.json"] = source_path.read_bytes()
+    if augmentation is not None:
+        snapshot["noise-config.json"] = (ROOT / config["augmentation"]["noise_config"]).read_bytes()
     specification = {
         "mode": args.mode,
-        "arm": "clean",
+        "arm": args.arm,
         "seed": args.seed,
         "calibration_steps": args.calibration_steps if args.mode == "calibrate" else None,
         "configuration": config,
@@ -212,6 +258,8 @@ def run(
         "environment": hardware,
         "initialization_identity": initialization["identity"],
         "initialization_tensors_sha256": initialization["model_tensors_sha256"],
+        "paired_clean_run": paired,
+        "without_family": args.without_family,
         "source_hashes": {
             name: hashlib.sha256(value).hexdigest() for name, value in snapshot.items()
         },
@@ -237,6 +285,15 @@ def run(
             }
         except (subprocess.CalledProcessError, FileNotFoundError):
             git = {"commit": None, "dirty": None}
+        if augmentation is not None:
+            assert augmentation_directory is not None
+            metadata = destination / "augmentation"
+            metadata.mkdir()
+            (metadata / "manifest.json").write_bytes(
+                (augmentation_directory / "manifest.json").read_bytes()
+            )
+            for epoch, item in augmentation["epochs"].items():
+                write_json(metadata / f"epoch-{int(epoch):02d}-audit.json", item["audit"])
         for name, value in snapshot.items():
             path = destination / "source_snapshot" / name
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -258,8 +315,10 @@ def run(
     scheduler = make_scheduler(optimizer, budget)
     progress = TrainingProgress()
     order = epoch_permutation(len(train), args.seed, 0)
+    latest_checkpoint_path = None
     if args.resume:
         saved, checkpoint_path = load_checkpoint(destination / "checkpoints", identity=identity)
+        latest_checkpoint_path = checkpoint_path
         model.load_state_dict(saved["model"], strict=True)
         optimizer.load_state_dict(saved["optimizer"])
         scheduler.load_state_dict(saved["scheduler"])
@@ -296,7 +355,7 @@ def run(
     torch.cuda.reset_peak_memory_stats()
 
     def checkpoint() -> None:
-        nonlocal checkpoint_seconds
+        nonlocal checkpoint_seconds, latest_checkpoint_path
         tick = perf_counter()
         existing_serials = [
             int(path.name.rsplit("-", 1)[1])
@@ -313,20 +372,34 @@ def run(
             "permutation": order,
             "rng": capture_rng(),
         }
-        save_checkpoint(
-            destination / "checkpoints",
-            payload,
-            identity=identity,
-            serial=progress.checkpoint_serial,
-            keep=config["artifacts"]["keep_latest_resumable_checkpoints"],
-        )
+        if config["artifacts"].get("checkpoint_layout") == "two_reused_slots":
+            latest_checkpoint_path = save_rotating_checkpoint(
+                destination / "checkpoints",
+                payload,
+                identity=identity,
+                serial=progress.checkpoint_serial,
+                protected=latest_checkpoint_path,
+            )
+        else:
+            latest_checkpoint_path = save_checkpoint(
+                destination / "checkpoints",
+                payload,
+                identity=identity,
+                serial=progress.checkpoint_serial,
+                keep=config["artifacts"]["keep_latest_resumable_checkpoints"],
+            )
         checkpoint_seconds += perf_counter() - tick
 
     if args.mode == "train" and not args.resume:
         checkpoint()
+    calibration_epoch = 1
+    calibration_train = train
     if args.mode == "calibrate":
-        # Include the longest clean batch in the peak-memory observation.
-        lengths = list(map(len, train["input_ids"]))
+        if views:
+            calibration_epoch = max(views, key=lambda e: max(map(len, views[e]["input_ids"])))
+            calibration_train = views[calibration_epoch]
+        # Include the longest prepared input batch in the peak-memory observation.
+        lengths = list(map(len, calibration_train["input_ids"]))
         worst = sorted(range(len(train)), key=lambda i: (-lengths[i], i))[
             : config["optimization"]["effective_batch_size"]
         ]
@@ -354,8 +427,13 @@ def run(
 
         while progress.epoch < config["optimization"]["epochs"]:
             if progress.next_row < len(train):
+                epoch_train = (
+                    calibration_train
+                    if args.mode == "calibrate"
+                    else (views[progress.epoch + 1] if views else train)
+                )
                 train_epoch(
-                    train,
+                    epoch_train,
                     tokenizer,
                     model,
                     optimizer,
@@ -384,7 +462,9 @@ def run(
                     ],
                     "peak_allocated_gpu_bytes": torch.cuda.max_memory_allocated(),
                     "peak_reserved_gpu_bytes": torch.cuda.max_memory_reserved(),
-                    "longest_clean_batch_included": True,
+                    "longest_clean_batch_included": args.arm == "clean",
+                    "longest_prepared_batch_included": True,
+                    "calibration_view_epoch": calibration_epoch,
                     "seconds": perf_counter() - started,
                     "weights_retained": False,
                     "test_accessed": False,
@@ -492,7 +572,7 @@ def run(
         destination / "summary.json",
         {
             "identity": identity,
-            "arm": "clean",
+            "arm": args.arm,
             "best_epoch": progress.best_epoch,
             "best_macro_f1": progress.best_score,
             "best_model": f"models/epoch-{progress.best_epoch:02d}",
@@ -518,9 +598,9 @@ def run(
 def main() -> None:
     args = parse_arguments()
     config = resolve_config(args)
-    destination = (
-        args.output_directory
-        or ROOT / config["artifacts"]["root_directory"] / f"{args.mode}-clean-seed-{args.seed}"
+    destination = args.output_directory or ROOT / config["artifacts"]["root_directory"] / (
+        f"{args.mode}-{args.arm}-seed-{args.seed}"
+        + (f"-without-{args.without_family}" if args.without_family else "")
     )
     if args.resume and (
         not (destination / "run.json").exists() or (destination / "summary.json").exists()

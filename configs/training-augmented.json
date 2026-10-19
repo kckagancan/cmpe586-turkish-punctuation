@@ -1,0 +1,190 @@
+{
+  "version": "training-v1",
+  "status": "augmentation_implementation_ready_gpu_calibration_pending",
+  "specified_on": "2026-10-18",
+  "protocol": "docs/training-protocol.md",
+  "model": {
+    "source_config": "configs/tokenizer.json",
+    "initialization": "base_model_id_at_base_model_revision",
+    "architecture": "BertForTokenClassification",
+    "attention_implementation": "eager",
+    "tokenizer": "model_id_at_revision_from_source_config",
+    "require_base_tokenizer_compatibility": true,
+    "classifier_initialization": "fresh_four_class_head_saved_once_per_training_seed",
+    "initialization_directory": "artifacts/initializations/training-v1",
+    "trainable_parameters": "all",
+    "hidden_dropout_prob": 0.1,
+    "attention_probs_dropout_prob": 0.1,
+    "classifier_dropout": 0.1
+  },
+  "data": {
+    "prepared_directory": "data/processed/clean-v1",
+    "train_split": "train",
+    "validation_split": "validation",
+    "expected_train_records": 116969,
+    "expected_train_words": 1463897,
+    "expected_validation_records": 14453,
+    "records_per_epoch": "each_eligible_training_row_exactly_once",
+    "shuffle": "shared_row_permutation_per_training_seed_and_epoch",
+    "drop_last": false,
+    "padding": "dynamic",
+    "pad_to_multiple_of": null,
+    "max_input_length": 512,
+    "truncation": false,
+    "alignment": "first_subword",
+    "ignore_index": -100,
+    "test_access_during_training": false
+  },
+  "optimization": {
+    "optimizer": "torch.optim.AdamW",
+    "learning_rate": 2e-05,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "weight_decay": 0.01,
+    "exclude_from_weight_decay": [
+      "bias",
+      "LayerNorm_parameters"
+    ],
+    "epochs": 3,
+    "per_device_train_batch_size": 8,
+    "gradient_accumulation_steps": 4,
+    "effective_batch_size": 32,
+    "world_size": 1,
+    "flush_accumulation_at_epoch_end": true,
+    "max_grad_norm": 1.0,
+    "scheduler": "linear_with_warmup",
+    "warmup_ratio": 0.1,
+    "warmup_steps_rounding": "ceil_total_optimizer_steps_times_ratio",
+    "scheduler_step_unit": "successful_optimizer_update",
+    "early_stopping": false,
+    "loss": {
+      "name": "cross_entropy",
+      "class_weights": null,
+      "label_smoothing": 0.0,
+      "include_O": true,
+      "reduction": "sum_then_divide_by_valid_words_in_accumulation_window"
+    }
+  },
+  "runtime": {
+    "target_device": "cuda",
+    "precision": "fp32",
+    "allow_tf32": false,
+    "dataloader_workers": 0,
+    "evaluation_batch_size": 16,
+    "nonfinite_loss_or_gradients": "stop_and_record_failure",
+    "hardware_calibration": "short_fresh_initialization_run_before_full_training",
+    "allowed_memory_fallback_batches": [
+      [
+        4,
+        8
+      ],
+      [
+        2,
+        16
+      ]
+    ],
+    "fallback_rule": "resolve_before_paired_runs_keep_effective_batch_32_and_restart_both"
+  },
+  "seeds": {
+    "initial_training_seeds": [
+      586
+    ],
+    "optional_confirmation_training_seeds": [
+      587,
+      588
+    ],
+    "training_noise_seed_formula": "700000 + 10 * training_seed + epoch_1_based",
+    "evaluation_noise_config": "configs/noise.json"
+  },
+  "augmentation": {
+    "implementation_status": "implemented",
+    "noise_config": "configs/noise.json",
+    "view": "combined",
+    "level": "medium",
+    "families": [
+      "case_loss",
+      "diacritic_loss",
+      "typo_swap"
+    ],
+    "noisy_view_row_percent": 50,
+    "row_count_rounding": "floor_N_times_percent_divided_by_100",
+    "row_selection": "lowest_sha256_rank",
+    "row_key_fields": [
+      "training_version",
+      "training_seed",
+      "epoch_1_based",
+      "row_id",
+      "purpose"
+    ],
+    "row_key_purpose": "noisy_view",
+    "row_key_serialization": "JSON array; ensure_ascii=False; separators=(',', ':'); UTF-8",
+    "row_tie_break": "row_id",
+    "excluded_row_key_fields": [
+      "labels",
+      "model_id",
+      "arm",
+      "ablated_family"
+    ],
+    "word_plan_scope": "whole_clean_training_split_before_row_view_selection",
+    "refresh": "once_per_epoch",
+    "replace_selected_rows_in_place": true,
+    "append_extra_records": false,
+    "force_actual_edit_in_selected_row": false,
+    "audit_realized_coverage_after_row_selection": true,
+    "retokenize_and_realign": true,
+    "prepared_directory": "data/processed/training-augmentation-v1"
+  },
+  "arms": {
+    "clean": {
+      "augmentation": false
+    },
+    "augmented": {
+      "augmentation": true
+    }
+  },
+  "training_ablations": {
+    "enabled_by_default": false,
+    "minimum_planned_drop_one_family": [
+      "case_loss"
+    ],
+    "optional_drop_one_family": [
+      "diacritic_loss",
+      "typo_swap"
+    ],
+    "reuse_initialization_row_views_and_remaining_word_plans": true,
+    "redistribute_removed_family_budget": false
+  },
+  "selection": {
+    "evaluation_frequency": "epoch",
+    "candidate_checkpoints": "completed_epoch_ends_only",
+    "split": "validation",
+    "condition": "clean",
+    "metric": "punctuation_macro.f1",
+    "greater_is_better": true,
+    "tie_break": "earliest_epoch",
+    "keep_final_checkpoint_for_matched_step_analysis": true,
+    "noisy_validation_used_for_selection": false
+  },
+  "hyperparameter_search": {
+    "enabled": false,
+    "policy": "fixed_starting_recipe_any_revision_logged_before_augmented_comparison"
+  },
+  "artifacts": {
+    "root_directory": "artifacts/training/training-v1",
+    "resumable_checkpoint_every_optimizer_steps": 500,
+    "keep_latest_resumable_checkpoints": 2,
+    "keep_best_and_final_model_exports": true,
+    "keep_candidate_epoch_exports": true,
+    "save_optimizer_scheduler_rng_and_sampler_state": true,
+    "archive_sources_configs_and_input_hashes": true,
+    "overwrite_existing_runs": false,
+    "checkpoint_layout": "two_reused_slots"
+  },
+  "paired_clean_run": {
+    "directory": "artifacts/training/training-v1/train-clean-seed-586-v1/completed-archive/run",
+    "identity": "5ddecc9b8bfaf0b9442a7942caa45a64173e037b0ea7309692c12e5767603f37"
+  }
+}

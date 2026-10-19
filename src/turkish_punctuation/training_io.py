@@ -159,9 +159,20 @@ def save_checkpoint(
 def load_checkpoint(directory: Path, *, identity: str) -> tuple[dict, Path]:
     """Try newest committed state first; report any damaged checkpoint explicitly."""
     errors = []
-    for checkpoint in sorted(directory.glob("checkpoint-[0-9]*"), reverse=True):
+    candidates = [*directory.glob("checkpoint-[0-9]*"), *directory.glob("slot-0[12]")]
+
+    def serial(path: Path) -> int:
+        try:
+            return int(json.loads((path / "manifest.json").read_text())["serial"])
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            errors.append(f"{path.name}: unreadable manifest: {error}")
+            return -1
+
+    for checkpoint in sorted(candidates, key=serial, reverse=True):
         try:
             manifest = json.loads((checkpoint / "manifest.json").read_text())
+            if manifest.get("status", "complete") != "complete":
+                raise ValueError("Checkpoint slot has an incomplete write.")
             if manifest["identity"] != identity:
                 raise ValueError("Checkpoint belongs to a different run identity.")
             if sha256(checkpoint / "state.pt") != manifest["state_sha256"]:
@@ -184,3 +195,67 @@ def load_checkpoint(directory: Path, *, identity: str) -> tuple[dict, Path]:
         ) as error:
             errors.append(f"{checkpoint.name}: {error}")
     raise ValueError(f"No verified resumable checkpoint found: {errors}")
+
+
+def _rewrite_file(path: Path, content: bytes) -> None:
+    """Preserve a Drive file's pathname; do not unlink or rename an old version."""
+    if path.is_symlink():
+        raise ValueError("Checkpoint slots must not contain symlinks.")
+    with path.open("wb") as stream:
+        stream.write(content)
+        stream.flush()
+        os.fsync(stream.fileno())
+
+
+def save_rotating_checkpoint(
+    directory: Path,
+    payload: dict,
+    *,
+    identity: str,
+    serial: int,
+    protected: Path | None,
+) -> Path:
+    """Reuse two stable slots while retaining the last verified slot during a write.
+
+    Stage on the VM first. Invalidate the other slot's manifest, overwrite its
+    state in place, check the readback hash, and publish its complete manifest
+    last. No Drive directory/file is deleted. Cloud upload durability and the
+    provider's version history remain separate from this local protocol.
+    """
+    directory.mkdir(parents=True, exist_ok=True)
+    if directory.is_symlink() or any(directory.glob("checkpoint-[0-9]*")):
+        raise ValueError("Use a fresh two-slot directory, not legacy checkpoints or symlinks.")
+    slots = [directory / "slot-01", directory / "slot-02"]
+    if protected is not None and protected not in slots:
+        raise ValueError("Protected checkpoint is outside the declared two slots.")
+    if protected is None and any(path.exists() for path in slots):
+        raise ValueError("Existing slots require a verified resume checkpoint before rewriting.")
+    destination = slots[1] if protected == slots[0] else slots[0]
+    if destination.is_symlink():
+        raise ValueError("Checkpoint slot must not be a symlink.")
+    if payload["identity"] != identity or payload["serial"] != serial:
+        raise ValueError("Checkpoint payload identity/serial differs.")
+    destination.mkdir(exist_ok=True)
+    with TemporaryDirectory(prefix="cmpe586-checkpoint-") as temporary:
+        staging = Path(temporary) / "state.pt"
+        torch.save(payload, staging)
+        expected = sha256(staging)
+        writing = {"identity": identity, "serial": serial, "status": "writing"}
+        _rewrite_file(destination / "manifest.json", json.dumps(writing).encode())
+        state_path = destination / "state.pt"
+        if state_path.is_symlink():
+            raise ValueError("Checkpoint state must not be a symlink.")
+        with staging.open("rb") as source, state_path.open("wb") as target:
+            shutil.copyfileobj(source, target, length=4 * 1024 * 1024)
+            target.flush()
+            os.fsync(target.fileno())
+        if sha256(state_path) != expected:
+            raise ValueError("Checkpoint slot readback hash differs; previous slot retained.")
+        complete = {
+            **writing,
+            "status": "complete",
+            "state_sha256": expected,
+            "created_at_utc": utc_now(),
+        }
+        _rewrite_file(destination / "manifest.json", json.dumps(complete).encode())
+    return destination

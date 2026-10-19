@@ -3,9 +3,11 @@
 Specified **2026-10-18**, version **training-v1**. Settings are in
 [configs/training.json](../configs/training.json). The clean runner completed a
 **30-update T4 calibration**; see [observations](training-calibration.md).
-Full fine-tuning, full-epoch validation/selection and checkpoint/resume remain
-unexecuted. Train augmentation preparation is still planned. No test evaluation
-has run as part of this training work.
+The clean three-epoch run and its medium-noise validation pilot are complete.
+Augmented epoch views and the paired runner are implemented; all three local
+views passed data/tokenization audits. Augmented GPU calibration and storage
+inspection are the next execution step. See [preparation status](augmentation-preparation.md).
+No full augmented training or held-out test evaluation has run.
 
 ## 1. What the comparison measures
 
@@ -73,8 +75,7 @@ dropout RNG use. Do not initialize from the published punctuation head.
 Reuse the pinned tokenizer assets already named in `tokenizer.json`, after
 verifying their vocabulary IDs, special tokens and tokenization configuration
 against the pinned base model's tokenizer and embedding dimensions. This
-compatibility check is implemented but has not run yet: the pinned base assets
-are not cached locally. Reproduce all prepared train/validation encodings with
+compatibility check passed during clean preparation/training. Reproduce all prepared train/validation encodings with
 the base tokenizer before training; fail on incompatibility instead of silently
 changing token IDs.
 
@@ -303,9 +304,12 @@ is complete: both optimizer checkpoints, epoch-01/02 exports and the temporary
 transfer ZIP were permanently deleted after user confirmation. The selected
 epoch-03 export, shared input/initialization assets and small run reports remain.
 The Drive UI subsequently showed 5 GB of 15 GB used (about 10 GB free).
-There is **no automatic Drive cleanup hook**. Safe checkpoint cleanup must be
-addressed before the next training because discarded active-run checkpoints can
-also accumulate in Trash.
+There is **no automatic permanent Drive cleanup hook**. New augmented runs use
+two fixed checkpoint slots, rewriting the older slot in place while protecting
+the last verified one. This avoids the legacy directory create/delete cycle;
+the loader rejects incomplete/hash-mismatched writes. Provider-side Drive
+behavior still requires observation before claiming the storage issue resolved.
+Details and execution status: [augmentation preparation](augmentation-preparation.md).
 
 For a future longer run (for example, 25 epochs), end-of-run archiving alone is
 insufficient: 25 FP32 epoch exports would use about 11 GB before resumable state,

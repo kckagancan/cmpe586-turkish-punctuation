@@ -31,7 +31,7 @@ class TrainingProgress:
 
 
 def validate_training_config(config: dict) -> None:
-    """Reject protocol switches that this clean-only FP32 runner cannot honor."""
+    """Reject numerical and storage policies the paired FP32 runner cannot honor."""
     opt, data, runtime = (config[key] for key in ("optimization", "data", "runtime"))
     fixed = {
         "optimizer": "torch.optim.AdamW",
@@ -108,6 +108,16 @@ def validate_training_config(config: dict) -> None:
     if config["artifacts"]["keep_latest_resumable_checkpoints"] < 2:
         raise ValueError("Keep at least two committed resumable checkpoints.")
     artifacts = config["artifacts"]
+    if artifacts.get("checkpoint_layout", "legacy_serial") not in (
+        "legacy_serial",
+        "two_reused_slots",
+    ):
+        raise ValueError("Unknown checkpoint layout.")
+    if (
+        artifacts.get("checkpoint_layout") == "two_reused_slots"
+        and artifacts["keep_latest_resumable_checkpoints"] != 2
+    ):
+        raise ValueError("The fixed-slot protocol retains exactly two slots.")
     if (
         artifacts["overwrite_existing_runs"] is not False
         or artifacts["keep_candidate_epoch_exports"] is not True
