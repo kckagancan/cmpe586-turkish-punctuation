@@ -77,3 +77,17 @@ python scripts/evaluate_noise.py --config configs/clean-noise-evaluation.json
 
 No training is performed. Protocol and results:
 [clean-noise-pilot.md](../docs/clean-noise-pilot.md).
+
+## Augmented fine-tuned model evaluation
+
+`augmented-noise-evaluation.json` pins the completed augmented run's selected
+epoch-03 export and tensor digest. It uses the same prepared validation noise,
+runtime, batching and scoring as the clean/published pilots. No noise is
+regenerated and no training is performed:
+
+```bash
+python scripts/evaluate_noise.py --config configs/augmented-noise-evaluation.json
+```
+
+Comparison scope and execution status:
+[augmented-noise-pilot.md](../docs/augmented-noise-pilot.md).
