@@ -19,6 +19,9 @@ from transformers import AutoTokenizer, PreTrainedTokenizerFast
 
 from turkish_punctuation.data import read_split
 from turkish_punctuation.evaluation_model import load_exported_model, training_reference
+from turkish_punctuation.gpu_evaluation import (
+    condition_committed, configure_runtime, publish_condition, write_in_place,
+)
 from turkish_punctuation.inference import load_published_model
 from turkish_punctuation.metrics import PUNCTUATION_LABELS
 from turkish_punctuation.preprocessing import encode_records, partition_records
@@ -29,6 +32,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PATHS = (
     "scripts/evaluate_noise.py",
     "src/turkish_punctuation/evaluation_model.py",
+    "src/turkish_punctuation/gpu_evaluation.py",
     "src/turkish_punctuation/training_io.py",
     "src/turkish_punctuation/robustness.py",
     "src/turkish_punctuation/inference.py",
@@ -46,7 +50,10 @@ def sha256(path: Path) -> str:
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
-def write_json(path: Path, value: object) -> None:
+def write_json(path: Path, value: object, *, in_place: bool = False) -> None:
+    if in_place:
+        write_in_place(path, value)
+        return
     temporary = path.with_suffix(".tmp")
     temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     temporary.replace(path)
@@ -55,6 +62,10 @@ def write_json(path: Path, value: object) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=Path("configs/noise-evaluation.json"))
+    parser.add_argument("--input-root", type=Path, default=ROOT)
+    parser.add_argument("--output-root", type=Path, default=ROOT)
+    parser.add_argument("--storage-root", type=Path)
+    parser.add_argument("--calibration", type=Path)
     parser.add_argument(
         "--resume", action="store_true", help="Resume an interrupted identical run."
     )
@@ -62,7 +73,22 @@ def main() -> None:
     config_path = (ROOT / args.config).resolve()
     config_bytes = config_path.read_bytes()
     config = json.loads(config_bytes)
+    gpu_runtime = configure_runtime(config)
     executed_sources = {name: (ROOT / name).read_bytes() for name in SOURCE_PATHS}
+    if gpu_runtime is not None:
+        if args.calibration is None:
+            raise ValueError("GPU evaluation requires the completed matched calibration receipt.")
+        calibration = json.loads(args.calibration.read_text())
+        if (
+            calibration["status"] != "complete"
+            or calibration["gpu_runtime"] != gpu_runtime
+            or calibration["configs_sha256"][str(config_path.relative_to(ROOT))]
+            != hashlib.sha256(config_bytes).hexdigest()
+            or calibration["evaluation_source_sha256"] != {
+                name: hashlib.sha256(content).hexdigest() for name, content in executed_sources.items()
+            }
+        ):
+            raise ValueError("GPU runtime/configuration/source differs from calibration.")
     if (
         config["split"] != "validation"
         or config["punctuation_labels"] != list(PUNCTUATION_LABELS)
@@ -92,16 +118,19 @@ def main() -> None:
         or any(not re.fullmatch(r"[a-zA-Z0-9_-]+", name) for name in names)
     ):
         raise ValueError("Choose distinct simple condition names from the prepared manifest.")
-    destination = (ROOT / config["output_directory"]).resolve()
-    if not destination.is_relative_to(ROOT / "artifacts/evaluations"):
+    output_root, input_root = args.output_root.resolve(), args.input_root.resolve()
+    destination = (output_root / config["output_directory"]).resolve()
+    if not destination.is_relative_to(output_root / "artifacts/evaluations"):
         raise ValueError("Results must be inside artifacts/evaluations/.")
-    if destination.exists() and (not args.resume or (destination / "summary.json").exists()):
+    if destination.exists() and (
+        not args.resume or (gpu_runtime is None and (destination / "summary.json").exists())
+    ):
         raise FileExistsError(
             "Output exists. Use a new directory, or --resume for an interrupted run."
         )
     if args.resume and not destination.exists():
         raise FileNotFoundError("No interrupted run exists at the configured destination.")
-    prepared = ROOT / config["prepared_directory"]
+    prepared = input_root / config["prepared_directory"]
     preparation_path = prepared / "manifest.json"
     preparation = json.loads(preparation_path.read_text())
     tokenizer_config = json.loads(executed_sources["configs/tokenizer.json"])
@@ -109,17 +138,24 @@ def main() -> None:
         name: version(name)
         for name in ("torch", "transformers", "datasets", "scikit-learn", "numpy")
     }
+    if gpu_runtime is not None and packages != calibration["packages"]:
+        raise ValueError("Evaluation packages changed after GPU calibration.")
     trained = None
     comparison = None
     if "trained_model" in config:
-        trained = training_reference(ROOT, config["trained_model"])
+        trained_settings = dict(config["trained_model"])
+        if args.storage_root is not None:
+            trained_settings["run_directory"] = str(
+                args.storage_root.resolve() / config["storage_run_directory"]
+            )
+        trained = training_reference(ROOT, trained_settings)
         clean_report_path = trained["report_path"]
         clean_report = trained["report"]
         baseline_path = trained["prediction_path"]
         reference_tokenizer = trained["tokenizer_config"]
         validation_source_sha256 = trained["validation_source_sha256"]
         model_provenance = trained["metadata"]
-        comparison_path = ROOT / config["published_comparison_directory"] / "summary.json"
+        comparison_path = output_root / config["published_comparison_directory"] / "summary.json"
         comparison = json.loads(comparison_path.read_text())
         if (
             packages != comparison["identity"]["packages"]
@@ -130,18 +166,20 @@ def main() -> None:
         for key in ("batch_size", "device", "cpu_threads", "seed", "batch_order"):
             if config[key] != comparison["run"][key]:
                 raise ValueError(f"Inference setting differs from published comparison: {key}")
+        if gpu_runtime != comparison["identity"].get("gpu_runtime"):
+            raise ValueError("Cross-model GPU hardware or numerical policy differs.")
     else:
-        clean_directory = ROOT / config["clean_reference_directory"]
+        clean_directory = input_root / config["clean_reference_directory"]
         clean_report_path = clean_directory / "metrics.json"
         clean_report = json.loads(clean_report_path.read_text())
         baseline_path = clean_directory / "predictions.jsonl"
         reference_tokenizer = clean_report["model"]
         validation_source_sha256 = clean_report["validation_source_sha256"]
-        model_provenance = tokenizer_config
-        if packages != clean_report["packages"]:
+        model_provenance = dict(tokenizer_config)
+        if gpu_runtime is None and packages != clean_report["packages"]:
             raise ValueError("Runtime packages differ from clean reference.")
         for key in ("batch_size", "device", "cpu_threads", "seed"):
-            if config[key] != clean_report["run"][key]:
+            if gpu_runtime is None and config[key] != clean_report["run"][key]:
                 raise ValueError(f"Inference setting differs from clean reference: {key}")
         if clean_report["run"]["split"] != "validation":
             raise ValueError("Clean reference must belong to validation.")
@@ -169,7 +207,7 @@ def main() -> None:
         raise ValueError("Saved clean predictions differ from their recorded hash.")
     source = json.loads(executed_sources["docs/data-manifest.json"])
     item = next(item for item in source["files"] if item["split"] == "validation")
-    raw_path = ROOT / source["local_directory"] / item["filename"]
+    raw_path = input_root / source["local_directory"] / item["filename"]
     if (
         sha256(raw_path) != item["sha256"]
         or raw_path.stat().st_size != item["bytes"]
@@ -317,6 +355,8 @@ def main() -> None:
         "batching": batching,
         "packages": packages,
     }
+    if gpu_runtime is not None:
+        identity["gpu_runtime"] = gpu_runtime
     if trained is not None:
         identity["trained_model"] = model_provenance
         identity["published_comparison_summary_sha256"] = sha256(comparison_path)
@@ -357,6 +397,27 @@ def main() -> None:
         raise ValueError(
             "Resume inputs/code/settings differ from the interrupted run; use a new run."
         )
+    identity_digest = hashlib.sha256(
+        json.dumps(identity, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    if gpu_runtime is not None and (destination / "summary.json").exists():
+        try:
+            completed_summary = json.loads((destination / "summary.json").read_text())
+        except json.JSONDecodeError:
+            completed_summary = None
+        if completed_summary is not None:
+            if completed_summary["identity"] != identity:
+                raise ValueError("Completed summary identity changed.")
+            for name in ["clean-anchor", *names]:
+                folder = destination / "conditions" / name
+                if not condition_committed(folder, identity_digest):
+                    raise ValueError("Completed summary refers to an uncommitted condition.")
+                saved = json.loads((folder / "metrics.json").read_text())
+                expected = completed_summary["clean_anchor"] if name == "clean-anchor" else completed_summary["conditions"][name]
+                if saved != expected:
+                    raise ValueError("Completed summary/condition report differs.")
+            print(f"Verified already completed GPU run: {destination}", flush=True)
+            return
     with (destination / ".run.lock").open("a") as lock:
         try:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -367,10 +428,21 @@ def main() -> None:
             if trained is not None
             else load_published_model(tokenizer_config, root=ROOT)
         )
+        if gpu_runtime is not None:
+            from turkish_punctuation.training_io import model_digest
+            if model.config._attn_implementation != "sdpa" or model.dtype != torch.float32:
+                raise ValueError("Expected the shared FP32 SDPA/math inference implementation.")
+            actual = model_digest(model)
+            expected = config.get("model_tensors_sha256") or config["trained_model"]["model_tensors_sha256"]
+            if actual != expected:
+                raise ValueError("GPU evaluation loaded a different model tensor identity.")
         reports = {}
         for name in ["clean-anchor", *names]:
             output = destination / "conditions" / name
-            if output.exists():
+            committed = output.exists() and (
+                gpu_runtime is None or condition_committed(output, identity_digest)
+            )
+            if committed:
                 saved = json.loads((output / "metrics.json").read_text())
                 if (
                     sha256(output / "predictions.jsonl") != saved["predictions_sha256"]
@@ -387,6 +459,8 @@ def main() -> None:
                         raise ValueError("Saved clean-anchor metrics do not reproduce.")
                 print(f"Resuming: retained completed condition {name}.", flush=True)
                 continue
+            if output.exists() and not args.resume:
+                raise FileExistsError(f"Uncommitted condition exists; use --resume: {output}")
             output.parent.mkdir(parents=True, exist_ok=True)
             print(f"Evaluating {name} on {config['device']}.", flush=True)
 
@@ -402,10 +476,13 @@ def main() -> None:
                         "completed_conditions": list(reports),
                         "updated_at_utc": datetime.now(timezone.utc).isoformat(),
                     },
+                    in_place=gpu_runtime is not None,
                 )
                 print(f"{name}: {completed}/{len(eligible)} records; {elapsed:.1f}s", flush=True)
 
-            with TemporaryDirectory(prefix=f".{name}-", dir=output.parent) as temporary:
+            with TemporaryDirectory(
+                prefix=f".{name}-", dir=output.parent if gpu_runtime is None else None
+            ) as temporary:
                 staging = Path(temporary) / "result"
                 staging.mkdir()
                 dataset, noisy_records = variants[name]
@@ -438,7 +515,10 @@ def main() -> None:
                     }
                 )
                 write_json(staging / "metrics.json", result)
-                staging.rename(output)
+                if gpu_runtime is None:
+                    staging.rename(output)
+                else:
+                    publish_condition(staging, output, identity_digest)
                 reports[name] = result
                 if name == "clean-anchor":
                     clean_predictions, clean_metrics = read_predictions(
@@ -460,17 +540,14 @@ def main() -> None:
             "conditions": {name: reports[name] for name in names},
             "completed_at_utc": datetime.now(timezone.utc).isoformat(),
             "scope": (
-                "Selected fine-tuned checkpoint on fixed clean-v1 validation; one training seed "
-                "and one corruption seed. Clean scores are recomputed in the matched published "
-                "pilot runtime. Not independent final-test evidence or an augmentation comparison."
-                if trained is not None else
-                "Published checkpoint on fixed clean-v1 validation; one corruption seed in the "
-                "pilot; not independent final-test evidence or a training-augmentation comparison."
+                "Fixed clean-v1 validation; corruption realizations are identified by condition "
+                "names. No held-out test or additional training seeds. Degradation uses this "
+                "run's recomputed clean control. Historical clean predictions are diagnostics."
             ),
             "training_performed": False,
             "test_evaluated": False,
         }
-        write_json(destination / "summary.json", summary)
+        write_json(destination / "summary.json", summary, in_place=gpu_runtime is not None)
         write_json(
             destination / "progress.json",
             {
@@ -478,6 +555,7 @@ def main() -> None:
                 "completed_conditions": list(reports),
                 "updated_at_utc": datetime.now(timezone.utc).isoformat(),
             },
+            in_place=gpu_runtime is not None,
         )
         print(
             f"Completed clean anchor and {len(names)} noise conditions: {destination}", flush=True

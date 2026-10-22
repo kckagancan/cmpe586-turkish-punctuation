@@ -28,6 +28,8 @@ def compare_runs(run: Path, summary: dict, reference_run: Path) -> tuple[dict, s
     for key in ("noise_manifest_sha256", "condition_input_sha256", "batching", "packages"):
         if summary["identity"][key] != reference["identity"][key]:
             raise ValueError(f"Cross-model comparison differs in {key}.")
+    if summary["identity"].get("gpu_runtime") != reference["identity"].get("gpu_runtime"):
+        raise ValueError("Cross-model GPU hardware or numerical policy differs.")
     for name in ("inference", "metrics", "preprocessing", "data", "tokenization", "robustness"):
         source = f"src/turkish_punctuation/{name}.py"
         if summary["identity"]["source_sha256"][source] != reference["identity"]["source_sha256"][source]:
@@ -103,6 +105,7 @@ def main() -> None:
     parser.add_argument("--run-directory", type=Path)
     parser.add_argument("--output-directory", type=Path)
     parser.add_argument("--comparison-run-directory", type=Path)
+    parser.add_argument("--input-root", type=Path, default=ROOT)
     args = parser.parse_args()
     config = json.loads((ROOT / "configs/noise-evaluation.json").read_text())
     run = (ROOT / (args.run_directory or config["output_directory"])).resolve()
@@ -111,7 +114,7 @@ def main() -> None:
     destination = (ROOT / (args.output_directory or run / "analysis")).resolve()
     if destination.exists():
         raise FileExistsError("Analysis already exists; choose a new --output-directory.")
-    prepared = ROOT / summary["run"]["prepared_directory"]
+    prepared = args.input_root / summary["run"]["prepared_directory"]
     anchor_path = run / "conditions/clean-anchor/predictions.jsonl"
     if sha256(anchor_path) != summary["clean_anchor"]["predictions_sha256"]:
         raise ValueError("Clean-anchor prediction hash differs.")

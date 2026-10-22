@@ -1,0 +1,42 @@
+{
+  "version": "robustness-grid-gpu-v1",
+  "split": "validation",
+  "configuration_order": [
+    "configs/published-robustness-grid.json",
+    "configs/clean-robustness-grid.json",
+    "configs/augmented-robustness-grid.json"
+  ],
+  "noise_seeds": [
+    586,
+    587,
+    588
+  ],
+  "levels": [
+    "mild",
+    "medium",
+    "heavy"
+  ],
+  "families": [
+    "case_loss",
+    "diacritic_loss",
+    "typo_swap",
+    "combined"
+  ],
+  "stress_conditions": [
+    "case_loss_full",
+    "diacritic_loss_full"
+  ],
+  "standard_deviation": "sample_ddof_1_across_corruption_seeds_not_training_seeds",
+  "conditions_per_model": 39,
+  "model_count": 3,
+  "total_evaluations": 117,
+  "selected_training_seed": 586,
+  "batch_size": 16,
+  "precision": "float32",
+  "cuda_sdpa_backend": "math",
+  "tf32": false,
+  "deterministic_algorithms": true,
+  "prepared_directory": "data/processed/noise-v1",
+  "output_directory": "artifacts/evaluations/robustness-grid-gpu-v1",
+  "input_bundle_sha256": "579a6a6ff5969ce0406ef7bbd057a5fe56c5058ebb17e6cb4918e6dc360c97eb"
+}
