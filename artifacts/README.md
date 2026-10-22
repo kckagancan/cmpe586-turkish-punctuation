@@ -127,3 +127,19 @@ Bu klasördeki `calibration/` Colab'ın gerçek `run.json`, `calibration.json`,
 de yerelde hash kontrolünden geçti. GPU calibration 30 update ile tamamlandı;
 full augmented training başlamadı. Bu küçük dosyalar ve ekran görüntüleri de
 Git dışında kalır.
+
+## Tamamlanan augmented koşu
+
+`training/training-v1/train-augmented-seed-586-v1/completion-2026-10-22/`, 3 epoch /
+10.968 update tamamlanan koşudan alınan metadata, source/hash/event denetimi,
+arşiv receipt'i ve ekran görüntülerini tutar. `metadata/` altında run/summary/
+progress, üç epoch'un metrics/export ve augmentation audit dosyaları bulunur.
+Geçici audit hücresi notebook'tan kaldırıldı; çalıştırılan yardımcı kaynaklar
+burada saklanır. Bu aşamada model ağırlıkları henüz yerel klasöre indirilmedi.
+
+Drive'daki `augmented-seed586-models-3cdf62cc3be4.zip`, 1.772.193.862 byte ve
+SHA-256 `b93de2fd2c0335c487332fcdb2d8ab10e9aaaf3eba11c9e43d93a7b5cfb44378`
+ile doğrulandı. Üç model ve ortak initialization dahil 58 kaynak üyeyi içerir;
+optimizer state içermez. Kullanıcının manuel indirmesi, yerel doğrulama/model
+yükleme ve ardından kapsamı belirlenmiş Drive temizliği bekleniyor. Güncel durum:
+[augmented training raporu](../docs/augmented-training-status.md).

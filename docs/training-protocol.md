@@ -7,10 +7,11 @@ The clean three-epoch run and its medium-noise validation pilot are complete.
 Augmented epoch views and the paired runner are implemented; all three local
 views passed data/tokenization audits locally and on Colab. The separate
 30-update augmented T4 calibration and tiny Drive slot inspection passed;
-the first full augmented run was subsequently launched on 2026-10-22 and is
-in progress. See [preparation status](augmentation-preparation.md) and
-[run status](augmented-training-status.md). No completed augmented result or
-held-out test evaluation has been produced.
+the first full augmented run subsequently completed on 2026-10-22: 3 epochs /
+10,968 updates, selected epoch 3, clean validation macro-F1 0.839880566. See
+[preparation status](augmentation-preparation.md) and
+[run/archive status](augmented-training-status.md). Augmented noisy-input and
+held-out test evaluation have not yet been performed.
 
 ## 1. What the comparison measures
 
