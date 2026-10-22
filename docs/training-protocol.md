@@ -14,8 +14,11 @@ the first full augmented run subsequently completed on 2026-10-22: 3 epochs /
 medium-noise validation pilot is also complete: macro-F1 gains over clean
 fine-tuning are +1.0084 / +0.1719 / +0.3331 / +1.7470 pp for case loss,
 diacritic loss, swaps and combined noise, with −0.0485 pp on clean text.
-See the [comparison and limitations](augmented-noise-pilot.md). Severity sweeps,
-additional corruption seeds and held-out test evaluation remain unperformed.
+See the [comparison and limitations](augmented-noise-pilot.md). The GPU severity
+grid and three corruption seeds subsequently completed: **117 evaluations**,
+verified on Colab and again locally. See the
+[full-grid results](robustness-grid-results.md). The training ablation and
+held-out test evaluation remain unperformed.
 Its 58-file local model/results archive and four offline model loads passed
 verification. After action-time user confirmation, the run's two optimizer slots,
 epoch-01/02 Drive exports and temporary transfer ZIP were permanently deleted;

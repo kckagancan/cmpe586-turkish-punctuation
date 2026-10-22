@@ -183,8 +183,14 @@ ham validation kaynağını ve hazır modelin tarihsel clean referansını taş�
 training/test metni veya model ağırlığı içermez. Model export'ları proje Drive'ında
 korunan seçili epoch-03 klasörlerinden okunur.
 
-Tam GPU sonuçları proje Drive'ındaki `artifacts/evaluations/` altında üç ayrı
-model koşusuna yazılacak. Ortak `robustness-grid-gpu-v1/` kalibrasyon, ilerleme ve
-analiz çıktıları içindir. `complete.json` koşul/analiz dosyalarının doğrulanmış
-yayınını tanımlar. Güncel çalışma durumu:
+Tam GPU sonuçları hem proje Drive'ındaki hem yereldeki `artifacts/evaluations/`
+altında üç ayrı model koşusunda tamamlandı. Ortak `robustness-grid-gpu-v1/`
+kalibrasyon, ilerleme, execution log ve analiz çıktılarını tutar. `complete.json`
+koşul/analiz dosyalarının doğrulanmış yayınını tanımlar. 533 dosyalık sonuç ZIP'i
+yerelde hash/boyut ve güvenli çıkarma kontrollerinden geçti; 117 ölçümün metrikleri
+ham hedeflerden yeniden hesaplandı, üç cross-model karşılaştırması ve 13 analiz
+dosyası doğrulandı. ZIP yaklaşık 15,7 MB; model ağırlığı içermez.
+`evaluation-preparation/robustness-grid-gpu-v1/` içindeki
+`completed-result-verification.json` yerel doğrulama kaydıdır. Drive'daki sonuçlar
+ve küçük arşiv korunuyor. Güncel çalışma durumu:
 [GPU grid raporu](../docs/robustness-grid.md).

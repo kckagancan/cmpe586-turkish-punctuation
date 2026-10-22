@@ -67,7 +67,7 @@ Persistent results are under the existing project's `artifacts/evaluations/`
 directories. The aggregate `robustness-grid-gpu-v1/analysis/` includes per-seed
 comparisons, mean/SD tables, deterministic endpoints and figures. Large outputs,
 text and weights stay outside Git. Inputs, models and earlier CPU pilots remain
-preserved. Results will be reported only after completion and verification.
+preserved. Results are reported after completion and verification.
 
 ## Current status
 
@@ -85,21 +85,51 @@ The validation ZIP reused 285 existing files and passed full ZIP/member hash
 verification after its Drive transfer and Colab extraction. Source commit:
 `085065f5203c63467321db7f5e5bbfb5b2158c45`.
 The complete grid started **2026-10-22 around 12:30 Europe/Istanbul**, beginning
-with the published model. Completion and aggregate results remain pending.
-Held-out test evaluation remains unperformed.
+with the published model, and finished around **13:58 Europe/Istanbul** according
+to the notebook execution display. All **117 evaluations and saved-metric
+verification completed successfully**. The source and publication history are
+preserved. [Results, class behavior and figures](robustness-grid-results.md).
+Held-out test evaluation remains unperformed; one training seed was evaluated.
 
 Initial full-condition observations were **33.5–35.8 seconds** for the clean
 control and first seven noisy conditions (14,453 records each). At roughly
 35 seconds per condition, 117 inference passes alone would take about 68
 minutes. Heavy/full-loss conditions, input audits, Drive publication and final
 analysis can change the total; the earlier two-hour figure is not a fixed ETA.
-The first eight conditions were published successfully, including their
-verified `complete.json` markers. The job is left running visibly for the user;
-this launch observation does not assert that the full grid has completed.
+The first eight conditions were published successfully before handoff. The
+job then completed all three models, recomputed every condition's metrics from
+saved predictions and raw targets, checked cross-model inputs/runtime, and
+published the aggregate analysis with verified `complete.json` markers.
 
 Live execution reuses the reconnected T4 in the existing
 [Colab notebook, grid cell](https://colab.research.google.com/drive/1KKuqXRHKn4xr0nA7mXjtZexL4FrKFsV8#scrollTo=BMwam3sZ8fY3).
 Appended cells 16–18 restore the new evaluation setup, calibrate, and run the
 grid; original completed training cells are not executed. The clean standalone
 reproduction notebook is `04_robustness_evaluation_colab.ipynb` in Git.
-Calibration/source pins stay frozen during the running evaluation.
+Calibration/source pins stayed frozen throughout the evaluation. Export and
+archive-persistence cells 19–20 were added after completion.
+The live calibration/grid switches were then set to `False` without rerunning
+either cell. Their completed outputs remain visible. The standalone notebook's
+status cell now reads saved result tables and figures; its calibration/grid
+switches remain off and committed notebook outputs are cleared.
+
+## Local archive verification
+
+The user downloaded `robustness-grid-gpu-v1-results.zip` through a normal browser
+after the in-app browser did not save the download. The ZIP contains **533 files**
+and is **15,740,950 bytes**, SHA-256
+`30712c7dcd36684d20708eddf5c6671dfafe569737e87f3079004b37ad4caf32`.
+It contains all three evaluation directories and the shared calibration,
+progress, execution log and analysis; no model weights or optimizer states.
+
+Locally, the transfer hash, ZIP membership, every member's hash/size, safe paths
+and extracted bytes passed. All 117 condition publication markers, prediction
+hashes, original targets, record order and recomputed metrics passed again.
+All three cross-model comparisons passed, as did the 13 committed analysis
+files and their source/summary hashes. The verification receipt is stored in
+`artifacts/evaluation-preparation/robustness-grid-gpu-v1/completed-result-verification.json`.
+An additional local aggregation check reproduced all 36 model/family/severity
+summaries, 12 paired seed deltas and six deterministic model endpoints, including
+sample SD (ddof=1). Its receipt is `aggregate-verification.json` in the same folder.
+The original Drive results and its small archive are retained. No Drive file
+was deleted. The completed source snapshot is preserved alongside every run.

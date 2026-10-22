@@ -47,8 +47,13 @@ Model/sonuç ZIP'i yerelde arşivlendi; 58 dosyanın hash'i, dört modelin offli
 validation skorları doğrulandı. Gereksiz Drive kopyaları onay sonrası temizlendi:
 [koşu ve arşiv durumu](docs/augmented-training-status.md).
 Mild/medium/heavy × üç corruption seed ve iki full-loss endpoint için ayrı,
-eşleşen GPU akışının üç model calibration'ı geçti; **117 ölçümlük validation
-grid T4'te başladı, tamamlanması bekleniyor**: [çalışma durumu](docs/robustness-grid.md).
+eşleşen GPU akışında **117 validation ölçümü tamamlandı**. Kaydedilen sonuçlar
+hem Colab'da hem yerelde ham hedeflerden yeniden doğrulandı. Augmented modelin
+clean modele göre combined-heavy kazancı **+3,8623 F1 puan**; clean skordaki
+farkı **−0,0485 puan**. Üç corruption seed'in ortalama/SD değerleri, sınıf
+sonuçları ve grafikler: [robustness sonuçları](docs/robustness-grid-results.md).
+Tek training seed kullanıldı; ablation ve held-out test henüz yapılmadı.
+Arşiv ve doğrulama durumu: [çalışma kaydı](docs/robustness-grid.md).
 Notebook'un training/calibration anahtarları kapalı; arşivleme de ayrı ve kapalı
 bir hücrede. Özet hücresi, bağlantı yenilendiğinde kalıcı Drive sonucunu okuyabilir.
 
