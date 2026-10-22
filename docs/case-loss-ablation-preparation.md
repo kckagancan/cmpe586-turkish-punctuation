@@ -44,7 +44,8 @@ Every epoch retains 116,969 records / 1,463,897 word targets. Row-view selection
 is 50%; it is not the changed-word percentage. Selected views with no actual
 edit are retained. Maximum length is 234, below 512; omitting lowercasing can
 still increase subword counts for some inputs. A separate calibration must
-include the longest prepared batch rather than assume the old peak is a bound.
+include the longest prepared batch rather than assume the old peak is a bound;
+the completed calibration below did so.
 
 Preparation identity:
 `c51d595912e144ab4f65233311299067590974077954504193f5abbf249a3a33`.
@@ -71,9 +72,9 @@ All calibration/training/archive switches default to **False**.
   and word targets before optimizer creation. Its training and inference
   implementations are unchanged in this preparation.
 
-The new calibration is a short technical run with **30 optimizer updates**.
+The new calibration was a short technical run with **30 optimizer updates**.
 It saves timing/memory/events, not trained weights or model-quality scores.
-The formal ablation starts again from the shared initialization. A passed
+The formal ablation will start again from the shared initialization. A passed
 calibration is not a completed ablation experiment.
 
 Formal run path: `training-v1/train-augmented-without-case-loss-seed-586-v1`.
@@ -87,8 +88,38 @@ automatic or account-wide Drive deletion is added.
 
 Local view preparation, complete re-tokenization, paired masks/operations audit,
 ZIP/member hash verification and notebook/config preparation passed.
-Drive transfer and GPU calibration are pending. Formal ablation training has
-**not started**. No ablation performance result exists yet.
+Drive upload, 31-file restoration/readback and the Colab paired-input audit passed
+using source commit `2cf928f`. The fresh VM mounted the existing project after
+the user's normal account approval. The separate T4 calibration and final
+readiness gate passed. Its identity is
+`9a44f3c234cca46c0479735e7b7052f15fe35dc08e056e7f5313fad26b1d5e64`.
+
+| Calibration observation | Value |
+| --- | ---: |
+| Completed optimizer updates | 30 |
+| Startup updates excluded from timing estimate | 5 |
+| Mean / median update time after startup | 0.3670 / 0.3159 s |
+| Peak allocated GPU memory | 2.44 GiB |
+| Longest prepared batch included | Yes, epoch view 2 |
+| Calibration weights retained | No |
+
+The update-only projection is about 67.1 minutes for 10,968 updates; it excludes
+input/model preparation, validation and checkpoint/export I/O. It is not a total
+wall-time guarantee. All 30 event losses were finite. Python 3.12.13, Torch
+2.11.0+cu128 and the recorded numerical runtime match the reference runs.
+
+Five calibration/readiness files were transferred to the local prep directory
+and checked by SHA-256. The local audit also verified run identity, source and
+config pins, shared initialization, matching paired-view audit, reference-run
+metadata, completed events and no retained calibration weights. The final
+`colab-preparation-verification.json` records `verified_ready`.
+
+The live notebook's calibration/training/archive switches are off and its final
+status cell passed. Nothing is running. Formal ablation training has **not
+started**; no ablation performance result exists yet. The user's requested stop
+point is preserved. Recheck the live runtime and readiness on a later authorized
+start; a disconnected VM may need setup again, while verified Drive inputs and
+calibration receipts remain reusable when their pins still match.
 
 Operational receipts are outside Git under
 `artifacts/training/training-v1/ablation-without-case-loss-preparation-seed-586/`.

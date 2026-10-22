@@ -194,3 +194,23 @@ dosyası doğrulandı. ZIP yaklaşık 15,7 MB; model ağırlığı içermez.
 `completed-result-verification.json` yerel doğrulama kaydıdır. Drive'daki sonuçlar
 ve küçük arşiv korunuyor. Güncel çalışma durumu:
 [GPU grid raporu](../docs/robustness-grid.md).
+
+## Case-loss ablation hazırlığı
+
+`training/training-v1/ablation-without-case-loss-preparation-seed-586/`, 31 dosyalık
+girdi ZIP'ini, transfer receipt'ini ve paired view audit'ini tutar. Asıl üç epoch
+view `data/processed/training-augmentation-v1/seed-586-without-case_loss/` altında;
+mevcut tam augmentation ile row mask, korunan word plan ve operation eşleşmeleri
+doğrulandı. Girdiler yeniden üretilmeden Drive'a aktarıldı ve tekrar doğrulandı.
+
+`calibration/` içindeki dört calibration kaydı ve `readiness.json`, Colab'dan
+alınan beş küçük dosyadır. `colab-ready-transfer.json` tam metin/hash zarfını,
+`colab-preparation-verification.json` yerel identity/source/config/runtime ve
+finite-loss denetimini saklar. T4 üzerinde 30 update tamamlandı; en uzun prepared
+batch dahil edildi, calibration ağırlıkları saklanmadı. Bunlar model performansı
+veya tamamlanmış bir ablation training sonucu değildir.
+
+`live-*.py` yürütülen hazırlık ve kapanış hücrelerini; `preparation-ready.jpg`
+son notebook durumunu, `files-changed.md` bu görevdeki tam dosya envanterini tutar.
+Notebook'taki çalışma anahtarları kapalı; formal ablation başlamadı ve çalışan
+iş yok. [Hazırlık raporu](../docs/case-loss-ablation-preparation.md).

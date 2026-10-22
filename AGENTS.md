@@ -63,3 +63,6 @@
   with the code changes, resolving them against actual artifacts and Git state.
 - Ignored local data/models are not copied by Git into a new worktree. Reuse a
   suitable read-only input location explicitly; do not silently duplicate weights.
+- A shared editable Python install can still resolve to the primary checkout.
+  Use the intended checkout's `src` on `PYTHONPATH`; do not rebind the shared
+  environment while another chat uses it. Keep experiments in their designated checkout.

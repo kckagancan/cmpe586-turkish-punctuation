@@ -45,9 +45,13 @@ they want to make a separate request before starting the study.
 - Orchestration: `notebooks/05_case_loss_ablation_colab.ipynb`;
   `scripts/prepare_ablation.py` and `src/turkish_punctuation/ablation.py`.
   [Preparation details](docs/case-loss-ablation-preparation.md).
-- **Still pending:** Drive ZIP transfer/restore, a separate 30-update T4
-  calibration whose weights are discarded, and final readiness verification.
-  No formal ablation output or performance result exists yet.
+- ZIP upload and Colab restoration passed, using source commit `2cf928f`.
+  A fresh VM reconnected to Drive; the user completed its normal account approval.
+- **Ready:** separate 30-update T4 calibration and final readiness passed;
+  the five transferred metadata files were locally hash/identity verified.
+  Calibration identity `9a44f3c234cc…`; longest prepared batch included,
+  finite losses, weights discarded. No formal ablation output or result exists.
+  Nothing is running; live calibration/training/archive switches are off.
 - Current working Colab:
   <https://colab.research.google.com/drive/1KKuqXRHKn4xr0nA7mXjtZexL4FrKFsV8>.
   Inspect live runtime state before using it; prior evaluation finished.
@@ -59,9 +63,13 @@ they want to make a separate request before starting the study.
 - Local prep receipts/ZIP:
   `artifacts/training/training-v1/ablation-without-case-loss-preparation-seed-586/`.
 - Drive input destination: `inputs/training-augmentation-v1/seed-586-without-case_loss`.
-- Planned calibration: `training-v1/calibration-augmented-without-case-loss-seed-586-v1`.
+- Completed calibration: `training-v1/calibration-augmented-without-case-loss-seed-586-v1`.
 - Planned formal output: `training-v1/train-augmented-without-case-loss-seed-586-v1`.
+- Local final receipt: prep directory's `colab-preparation-verification.json`;
+  full changed/generated file inventory: `files-changed.md` in that directory.
 
-Finish the pending preparation, update this status with actual receipts, and
-leave formal training/calibration/archive switches off for handoff. Do not
-start the three-epoch run until the user explicitly asks.
+Preparation is complete. The user wants to make another request before starting
+the ablation study; wait for that request. On a later authorized start, inspect
+the current VM, restore setup if disconnected, and repeat the readiness gate
+against the then-current runtime. Do not rerun calibration if its verified
+receipt still matches. Do not start the three-epoch run until explicitly asked.

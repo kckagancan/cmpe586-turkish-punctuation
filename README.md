@@ -60,8 +60,9 @@ sonuçları ve grafikler: [robustness sonuçları](docs/robustness-grid-results.
 Tek training seed kullanıldı; ablation ve held-out test henüz yapılmadı.
 Arşiv ve doğrulama durumu: [çalışma kaydı](docs/robustness-grid.md).
 Case-loss training ablation için üç epoch'un verisi, paired row/word-plan
-kontrolleri, transfer ZIP'i ve ayrı `05` notebook'u hazırlandı. Formal ablation
-başlatılmadan önceki güncel hazırlık durumu:
+kontrolleri, transfer ZIP'i ve ayrı `05` notebook'u hazırlandı. Drive restoration,
+30-update T4 calibration ve final readiness geçti; kayıtlar yerelde doğrulandı.
+Formal ablation başlamadı. Güncel hazırlık durumu:
 [ablation hazırlık kaydı](docs/case-loss-ablation-preparation.md).
 Notebook'un training/calibration anahtarları kapalı; arşivleme de ayrı ve kapalı
 bir hücrede. Özet hücresi, bağlantı yenilendiğinde kalıcı Drive sonucunu okuyabilir.

@@ -88,6 +88,18 @@ Local ignored assets do not automatically follow a worktree. Inspect artifacts
 before creating a worktree, reuse an existing suitable checkout when possible,
 and archive managed worktrees when their work has been integrated.
 
+The shared Conda environment's editable package can point at the primary
+checkout. In a separate worktree, explicitly put that checkout's `src` first
+when running its Python tools, rather than reinstalling the shared editable
+package while another chat is using it:
+
+```bash
+PYTHONPATH="$PWD/src" python scripts/prepare_ablation.py --help
+```
+
+Run actual experiments from the designated experiment checkout with its verified
+assets. A new worktree does not imply another training run or Colab session.
+
 ## Persistent assets and handoffs
 
 Drive project root: `MyDrive/cmpe586-turkish-punctuation`.
