@@ -91,3 +91,13 @@ python scripts/evaluate_noise.py --config configs/augmented-noise-evaluation.jso
 
 Comparison scope and execution status:
 [augmented-noise-pilot.md](../docs/augmented-noise-pilot.md).
+
+## GPU severity and corruption-seed grid
+
+`robustness-grid.json` freezes the 117-evaluation matrix and verified validation
+transfer SHA. The three `{published,clean,augmented}-robustness-grid.json` files
+pin model identities and share the same 38 noisy conditions plus fresh clean
+controls. They require CUDA, a matched calibration receipt and one shared GPU
+runtime/numerical policy. Historical CPU clean scores are diagnostics only.
+Mean/sample SD varies corruption seeds, not the single training seed.
+Execution and output map: [robustness-grid.md](../docs/robustness-grid.md).

@@ -173,3 +173,18 @@ geçen `result-verification.json` denetimi bulunur. Beş koşulun dosya hash'ler
 ham validation hedefleri, sıra ve bütün metrikleri yeniden doğrulandı. Yeni noise,
 training veya test değerlendirmesi yapılmadı. Toplu sonuçlar:
 [augmented noise pilotu](../docs/augmented-noise-pilot.md).
+
+## GPU robustness grid hazırlığı
+
+`evaluation-preparation/robustness-grid-gpu-v1/`, yeniden üretilmeyen validation
+girdilerinin 285 dosyalık ZIP'ini, hash receipt'ini, Drive yükleme kaydını ve ekran
+görüntülerini tutar. ZIP yalnızca mevcut clean/noisy validation girdilerini,
+ham validation kaynağını ve hazır modelin tarihsel clean referansını taşır;
+training/test metni veya model ağırlığı içermez. Model export'ları proje Drive'ında
+korunan seçili epoch-03 klasörlerinden okunur.
+
+Tam GPU sonuçları proje Drive'ındaki `artifacts/evaluations/` altında üç ayrı
+model koşusuna yazılacak. Ortak `robustness-grid-gpu-v1/` kalibrasyon, ilerleme ve
+analiz çıktıları içindir. `complete.json` koşul/analiz dosyalarının doğrulanmış
+yayınını tanımlar. Güncel çalışma durumu:
+[GPU grid raporu](../docs/robustness-grid.md).

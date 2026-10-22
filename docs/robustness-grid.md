@@ -71,7 +71,35 @@ preserved. Results will be reported only after completion and verification.
 
 ## Current status
 
-Prepared and locally checked; GPU timing and full-grid execution are pending.
-The existing T4 session has reconnected. The input ZIP reuses 285 existing files
-and passed full archive/member-hash checks. No broader noisy model scores have
-been computed yet. Held-out test evaluation remains unperformed.
+GPU calibration completed on Tesla T4, Python 3.12.13, Torch 2.11.0+cu128,
+Transformers 4.57.6, datasets 4.0.0, NumPy 2.0.2 and scikit-learn 1.6.1.
+All three exact model tensor identities and the paired training recipe passed.
+Sample peak allocated GPU memory was **0.4872 GiB**, not a full-run memory bound.
+Calibration took 126 seconds including model/tokenizer loading and preparation.
+Representative-batch extrapolations were 57.6 / 38.0 / 22.4 minutes per model
+(117.9 minutes total). These vary despite the same architecture and are advisory
+timing observations, not evidence that one model architecture is faster.
+Input audit, model loading, Drive publication and final analysis add overhead.
+
+The validation ZIP reused 285 existing files and passed full ZIP/member hash
+verification after its Drive transfer and Colab extraction. Source commit:
+`085065f5203c63467321db7f5e5bbfb5b2158c45`.
+The complete grid started **2026-10-22 around 12:30 Europe/Istanbul**, beginning
+with the published model. Completion and aggregate results remain pending.
+Held-out test evaluation remains unperformed.
+
+Initial full-condition observations were **33.5–35.8 seconds** for the clean
+control and first seven noisy conditions (14,453 records each). At roughly
+35 seconds per condition, 117 inference passes alone would take about 68
+minutes. Heavy/full-loss conditions, input audits, Drive publication and final
+analysis can change the total; the earlier two-hour figure is not a fixed ETA.
+The first eight conditions were published successfully, including their
+verified `complete.json` markers. The job is left running visibly for the user;
+this launch observation does not assert that the full grid has completed.
+
+Live execution reuses the reconnected T4 in the existing
+[Colab notebook, grid cell](https://colab.research.google.com/drive/1KKuqXRHKn4xr0nA7mXjtZexL4FrKFsV8#scrollTo=BMwam3sZ8fY3).
+Appended cells 16–18 restore the new evaluation setup, calibrate, and run the
+grid; original completed training cells are not executed. The clean standalone
+reproduction notebook is `04_robustness_evaluation_colab.ipynb` in Git.
+Calibration/source pins stay frozen during the running evaluation.

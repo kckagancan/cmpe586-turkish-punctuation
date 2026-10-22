@@ -46,6 +46,9 @@ held-out test sonucu değildir: [karşılaştırma ve hata analizi](docs/augment
 Model/sonuç ZIP'i yerelde arşivlendi; 58 dosyanın hash'i, dört modelin offline yüklenmesi ve kaydedilmiş
 validation skorları doğrulandı. Gereksiz Drive kopyaları onay sonrası temizlendi:
 [koşu ve arşiv durumu](docs/augmented-training-status.md).
+Mild/medium/heavy × üç corruption seed ve iki full-loss endpoint için ayrı,
+eşleşen GPU akışının üç model calibration'ı geçti; **117 ölçümlük validation
+grid T4'te başladı, tamamlanması bekleniyor**: [çalışma durumu](docs/robustness-grid.md).
 Notebook'un training/calibration anahtarları kapalı; arşivleme de ayrı ve kapalı
 bir hücrede. Özet hücresi, bağlantı yenilendiğinde kalıcı Drive sonucunu okuyabilir.
 
