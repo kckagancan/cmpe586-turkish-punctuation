@@ -90,7 +90,11 @@ def compare_runs(run: Path, summary: dict, reference_run: Path) -> tuple[dict, s
             f"{100*a['punctuation_macro']['f1']:.4f} | "
             f"{difference['punctuation_macro']['f1']:+.4f} | {reference_drop:.4f} | {current_drop:.4f} |"
         )
-    table.extend(["", "These validation observations do not establish significance or augmentation benefit."])
+    table.extend([
+        "",
+        "These descriptive validation observations do not establish statistical "
+        "significance or held-out generalization.",
+    ])
     return result, "\n".join(table) + "\n"
 
 

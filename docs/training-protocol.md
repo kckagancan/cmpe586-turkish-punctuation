@@ -10,8 +10,12 @@ views passed data/tokenization audits locally and on Colab. The separate
 the first full augmented run subsequently completed on 2026-10-22: 3 epochs /
 10,968 updates, selected epoch 3, clean validation macro-F1 0.839880566. See
 [preparation status](augmentation-preparation.md) and
-[run/archive status](augmented-training-status.md). Augmented noisy-input and
-held-out test evaluation have not yet been performed.
+[run/archive status](augmented-training-status.md). The matched augmented
+medium-noise validation pilot is also complete: macro-F1 gains over clean
+fine-tuning are +1.0084 / +0.1719 / +0.3331 / +1.7470 pp for case loss,
+diacritic loss, swaps and combined noise, with −0.0485 pp on clean text.
+See the [comparison and limitations](augmented-noise-pilot.md). Severity sweeps,
+additional corruption seeds and held-out test evaluation remain unperformed.
 Its 58-file local model/results archive and four offline model loads passed
 verification. After action-time user confirmation, the run's two optimizer slots,
 epoch-01/02 Drive exports and temporary transfer ZIP were permanently deleted;

@@ -16,8 +16,11 @@ are finite. All three validation reports contain 179,164 word targets.
 
 Selected and final model: **epoch 3**. Clean validation punctuation macro-F1 is
 **83.9881%**, versus clean training's **84.0365%** (difference **−0.0485 percentage
-points**). This small clean-validation difference is descriptive; augmentation's
-robustness contribution has not yet been evaluated on noisy inputs.
+points**). This small clean-validation difference is descriptive. The subsequent
+[matched medium-noise pilot](augmented-noise-pilot.md) found higher noisy
+macro-F1 and smaller clean-to-noisy drops in all four conditions for this seed
+pair. Its largest gain over clean fine-tuning is +1.7470 pp under combined noise;
+these are single-training-seed/single-corruption-seed validation observations.
 No held-out test evaluation was performed.
 
 The loop including validation/checkpoint/export work took **82.8746 minutes**;

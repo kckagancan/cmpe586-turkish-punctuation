@@ -153,3 +153,23 @@ ve geçici ZIP. Epoch-03, raporlar ve ortak girdiler/initialization korundu.
 işlemi kaydeder. Genel çöp kutusu boşaltılmadı. Son Drive göstergesi 15 GB'ın
 2,75 GB'ının dolu olduğunu gösterdi (yaklaşık 12,25 GB boş). Güncel durum:
 [augmented training raporu](../docs/augmented-training-status.md).
+
+## Augmented medium-noise validation pilotu
+
+`evaluations/finetuned-augmented-seed586-noise-pilot-v1/`, seçilen epoch-03'ün
+clean control ve aynı dört medium/seed-586 validation koşulundaki tamamlanmış
+ölçümüdür. Her koşul 14.453 kayıt / 179.164 kelime hedefini korur. `run.json`,
+`summary.json`, `progress.json`, sabit source/config snapshot'ları ve her koşulun
+prediction/metrics/error_examples dosyaları burada tutulur.
+
+`analysis/` clean fine-tuned modelle, `analysis-published/` hazır modelle eşleşen
+karşılaştırmayı içerir. Her ikisinde `analysis.json`, `comparison.md`,
+`model-comparison.json`, `model-comparison.md` ve analiz kodunun snapshot'ı vardır.
+Analiz yalnızca kaydedilmiş tahminleri okur; ek inference yapmaz.
+
+`evaluation-preparation/augmented-seed586-noise-pilot-v1/` altında 45 eşleşme
+kontrolünün `preflight.json` receipt'i, `evaluation.log`, `verify_results.py` ve
+geçen `result-verification.json` denetimi bulunur. Beş koşulun dosya hash'leri,
+ham validation hedefleri, sıra ve bütün metrikleri yeniden doğrulandı. Yeni noise,
+training veya test değerlendirmesi yapılmadı. Toplu sonuçlar:
+[augmented noise pilotu](../docs/augmented-noise-pilot.md).

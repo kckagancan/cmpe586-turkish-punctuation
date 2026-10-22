@@ -168,7 +168,9 @@ Large/raw artifacts remain outside Git; this document retains aggregate results.
 Successful inference loops including prediction I/O totaled **27.65 minutes**; preflight and postprocessing are excluded.
 No training, model deletion or Drive writes occurred in this step.
 
-Next: implement and audit the prespecified noise-augmented training view; address
-active-run checkpoint Trash accumulation before launching another training.
-Keep the shared initialization, training budget and clean selection rule fixed.
-Augmented training, severity sweeps and held-out test evaluation have not run.
+The matched augmented training and its medium-noise pilot subsequently completed
+on 2026-10-22 with the shared initialization, budget and clean selection rule.
+Its combined macro-F1 is 81.8435%, versus this clean model's 80.0965%; full
+results and class-specific trade-offs are in the
+[augmented comparison](augmented-noise-pilot.md). The broader severity/corruption
+seed evaluation, training ablation and held-out test evaluation remain outstanding.
