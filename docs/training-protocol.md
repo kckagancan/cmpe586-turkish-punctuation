@@ -12,6 +12,11 @@ the first full augmented run subsequently completed on 2026-10-22: 3 epochs /
 [preparation status](augmentation-preparation.md) and
 [run/archive status](augmented-training-status.md). Augmented noisy-input and
 held-out test evaluation have not yet been performed.
+Its 58-file local model/results archive and four offline model loads passed
+verification. After action-time user confirmation, the run's two optimizer slots,
+epoch-01/02 Drive exports and temporary transfer ZIP were permanently deleted;
+the selected epoch-03 export, metadata and shared assets remain. All epoch models
+and saved validation predictions are preserved locally; optimizer history is not.
 
 ## 1. What the comparison measures
 

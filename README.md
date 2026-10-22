@@ -38,8 +38,9 @@ küçük Drive kontrolü ve T4 üzerinde 30 update calibration tamamlandı
 [augmentation hazırlık raporu](docs/augmentation-preparation.md).
 İlk formal augmented training 2026-10-22'de tamamlandı: 3 epoch / 10.968 update,
 seçilen epoch 3, clean validation macro-F1 **%83,99**, loop süresi **82,9 dakika**.
-Noisy validation karşılaştırması henüz yapılmadı. Model/sonuç ZIP'i Drive'da
-doğrulandı; manuel yerel indirme ve yedek kontrolü bekleniyor:
+Noisy validation karşılaştırması henüz yapılmadı. Model/sonuç ZIP'i yerelde
+arşivlendi; 58 dosyanın hash'i, dört modelin offline yüklenmesi ve kaydedilmiş
+validation skorları doğrulandı. Gereksiz Drive kopyaları onay sonrası temizlendi:
 [koşu ve arşiv durumu](docs/augmented-training-status.md).
 Notebook'un training/calibration anahtarları kapalı; arşivleme de ayrı ve kapalı
 bir hücrede. Özet hücresi, bağlantı yenilendiğinde kalıcı Drive sonucunu okuyabilir.

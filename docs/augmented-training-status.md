@@ -33,7 +33,7 @@ of 1,321,522,291 / 1,320,587,955 bytes. These optimizer-state payloads were not
 reloaded/rehashed in this completion check; exact optimizer resume remains
 unexercised and is not needed for the completed-run inference archive.
 
-## Model/results archive — download pending
+## Model/results archive — local verification passed
 
 All three epoch exports, their validation outputs and shared initialization
 passed the archive builder's manifest/hash checks. The VM ZIP's entries/hashes
@@ -47,17 +47,41 @@ were verified, then its Drive copy passed a full SHA-256/size readback check.
   event/run metadata, training/noise source snapshots and augmentation audits.
 - Optimizer checkpoint payloads are excluded, as agreed for completed runs.
 - Drive folder: [project archives](https://drive.google.com/drive/u/0/folders/1rp2-j-2Hk-nwzgCTIq0hx2yX7TujQyGU).
-- Status: source ZIP and Drive copy verified; **manual local download, extraction
-  and offline model loading remain pending**. No source/Drive file was deleted.
+- Status: the user's manual download, the project ZIP copy, all member hashes,
+  safe extraction and all four offline model loads **passed on 2026-10-22**.
+- Local ZIP:
+  `artifacts/training/training-v1/train-augmented-seed-586-v1/augmented-seed586-models-3cdf62cc3be4.zip`.
+- Extracted copy: the same run directory's `completed-archive/`, containing
+  `initialization/` and `run/`. The original Downloads copy was retained.
+- All four models loaded with no missing, unexpected or mismatched weights;
+  tensor identities, finite weights, tokenizers and label mappings matched.
+  All three epoch reports were recomputed from archived validation predictions:
+  14,453 records / 179,164 words each, with every metric matching.
+  No training, new model inference or held-out test evaluation was performed.
 
 Drive showed **7.69 GB of 15 GB used** with the temporary archive present.
-Do not clean the completed-run copies until local archive/file/model verification
-passes. Preserve shared initialization/inputs and the selected epoch-03 export;
-identify unnecessary checkpoint/epoch-01/02/transfer-ZIP copies only after backup.
+After local verification and action-time user confirmation, only these four
+identified items were permanently deleted from Drive:
+
+1. This run's `checkpoints/`, containing the two optimizer-state slots.
+2. This run's `models/epoch-01/`.
+3. This run's `models/epoch-02/`.
+4. `archives/augmented-seed586-models-3cdf62cc3be4.zip`.
+
+All four item IDs were matched before deletion and were absent from Trash
+afterward. The selected epoch-03 model and the run's validation, source snapshots
+and metadata remain; shared inputs/initialization and the small archive receipt
+were preserved. Optimizer history was intentionally not backed up: this completed
+run cannot be resumed with that optimizer state. Account-wide Trash was not emptied.
+After the display updated, Drive showed **2.75 GB of 15 GB used**
+(about **12.25 GB free**), down from 7.69 GB used before cleanup.
 
 Completion receipts, 16 metadata files, audit/archive helper sources and screenshots
 are saved outside Git under
 `artifacts/training/training-v1/train-augmented-seed-586-v1/completion-2026-10-22/`.
+This directory also contains `local-archive-verification.json`,
+`local-model-verification.json`, `completion-verification.json`, the scoped
+`drive-cleanup-plan.json` / `drive-cleanup-result.json` and before/after screenshots.
 All transferred metadata hashes, the run identity and source snapshot hashes
 also matched the local project. The active notebook's full training/calibration
 switches were reset to false; the archive switch is also saved false.

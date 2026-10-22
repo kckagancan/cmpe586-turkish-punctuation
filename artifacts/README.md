@@ -135,11 +135,21 @@ Git dışında kalır.
 arşiv receipt'i ve ekran görüntülerini tutar. `metadata/` altında run/summary/
 progress, üç epoch'un metrics/export ve augmentation audit dosyaları bulunur.
 Geçici audit hücresi notebook'tan kaldırıldı; çalıştırılan yardımcı kaynaklar
-burada saklanır. Bu aşamada model ağırlıkları henüz yerel klasöre indirilmedi.
+burada saklanır. `local-archive-verification.json` arşiv/dosya kontrolünü,
+`local-model-verification.json` dört offline model yüklemesini ve üç epoch'un
+kaydedilmiş tahminlerinden yeniden hesaplanan metriklerini doğrular.
 
-Drive'daki `augmented-seed586-models-3cdf62cc3be4.zip`, 1.772.193.862 byte ve
+Kullanıcının indirdiği `augmented-seed586-models-3cdf62cc3be4.zip`, 1.772.193.862 byte ve
 SHA-256 `b93de2fd2c0335c487332fcdb2d8ab10e9aaaf3eba11c9e43d93a7b5cfb44378`
 ile doğrulandı. Üç model ve ortak initialization dahil 58 kaynak üyeyi içerir;
-optimizer state içermez. Kullanıcının manuel indirmesi, yerel doğrulama/model
-yükleme ve ardından kapsamı belirlenmiş Drive temizliği bekleniyor. Güncel durum:
+optimizer state içermez. ZIP bu koşunun yerel artifact köküne kopyalandı;
+doğrulanan açılmış kopyası `completed-archive/` altında durur. Downloads'taki
+orijinal de korundu. Yeni eğitim veya model inference yapılmadı.
+
+Kapsamı belirlenen dört Drive öğesi, yerel doğrulama ve kullanıcının işlem anındaki
+onayı sonrası kalıcı silindi: iki slotu içeren checkpoints klasörü, epoch-01/02
+ve geçici ZIP. Epoch-03, raporlar ve ortak girdiler/initialization korundu.
+`drive-cleanup-plan.json`, `drive-cleanup-result.json` ve ekran görüntüleri bu
+işlemi kaydeder. Genel çöp kutusu boşaltılmadı. Son Drive göstergesi 15 GB'ın
+2,75 GB'ının dolu olduğunu gösterdi (yaklaşık 12,25 GB boş). Güncel durum:
 [augmented training raporu](../docs/augmented-training-status.md).
