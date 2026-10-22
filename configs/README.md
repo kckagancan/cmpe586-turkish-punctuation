@@ -101,3 +101,13 @@ controls. They require CUDA, a matched calibration receipt and one shared GPU
 runtime/numerical policy. Historical CPU clean scores are diagnostics only.
 Mean/sample SD varies corruption seeds, not the single training seed.
 Execution and output map: [robustness-grid.md](../docs/robustness-grid.md).
+
+## Case-loss training ablation
+
+`ablation-case-loss.json` pins the omitted family, shared initialization,
+completed reference runs, separate calibration/formal output directories and
+five post-training validation conditions. It references the byte-identical
+`training-augmented.json`; it does not change the paired numerical recipe.
+`ablation-case-loss-inputs.json` records the 31-file input ZIP SHA and epoch
+content/audit hashes. The omitted-family views are prepared locally once and
+restored on Colab. See [preparation](../docs/case-loss-ablation-preparation.md).

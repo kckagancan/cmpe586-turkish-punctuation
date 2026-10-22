@@ -1,0 +1,61 @@
+{
+  "version": "case-loss-ablation-v1",
+  "specified_on": "2026-10-22",
+  "protocol": "docs/training-protocol.md",
+  "training_config": "configs/training-augmented.json",
+  "training_config_sha256": "73bd0ea1a9c50adc24fb5ae26483a4d4438390147335ae320239100882cb408a",
+  "seed": 586,
+  "arm": "augmented",
+  "without_family": "case_loss",
+  "remaining_families": [
+    "typo_swap",
+    "diacritic_loss"
+  ],
+  "redistribute_removed_budget": false,
+  "reference_runs": {
+    "clean": {
+      "identity": "5ddecc9b8bfaf0b9442a7942caa45a64173e037b0ea7309692c12e5767603f37",
+      "local_directory": "artifacts/training/training-v1/train-clean-seed-586-v1/completed-archive/run",
+      "storage_directory": "training-v1/train-clean-seed-586-v1",
+      "run_json_sha256": "dfc9b1e90b219e2f0fcb3e34ae1508b613366aeac8e399cca4f00a45ca915ce2",
+      "summary_sha256": "aff829f67f74d56aae5ff8582ca2f12136929a1884481a47853ceb79a12e9bef"
+    },
+    "augmented": {
+      "identity": "3cdf62cc3be4bbd21e48dc17aee7b450f90e6b1e2b6041dea185e3d8f0ceb01e",
+      "local_directory": "artifacts/training/training-v1/train-augmented-seed-586-v1/completed-archive/run",
+      "storage_directory": "training-v1/train-augmented-seed-586-v1",
+      "run_json_sha256": "4cb635ffb5a661538fbe5e86fb7a8efbd2d6baafb52bdeb86c1f2c83ea5f4a73",
+      "summary_sha256": "72875146d81184bdac36e2c3d0dbf402aff9153ed93c2b600d6102f079be1de6"
+    }
+  },
+  "initialization": {
+    "identity": "6db2c7cdb55e7ce6d8d833704dc450bd228c87067b40c754596e6a4a50428b64",
+    "model_tensors_sha256": "f26849ec8c687a095ec702cd81c3522e4e0e58a4ed52c4aeff88b0d6715cbf5e",
+    "storage_directory": "initializations/training-v1"
+  },
+  "local_views": "data/processed/training-augmentation-v1/seed-586-without-case_loss",
+  "local_reference_views": "data/processed/training-augmentation-v1/seed-586",
+  "storage_views": "inputs/training-augmentation-v1/seed-586-without-case_loss",
+  "storage_reference_views": "inputs/training-augmentation-v1/seed-586",
+  "storage_preparation": "preparation/case-loss-ablation-v1/seed-586",
+  "storage_calibration": "training-v1/calibration-augmented-without-case-loss-seed-586-v1",
+  "storage_training": "training-v1/train-augmented-without-case-loss-seed-586-v1",
+  "storage_input_zip": "inputs/case-loss-ablation-v1-seed586-inputs.zip",
+  "calibration_steps": 30,
+  "evaluation_after_training": {
+    "split": "validation",
+    "clean_control": true,
+    "conditions": [
+      "case_loss-medium-seed586",
+      "diacritic_loss-medium-seed586",
+      "typo_swap-medium-seed586",
+      "combined-medium-seed586"
+    ],
+    "selection": "best_clean_validation_epoch_with_earliest_tie_break",
+    "matched_final_epoch_sensitivity_if_selection_differs": true,
+    "training_seed_count": 1,
+    "test_evaluated": false
+  },
+  "archive_policy": "manual_download_then_local_hash_model_and_metric_verification_then_scoped_cleanup",
+  "formal_training_enabled_by_default": false
+}

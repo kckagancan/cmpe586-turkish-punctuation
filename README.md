@@ -6,6 +6,11 @@ CMPE 586 Transformer/NLP ders projesi. Türkçe noktalama geri yükleme modeller
 büyük/küçük harf kaybı, Türkçe karakterlerin sadeleştirilmesi ve yazım hataları
 altındaki dayanıklılığı incelenecek.
 
+Yeni bir çalışma/chat için: [güncel durum ve sıradaki iş](PROJECT_STATUS.md).
+Kalıcı agent kuralları [AGENTS.md](AGENTS.md), ortam ve çalışma düzeni
+[PROJECT_SETUP.md](PROJECT_SETUP.md) içindedir. Ayrı yazma görevleri paralel
+yürütülürse ayrı Git worktree kullanılır; aynı Colab/Drive koşusuna tek chat yazar.
+
 **Durum:** Yerel ortam ve public repo hazır. Veri incelendi; `clean-v1` model
 girdileri hazırlandı ve yayımlanmış BERT üç elle yazılmış örnekte çalıştırıldı.
 Veri lisansı ve kesin kaynak/split geçmişi henüz doğrulanmadı.
@@ -54,6 +59,10 @@ farkı **−0,0485 puan**. Üç corruption seed'in ortalama/SD değerleri, sın�
 sonuçları ve grafikler: [robustness sonuçları](docs/robustness-grid-results.md).
 Tek training seed kullanıldı; ablation ve held-out test henüz yapılmadı.
 Arşiv ve doğrulama durumu: [çalışma kaydı](docs/robustness-grid.md).
+Case-loss training ablation için üç epoch'un verisi, paired row/word-plan
+kontrolleri, transfer ZIP'i ve ayrı `05` notebook'u hazırlandı. Formal ablation
+başlatılmadan önceki güncel hazırlık durumu:
+[ablation hazırlık kaydı](docs/case-loss-ablation-preparation.md).
 Notebook'un training/calibration anahtarları kapalı; arşivleme de ayrı ve kapalı
 bir hücrede. Özet hücresi, bağlantı yenilendiğinde kalıcı Drive sonucunu okuyabilir.
 

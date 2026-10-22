@@ -1,0 +1,39 @@
+{
+  "status": "verified",
+  "sha256": "e0fe9e767406c75702f112c068a404276c4d41661231e3376e2862654dfdca53",
+  "files": 31,
+  "test_text_included": false,
+  "noise_regenerated": false,
+  "version": "case-loss-ablation-v1",
+  "bytes": 42800098,
+  "prepared_identity": "c51d595912e144ab4f65233311299067590974077954504193f5abbf249a3a33",
+  "epoch_audit": {
+    "1": {
+      "selected_view_rows": 58484,
+      "selected_row_ids_sha256": "cf04e036bd84bc0e5352005f8242d0784b5d3a64bedea6e4f6ce8d533b593b5f",
+      "changed_words": 70491,
+      "changed_word_percent": 4.815297797590951,
+      "reference_changed_word_percent": 7.120378004736672,
+      "max_subwords": 227,
+      "encoded_content_sha256": "4907ea817ba6e8b0e2c8a2af8dd9decf6d27926680387c3490e0ed87a062725a"
+    },
+    "2": {
+      "selected_view_rows": 58484,
+      "selected_row_ids_sha256": "1b5edc6c76124be33e354c25acad441532cc77ecd8ce55775918e573229b9a6a",
+      "changed_words": 71054,
+      "changed_word_percent": 4.853756787533549,
+      "reference_changed_word_percent": 7.181652807540421,
+      "max_subwords": 234,
+      "encoded_content_sha256": "50ce7399c6c7f3c69d3e31278e86c8e498cbc050d70ad2099bcb6ff323b8ad63"
+    },
+    "3": {
+      "selected_view_rows": 58484,
+      "selected_row_ids_sha256": "14802dd6279b05d12359ad0c591dd6c49e1547bbe28061be7b105618e8f8134f",
+      "changed_words": 70856,
+      "changed_word_percent": 4.840231245777538,
+      "reference_changed_word_percent": 7.150981250730072,
+      "max_subwords": 229,
+      "encoded_content_sha256": "0d7fe6187531a0b9843e1827ab984c43c052494942ed5f9c8609c5eeaf4e4e5c"
+    }
+  }
+}
