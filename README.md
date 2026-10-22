@@ -36,7 +36,9 @@ tokenization kontrolleri yerelde ve Colab'da geçti. İki sabit checkpoint slotu
 küçük Drive kontrolü ve T4 üzerinde 30 update calibration tamamlandı
 (peak allocated 2,434 GiB). Ayrıntılar ve kapsam:
 [augmentation hazırlık raporu](docs/augmentation-preparation.md).
-Asıl augmented training henüz başlamadı; notebook'un iki execution anahtarı kapalı.
+İlk formal augmented training 2026-10-22'de başlatıldı ve devam ediyor:
+[koşu durumu](docs/augmented-training-status.md). Git'teki notebook'un iki execution
+anahtarı kapalı; training yalnızca aktif Drive kopyasında açıldı.
 
 ## Çalışma düzeni
 

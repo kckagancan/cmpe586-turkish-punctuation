@@ -170,3 +170,18 @@ the calibration pins its bytes; this document records the current execution stat
 - Both notebook execution switches: **False**; formal augmented training not started.
 - Actual model/optimizer resume, expanded evaluation and held-out test: not run.
 - Static lint and whitespace checks: passed; no unit test suite was added or run.
+
+## Reuse on later sessions — 2026-10-22
+
+The notebook now requires the already prepared Drive views instead of regenerating
+them or repeating the complete augmentation audit in a separate preparation
+process. The formal training runner still verifies all file/source hashes and
+re-tokenizes all three saved word views against original targets before optimizer
+creation. Persistent clean input/initialization checks are retained.
+
+An existing passed tiny storage report is reused only if its checkpoint-code
+hash matches. Its old inode observations belong to the earlier mount session;
+they are not compared with inodes allocated by a new Drive mount. The calibration
+remains disabled and the formal runner checks the matched clean numerical runtime.
+Both execution switches remain false in Git; the active Drive notebook may enable
+the explicitly requested run. Launch/progress: [augmented training status](augmented-training-status.md).
