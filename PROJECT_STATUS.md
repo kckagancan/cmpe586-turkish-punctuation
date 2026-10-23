@@ -82,10 +82,12 @@ combined +0.8799 pp. [All results](docs/held-out-test-results.md),
   retained; new publication scripts pass full Ruff. CSV bytes are preserved by
   `.gitattributes` so fresh checkouts retain the original audited SHA bindings.
 - User granted `workflow` scope and authorized activation. The
-  [Repository checks workflow](.github/workflows/repository-checks.yml) is now
-  prepared: push/PR, read-only contents, pinned actions/Ruff, Python3.11;
-  repository/binding checks and fatal/undefined-name lint only. First live
-  GitHub execution is pending this handoff's push; no scientific run is started.
+  [Repository checks workflow](.github/workflows/repository-checks.yml) is live:
+  push/PR, read-only contents, pinned actions/Ruff, Python3.11; repository/binding
+  checks and fatal/undefined-name lint only. The
+  [first GitHub run](https://github.com/kckagancan/cmpe586-turkish-punctuation/actions/runs/39975998764)
+  **passed every step** on activation commit `8373859`. No scientific run or
+  historical unit suite was executed. README shows the live workflow badge.
 - Publication receipts, exact Git/remote/CI outcome and full changed-file inventory:
   `artifacts/publication/final-report-2026-10-23/`. Frozen recipes, numerical
   sources and original snapshots were preserved; prior uncommitted experiment
@@ -93,10 +95,12 @@ combined +0.8799 pp. [All results](docs/held-out-test-results.md),
 
 ## Next action and remaining limits
 
-No experiment or cleanup job is running. Deliverables are ready for review and
-GitHub presentation. Adapt the paper if the instructor specifies a final template
-or page limit; no new experiment is needed for that formatting change.
-CI activation receipts and the final job outcome belong under
+The planned experiments, analyses, report, GitHub publication, backups, scoped
+cleanup and repository automation are complete. No experiment or cleanup job is
+running and no additional research step is required by the recorded plan.
+The remaining course action is submission, adapting the paper only if the
+instructor supplies a final template/page limit. CI activation receipts and final
+job outcomes are under
 `artifacts/publication/github-actions-2026-10-23/`.
 
 One training seed and synthetic noise only. Dataset licensing/exact split

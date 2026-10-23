@@ -3,6 +3,8 @@
 **A controlled robustness study of casing loss, Turkish character folding, and
 typing errors.** CMPE 586 course project by **Kagan Can**.
 
+[![Repository checks](https://github.com/kckagancan/cmpe586-turkish-punctuation/actions/workflows/repository-checks.yml/badge.svg?branch=main)](https://github.com/kckagancan/cmpe586-turkish-punctuation/actions/workflows/repository-checks.yml)
+
 [Read the paper](output/pdf/turkish-punctuation-report.pdf) ·
 [Full results](docs/held-out-test-results.md) ·
 [Methods and evidence](docs/README.md) ·
