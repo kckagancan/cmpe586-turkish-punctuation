@@ -48,6 +48,16 @@ mlruns/
 # Paper build intermediates and private course submission metadata
 report/private-author.tex
 report/course-submission.tex
+report/proposal/private-author.tex
+report/proposal/course-submission.tex
+report/proposal/*.aux
+report/proposal/*.out
+report/proposal/*.toc
+report/proposal/*.bbl
+report/proposal/*.blg
+report/proposal/*.synctex.gz
+report/proposal/*.xdv
+report/proposal/*.pdf
 report/*.aux
 report/*.out
 report/*.toc
@@ -61,6 +71,7 @@ output/**
 !output/pdf/
 output/pdf/**
 !output/pdf/turkish-punctuation-report.pdf
+!output/pdf/turkish-punctuation-proposal.pdf
 tmp/
 *.zip
 *.tar.gz

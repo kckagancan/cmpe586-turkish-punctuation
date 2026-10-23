@@ -9,6 +9,11 @@ report, with no claim of conference submission, acceptance, or peer review.
 The initial course idea used NeurIPS formatting; the final course requirements
 have not been supplied. The source can be adapted when those are known.
 
+A separate [retrospective project proposal](proposal/README.md) expresses the
+research design in prospective form without performance results. It was written
+after completion and explicitly documents that chronology. The final paper and
+its numerical source bindings are unchanged.
+
 ## What is included
 
 - Abstract, research questions and related work with primary-source references.

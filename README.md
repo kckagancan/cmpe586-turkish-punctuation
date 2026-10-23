@@ -10,6 +10,10 @@ typing errors.** CMPE 586 course project by **Kagan Can**.
 [Methods and evidence](docs/README.md) ·
 [Reproduce the report](report/README.md)
 
+A separate [project proposal](report/proposal/README.md) reconstructs the
+research plan in prospective form. It was prepared after completion, is dated
+and labeled accordingly, and contains no performance results.
+
 How much does a punctuation model rely on clean spelling and capitalization?
 This project compares a published Turkish punctuation BERT with matched clean
 and noise-augmented BERTurk fine-tuning, then removes case loss from augmentation
@@ -97,7 +101,8 @@ describes the separately held inputs, exact recipes, GPU requirements, and archi
 | Path | Contents |
 | --- | --- |
 | [`report/`](report/) | Editable NeurIPS preprint source, generated tables, source bindings |
-| [`output/pdf/`](output/pdf/) | Public report PDF |
+| [`report/proposal/`](report/proposal/README.md) | Dated retrospective proposal source and build instructions |
+| [`output/pdf/`](output/pdf/) | Public final report and retrospective proposal PDFs |
 | [`docs/`](docs/README.md) | Current results/methods and dated research records |
 | [`src/turkish_punctuation/`](src/turkish_punctuation/) | Shared noise, alignment, training, inference, metrics |
 | [`configs/`](configs/README.md) | Frozen experimental recipes and model identities |

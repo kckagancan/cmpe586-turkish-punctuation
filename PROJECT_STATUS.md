@@ -1,6 +1,7 @@
 # Current project state
 
-Updated **2026-10-23**. The experiments and final report are complete.
+Updated **2026-10-23**. The experiments, final report, and retrospective proposal
+are complete.
 Read this first, then the relevant linked record. This file authorizes no new run.
 
 ## Project and delivered report
@@ -15,9 +16,18 @@ noise-augmented BERTurk fine-tuning, and a case-loss removal arm.
 - [Editable source and build instructions](report/README.md), complete main and
   sensitivity tables, per-class/contextual diagnostics, training history,
   primary-source references, limits and AI-assistance disclosure.
+- [Proposal PDF](output/pdf/turkish-punctuation-proposal.pdf) and
+  [editable source/build guide](report/proposal/README.md): five pages in the
+  same NeurIPS preprint style, prepared October23 after completion. Future-tense
+  design reconstruction with an explicit first-page chronology disclosure;
+  no performance results or preregistration claim. The local student-number
+  copy is `output/pdf/proposal-course-submission.pdf` (Git-ignored).
+  Both five-page copies compiled with cached Tectonic0.17.0 and were rendered
+  for review. Content/privacy, repository links and public result bindings pass;
+  final paper/frozen scientific sources are unchanged. No experiments or tests ran.
 - Author/student number supplied by the user. The number appears only in the
-  Git-ignored local `output/pdf/course-submission.pdf` and private author file.
-  Public PDF/source excludes it. Final course-specific format is not yet supplied.
+  Git-ignored local course PDFs and private author files. Public PDFs/sources
+  exclude it. Final course-specific format is not yet supplied.
 - [README](README.md) presents results; [documentation guide](docs/README.md)
   separates current methods/results from dated records. [Reproduction](docs/reproduction.md)
   distinguishes public report rebuilding from exact scientific reruns.
@@ -99,7 +109,11 @@ The planned experiments, analyses, report, GitHub publication, backups, scoped
 cleanup and repository automation are complete. No experiment or cleanup job is
 running and no additional research step is required by the recorded plan.
 The remaining course action is submission, adapting the paper only if the
-instructor supplies a final template/page limit. CI activation receipts and final
+instructor supplies a final template/page limit, and confirming whether the
+retrospective proposal meets the course's missing-proposal requirement.
+No document has been submitted by this preparation step. Proposal build,
+content/privacy checks, page renders and full changed-file inventory are under
+`artifacts/publication/proposal-2026-10-23/`. CI activation receipts and final
 job outcomes are under
 `artifacts/publication/github-actions-2026-10-23/`.
 

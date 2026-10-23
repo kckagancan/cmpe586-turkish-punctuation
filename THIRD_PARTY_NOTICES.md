@@ -30,6 +30,9 @@ The [official template listing on Overleaf](https://www.overleaf.com/latex/templ
 attributes it to the NeurIPS 2026 Program Chairs and lists CC BY 4.0.
 This project does not relicense that template or claim conference affiliation,
 submission, acceptance or peer review. The report uses the `preprint` option.
+The standalone proposal includes a byte-identical copy at
+`report/proposal/neurips_2026.sty`, with the same attribution and external terms,
+and also uses the `preprint` option.
 
 - Official ZIP SHA-256: `82473931e3ef710fcd3f4a8cd4119b9de32e56825f90f9e5a6d55f2d01b817d9`.
 - Unchanged style SHA-256: `c3fc2894e83d2517ca18b66741d6c595986d97957dc08ec08bb2125a7ec4555a`.
