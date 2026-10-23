@@ -81,9 +81,11 @@ combined +0.8799 pp. [All results](docs/held-out-test-results.md),
   pre-existing style findings in frozen historical grid/calibration scripts are
   retained; new publication scripts pass full Ruff. CSV bytes are preserved by
   `.gitattributes` so fresh checkouts retain the original audited SHA bindings.
-- No live CI workflow is published: GitHub rejected the initial push because
-  its OAuth connection lacks `workflow` scope. The optional proposal is retained
-  locally; publication proceeds with the verified scripts and no scope expansion.
+- User granted `workflow` scope and authorized activation. The
+  [Repository checks workflow](.github/workflows/repository-checks.yml) is now
+  prepared: push/PR, read-only contents, pinned actions/Ruff, Python3.11;
+  repository/binding checks and fatal/undefined-name lint only. First live
+  GitHub execution is pending this handoff's push; no scientific run is started.
 - Publication receipts, exact Git/remote/CI outcome and full changed-file inventory:
   `artifacts/publication/final-report-2026-10-23/`. Frozen recipes, numerical
   sources and original snapshots were preserved; prior uncommitted experiment
@@ -94,7 +96,8 @@ combined +0.8799 pp. [All results](docs/held-out-test-results.md),
 No experiment or cleanup job is running. Deliverables are ready for review and
 GitHub presentation. Adapt the paper if the instructor specifies a final template
 or page limit; no new experiment is needed for that formatting change.
-Optional CI setup needs a separately workflow-authorized GitHub connection.
+CI activation receipts and the final job outcome belong under
+`artifacts/publication/github-actions-2026-10-23/`.
 
 One training seed and synthetic noise only. Dataset licensing/exact split
 provenance and document independence remain unresolved; published-model prior

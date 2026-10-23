@@ -120,9 +120,12 @@ local archives. See [completion](held-out-test-completion.md),
 Repository checks parse source/JSON/notebooks, validate local public links and
 generated report bindings, and reject data/model/private-metadata files in the
 publication set. They do not import training modules, download assets, execute
-notebooks, or run the historical unit suite. No live GitHub Actions workflow is
-configured; the current GitHub connection does not grant workflow publication.
-The locally verified commands are available without granting additional access:
+notebooks, or run the historical unit suite. The
+[Repository checks workflow](../.github/workflows/repository-checks.yml) runs on
+pushes and pull requests with read-only repository permissions, Python 3.11,
+pinned action revisions and Ruff 0.17.1. It installs only the lightweight linter;
+the project/training dependencies and model/data assets are not installed.
+The same checks are available locally:
 
 ```bash
 python scripts/check_repository.py
@@ -132,8 +135,9 @@ python -m ruff check --select E9,F scripts src tests
 Full-style lint has seven existing
 findings in two frozen historical grid/calibration scripts; those sources are
 preserved rather than rewritten for formatting. New publication scripts pass
-the project's complete Ruff rules. An optional automated-check proposal is
-retained with the local publication receipts, outside Git.
+the project's complete Ruff rules. The initial workflow proposal was retained
+locally when the connection lacked publication permission; the user subsequently
+granted `workflow` scope and authorized its activation.
 
 Claims are limited to the recorded checks. Fresh test-informed recipes must use
 new versions and be identified as exploratory; do not edit frozen snapshots or
