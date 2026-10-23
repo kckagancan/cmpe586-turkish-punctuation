@@ -16,15 +16,13 @@ noise-augmented BERTurk fine-tuning, and a case-loss removal arm.
 - [Editable source and build instructions](report/README.md), complete main and
   sensitivity tables, per-class/contextual diagnostics, training history,
   primary-source references, limits and AI-assistance disclosure.
-- [Proposal PDF](output/pdf/turkish-punctuation-proposal.pdf) and
-  [editable source/build guide](report/proposal/README.md): five pages in the
-  same NeurIPS preprint style, prepared October23 after completion. Future-tense
-  design reconstruction with an explicit first-page chronology disclosure;
-  no performance results or preregistration claim. The local student-number
-  copy is `output/pdf/proposal-course-submission.pdf` (Git-ignored).
-  Both five-page copies compiled with cached Tectonic0.17.0 and were rendered
-  for review. Content/privacy, repository links and public result bindings pass;
-  final paper/frozen scientific sources are unchanged. No experiments or tests ran.
+- Proposal is now a **local-only course document**, at the user's request.
+  Both five-page PDFs remain at `output/pdf/turkish-punctuation-proposal.pdf`
+  and `output/pdf/proposal-course-submission.pdf`; editable project/build guide
+  remains at `report/proposal/`. All are Git-ignored and removed from the current
+  public tree; the earlier publication commit remains in Git history.
+  The dated retrospective-design disclosure remains intact. Final report PDF,
+  editable public source, numerical bindings and frozen experiments are preserved.
 - Author/student number supplied by the user. The number appears only in the
   Git-ignored local course PDFs and private author files. Public PDFs/sources
   exclude it. Final course-specific format is not yet supplied.
@@ -116,6 +114,8 @@ content/privacy checks, page renders and full changed-file inventory are under
 `artifacts/publication/proposal-2026-10-23/`. CI activation receipts and final
 job outcomes are under
 `artifacts/publication/github-actions-2026-10-23/`.
+Proposal local-retention hashes, publication-removal checks and changed-file
+inventory are under `artifacts/publication/proposal-local-only-2026-10-23/`.
 
 One training seed and synthetic noise only. Dataset licensing/exact split
 provenance and document independence remain unresolved; published-model prior
