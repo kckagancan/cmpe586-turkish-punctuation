@@ -121,13 +121,16 @@ This is an interpretation supported by the observed pattern, not a controlled
 causal isolation of one contextual cue. Synthetic swaps/folding also do not
 represent every kind of real informal Turkish writing.
 
-The next planned experiment is the **training ablation without case loss**,
+At the grid milestone, the next planned experiment was the **training ablation without case loss**,
 already specified in the [training protocol](training-protocol.md#7-seeds-ablations-and-affordable-execution).
 Keep the same initialization, rows, updates and remaining word plans; omit case
 loss without reallocating its budget. Its clean and four medium/seed-586
 evaluations will help separate the value of the casing augmentation component.
-This ablation has **not** been trained. Held-out test evaluation remains
-unperformed; dataset licensing and exact source/split provenance remain open.
+At the time of this grid report the ablation had not been trained. It subsequently
+completed, including the fixed five-condition validation comparison and local
+verification: [case-loss ablation results](case-loss-ablation-results.md).
+Held-out test evaluation remains unperformed; dataset licensing and exact
+source/split provenance remain open.
 
 ## Verification and stored outputs
 

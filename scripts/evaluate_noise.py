@@ -20,7 +20,10 @@ from transformers import AutoTokenizer, PreTrainedTokenizerFast
 from turkish_punctuation.data import read_split
 from turkish_punctuation.evaluation_model import load_exported_model, training_reference
 from turkish_punctuation.gpu_evaluation import (
-    condition_committed, configure_runtime, publish_condition, write_in_place,
+    condition_committed,
+    configure_runtime,
+    publish_condition,
+    write_in_place,
 )
 from turkish_punctuation.inference import load_published_model
 from turkish_punctuation.metrics import PUNCTUATION_LABELS
@@ -157,10 +160,39 @@ def main() -> None:
         model_provenance = trained["metadata"]
         comparison_path = output_root / config["published_comparison_directory"] / "summary.json"
         comparison = json.loads(comparison_path.read_text())
+        subset = config.get("comparison_condition_policy") == "verified_ablation_subset_v1"
+        if subset:
+            plan_path = ROOT / "configs/ablation-case-loss.json"
+            plan = json.loads(plan_path.read_text())
+            if (gpu_runtime is None or sha256(plan_path) != config["ablation_plan_sha256"]
+                or names != plan["evaluation_after_training"]["conditions"]
+                or not set(names) < set(comparison["run"]["conditions"])):
+                raise ValueError("The ablation subset differs from its fixed plan/reference.")
+            comparison_directory = comparison_path.parent
+            if sha256(comparison_path) != config["published_comparison_summary_sha256"]:
+                raise ValueError("The frozen full-grid comparison summary changed.")
+            parent_config = comparison_directory / "source_snapshot/noise-evaluation-config.json"
+            if sha256(parent_config) != comparison["identity"]["config_sha256"]:
+                raise ValueError("Full-grid reference configuration snapshot changed.")
+            parent_identity = hashlib.sha256(json.dumps(
+                comparison["identity"], sort_keys=True, separators=(",", ":")
+            ).encode()).hexdigest()
+            for name in ["clean-anchor", *names]:
+                folder = comparison_directory / "conditions" / name
+                if not condition_committed(folder, parent_identity):
+                    raise ValueError(f"Unverified reference condition: {name}")
+                expected = comparison["clean_anchor"] if name == "clean-anchor" else comparison["conditions"][name]
+                if json.loads((folder / "metrics.json").read_text()) != expected:
+                    raise ValueError(f"Reference summary/condition mismatch: {name}")
+            for name, expected in comparison["identity"]["source_sha256"].items():
+                if sha256(comparison_directory / "source_snapshot" / name) != expected:
+                    raise ValueError(f"Reference source snapshot changed: {name}")
+                if name != "scripts/evaluate_noise.py" and hashlib.sha256(executed_sources[name]).hexdigest() != expected:
+                    raise ValueError(f"Shared numerical/data implementation changed: {name}")
         if (
             packages != comparison["identity"]["packages"]
             or sha256(preparation_path) != comparison["identity"]["noise_manifest_sha256"]
-            or names != comparison["run"]["conditions"]
+            or (not subset and names != comparison["run"]["conditions"])
         ):
             raise ValueError("Published comparison has different runtime or noise preparation.")
         for key in ("batch_size", "device", "cpu_threads", "seed", "batch_order"):
@@ -341,8 +373,17 @@ def main() -> None:
             dataset.select(order),
             {row_id: records[row_id] for row_id in ordered_ids},
         )
-    if comparison is not None and batching != comparison["identity"]["batching"]:
-        raise ValueError("Published comparison uses different row order or batch membership.")
+    if comparison is not None:
+        reference_batching = comparison["identity"]["batching"]
+        if config.get("comparison_condition_policy") == "verified_ablation_subset_v1":
+            reference_batching = {**reference_batching, "padded_tokens": {
+                name: reference_batching["padded_tokens"][name] for name in [*names, "clean-anchor"]
+            }}
+            for name in ["clean-anchor", *names]:
+                if input_hashes[name] != comparison["identity"]["condition_input_sha256"][name]:
+                    raise ValueError(f"Reference input bytes differ: {name}")
+        if batching != reference_batching:
+            raise ValueError("Published comparison uses different row order or batch membership.")
     identity = {
         "config_sha256": hashlib.sha256(config_bytes).hexdigest(),
         "source_sha256": {

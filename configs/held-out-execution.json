@@ -1,0 +1,20 @@
+{
+  "version": "held-out-execution-v1",
+  "protocol_config": "configs/held-out-test.json",
+  "protocol_config_sha256": "0612db6c1498438d1992964a7e0d8101577de7daf8270a172b5088b1b9cf86bc",
+  "freeze_identity": "ba6bf8decbd62a64f898a4eb47054776a97b3131fc8c6a20d8a50e22c6dc9653",
+  "prepared_directory": "data/processed/noise-held-out-test-v1",
+  "output_directory": "artifacts/evaluations/held-out-test-v1",
+  "runtime_preparation_directory": "preparation/held-out-test-v1/runtime-v1",
+  "validation_probe_directory": "data/processed/noise-v1",
+  "validation_probe_manifest_sha256": "285d14778d917eb0d7b602f2de36b84620bfabdee6ba7af3bd0fac8fed845e29",
+  "progress_every_records": 2000,
+  "error_examples_per_category_and_class": 2,
+  "model_order": [
+    "published",
+    "clean",
+    "augmented",
+    "without_case_loss"
+  ],
+  "test_scoring_enabled_by_default": false
+}

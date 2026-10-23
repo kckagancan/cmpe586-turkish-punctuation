@@ -1,0 +1,1903 @@
+{
+  "version": "held-out-input-audit-v1",
+  "freeze_identity": "ba6bf8decbd62a64f898a4eb47054776a97b3131fc8c6a20d8a50e22c6dc9653",
+  "input_identity": "fce0d2c6f8a47ffaf012e55af5dd34d84b2089b8bbac73ae8ea80208f1fe8e19",
+  "prepared_files_excluding_commit": 274,
+  "independent_retokenization_passed": true,
+  "independent_retokenization_log": "artifacts/evaluation-preparation/held-out-test-v1/input-verification.log",
+  "all_conditions": 39,
+  "max_planned_input_length": 172,
+  "model_weights_loaded": false,
+  "model_predictions_or_scores_computed": false,
+  "training_performed": false,
+  "conditions": {
+    "clean-anchor": {
+      "families": [],
+      "seed": null,
+      "level": "clean",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 0,
+          "changed_words": 0,
+          "changed_word_percent": 0.0,
+          "selected_union_words": 0,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 0,
+          "changed_words": 0,
+          "changed_word_percent": 0.0,
+          "selected_union_words": 0,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 153
+    },
+    "case_loss-mild-seed586": {
+      "families": [
+        "case_loss"
+      ],
+      "seed": 586,
+      "level": "mild",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 3207,
+          "changed_words": 3629,
+          "changed_word_percent": 1.999614293192275,
+          "selected_union_words": 3629,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 3180,
+          "changed_words": 3601,
+          "changed_word_percent": 1.9882285386161356,
+          "selected_union_words": 3601,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 153
+    },
+    "diacritic_loss-mild-seed586": {
+      "families": [
+        "diacritic_loss"
+      ],
+      "seed": 586,
+      "level": "mild",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 3066,
+          "changed_words": 3629,
+          "changed_word_percent": 1.999614293192275,
+          "selected_union_words": 3629,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 3059,
+          "changed_words": 3622,
+          "changed_word_percent": 1.999823317652775,
+          "selected_union_words": 3622,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 154
+    },
+    "typo_swap-mild-seed586": {
+      "families": [
+        "typo_swap"
+      ],
+      "seed": 586,
+      "level": "mild",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 3060,
+          "changed_words": 3629,
+          "changed_word_percent": 1.999614293192275,
+          "selected_union_words": 3629,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 3054,
+          "changed_words": 3623,
+          "changed_word_percent": 2.000375449987853,
+          "selected_union_words": 3623,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 153
+    },
+    "combined-mild-seed586": {
+      "families": [
+        "typo_swap",
+        "case_loss",
+        "diacritic_loss"
+      ],
+      "seed": 586,
+      "level": "mild",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 7143,
+          "changed_words": 10690,
+          "changed_word_percent": 5.8902939636884595,
+          "selected_union_words": 10690,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 7105,
+          "changed_words": 10650,
+          "changed_word_percent": 5.880209368581462,
+          "selected_union_words": 10650,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 154
+    },
+    "case_loss-medium-seed586": {
+      "families": [
+        "case_loss"
+      ],
+      "seed": 586,
+      "level": "medium",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 6982,
+          "changed_words": 9074,
+          "changed_word_percent": 4.99986224756867,
+          "selected_union_words": 9074,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 6919,
+          "changed_words": 9005,
+          "changed_word_percent": 4.971951677378034,
+          "selected_union_words": 9005,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 152
+    },
+    "diacritic_loss-medium-seed586": {
+      "families": [
+        "diacritic_loss"
+      ],
+      "seed": 586,
+      "level": "medium",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 6229,
+          "changed_words": 9074,
+          "changed_word_percent": 4.99986224756867,
+          "selected_union_words": 9074,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 6204,
+          "changed_words": 9048,
+          "changed_word_percent": 4.995693367786391,
+          "selected_union_words": 9048,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 154
+    },
+    "typo_swap-medium-seed586": {
+      "families": [
+        "typo_swap"
+      ],
+      "seed": 586,
+      "level": "medium",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 6193,
+          "changed_words": 9074,
+          "changed_word_percent": 4.99986224756867,
+          "selected_union_words": 9074,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 6177,
+          "changed_words": 9057,
+          "changed_word_percent": 5.000662558802094,
+          "selected_union_words": 9057,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 153
+    },
+    "combined-medium-seed586": {
+      "families": [
+        "typo_swap",
+        "case_loss",
+        "diacritic_loss"
+      ],
+      "seed": 586,
+      "level": "medium",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 11602,
+          "changed_words": 26012,
+          "changed_word_percent": 14.33286497506681,
+          "selected_union_words": 26012,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 11513,
+          "changed_words": 25905,
+          "changed_word_percent": 14.302988140197442,
+          "selected_union_words": 25905,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 153
+    },
+    "case_loss-heavy-seed586": {
+      "families": [
+        "case_loss"
+      ],
+      "seed": 586,
+      "level": "heavy",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 11629,
+          "changed_words": 18148,
+          "changed_word_percent": 9.99972449513734,
+          "selected_union_words": 18148,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 11515,
+          "changed_words": 18019,
+          "changed_word_percent": 9.94887254577177,
+          "selected_union_words": 18019,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 154
+    },
+    "diacritic_loss-heavy-seed586": {
+      "families": [
+        "diacritic_loss"
+      ],
+      "seed": 586,
+      "level": "heavy",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 9330,
+          "changed_words": 18148,
+          "changed_word_percent": 9.99972449513734,
+          "selected_union_words": 18148,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 9288,
+          "changed_words": 18104,
+          "changed_word_percent": 9.995803794253407,
+          "selected_union_words": 18104,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 156
+    },
+    "typo_swap-heavy-seed586": {
+      "families": [
+        "typo_swap"
+      ],
+      "seed": 586,
+      "level": "heavy",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 9317,
+          "changed_words": 18148,
+          "changed_word_percent": 9.99972449513734,
+          "selected_union_words": 18148,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 9286,
+          "changed_words": 18115,
+          "changed_word_percent": 10.001877249939266,
+          "selected_union_words": 18115,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 155
+    },
+    "combined-heavy-seed586": {
+      "families": [
+        "typo_swap",
+        "case_loss",
+        "diacritic_loss"
+      ],
+      "seed": 586,
+      "level": "heavy",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 14021,
+          "changed_words": 49576,
+          "changed_word_percent": 27.316858142546216,
+          "selected_union_words": 49576,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 13889,
+          "changed_words": 49402,
+          "changed_word_percent": 27.27644161752689,
+          "selected_union_words": 49402,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 159
+    },
+    "case_loss-mild-seed587": {
+      "families": [
+        "case_loss"
+      ],
+      "seed": 587,
+      "level": "mild",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 3229,
+          "changed_words": 3629,
+          "changed_word_percent": 1.999614293192275,
+          "selected_union_words": 3629,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 3198,
+          "changed_words": 3595,
+          "changed_word_percent": 1.984915744605667,
+          "selected_union_words": 3595,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 154
+    },
+    "diacritic_loss-mild-seed587": {
+      "families": [
+        "diacritic_loss"
+      ],
+      "seed": 587,
+      "level": "mild",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 3037,
+          "changed_words": 3629,
+          "changed_word_percent": 1.999614293192275,
+          "selected_union_words": 3629,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 3025,
+          "changed_words": 3617,
+          "changed_word_percent": 1.9970626559773847,
+          "selected_union_words": 3617,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 154
+    },
+    "typo_swap-mild-seed587": {
+      "families": [
+        "typo_swap"
+      ],
+      "seed": 587,
+      "level": "mild",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 3070,
+          "changed_words": 3629,
+          "changed_word_percent": 1.999614293192275,
+          "selected_union_words": 3629,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 3061,
+          "changed_words": 3619,
+          "changed_word_percent": 1.9981669206475408,
+          "selected_union_words": 3619,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 155
+    },
+    "combined-mild-seed587": {
+      "families": [
+        "typo_swap",
+        "case_loss",
+        "diacritic_loss"
+      ],
+      "seed": 587,
+      "level": "mild",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 7235,
+          "changed_words": 10687,
+          "changed_word_percent": 5.888640934512494,
+          "selected_union_words": 10687,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 7188,
+          "changed_words": 10636,
+          "changed_word_percent": 5.872479515890369,
+          "selected_union_words": 10636,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 157
+    },
+    "case_loss-medium-seed587": {
+      "families": [
+        "case_loss"
+      ],
+      "seed": 587,
+      "level": "medium",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 6970,
+          "changed_words": 9074,
+          "changed_word_percent": 4.99986224756867,
+          "selected_union_words": 9074,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 6905,
+          "changed_words": 9004,
+          "changed_word_percent": 4.971399545042956,
+          "selected_union_words": 9004,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 155
+    },
+    "diacritic_loss-medium-seed587": {
+      "families": [
+        "diacritic_loss"
+      ],
+      "seed": 587,
+      "level": "medium",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 6221,
+          "changed_words": 9074,
+          "changed_word_percent": 4.99986224756867,
+          "selected_union_words": 9074,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 6185,
+          "changed_words": 9038,
+          "changed_word_percent": 4.99017204443561,
+          "selected_union_words": 9038,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 157
+    },
+    "typo_swap-medium-seed587": {
+      "families": [
+        "typo_swap"
+      ],
+      "seed": 587,
+      "level": "medium",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 6211,
+          "changed_words": 9074,
+          "changed_word_percent": 4.99986224756867,
+          "selected_union_words": 9074,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 6194,
+          "changed_words": 9056,
+          "changed_word_percent": 5.000110426467016,
+          "selected_union_words": 9056,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 155
+    },
+    "combined-medium-seed587": {
+      "families": [
+        "typo_swap",
+        "case_loss",
+        "diacritic_loss"
+      ],
+      "seed": 587,
+      "level": "medium",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 11633,
+          "changed_words": 25945,
+          "changed_word_percent": 14.295947323470259,
+          "selected_union_words": 25945,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 11536,
+          "changed_words": 25834,
+          "changed_word_percent": 14.2637867444069,
+          "selected_union_words": 25834,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 161
+    },
+    "case_loss-heavy-seed587": {
+      "families": [
+        "case_loss"
+      ],
+      "seed": 587,
+      "level": "heavy",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 11614,
+          "changed_words": 18148,
+          "changed_word_percent": 9.99972449513734,
+          "selected_union_words": 18148,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 11490,
+          "changed_words": 18005,
+          "changed_word_percent": 9.941142693080678,
+          "selected_union_words": 18005,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 156
+    },
+    "diacritic_loss-heavy-seed587": {
+      "families": [
+        "diacritic_loss"
+      ],
+      "seed": 587,
+      "level": "heavy",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 9255,
+          "changed_words": 18148,
+          "changed_word_percent": 9.99972449513734,
+          "selected_union_words": 18148,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 9203,
+          "changed_words": 18093,
+          "changed_word_percent": 9.989730338567547,
+          "selected_union_words": 18093,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 162
+    },
+    "typo_swap-heavy-seed587": {
+      "families": [
+        "typo_swap"
+      ],
+      "seed": 587,
+      "level": "heavy",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 9433,
+          "changed_words": 18148,
+          "changed_word_percent": 9.99972449513734,
+          "selected_union_words": 18148,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 9399,
+          "changed_words": 18110,
+          "changed_word_percent": 9.999116588263876,
+          "selected_union_words": 18110,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 155
+    },
+    "combined-heavy-seed587": {
+      "families": [
+        "typo_swap",
+        "case_loss",
+        "diacritic_loss"
+      ],
+      "seed": 587,
+      "level": "heavy",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 14019,
+          "changed_words": 49522,
+          "changed_word_percent": 27.287103617378847,
+          "selected_union_words": 49522,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 13875,
+          "changed_words": 49321,
+          "changed_word_percent": 27.231718898385566,
+          "selected_union_words": 49321,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 167
+    },
+    "case_loss-mild-seed588": {
+      "families": [
+        "case_loss"
+      ],
+      "seed": 588,
+      "level": "mild",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 3196,
+          "changed_words": 3629,
+          "changed_word_percent": 1.999614293192275,
+          "selected_union_words": 3629,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 3170,
+          "changed_words": 3603,
+          "changed_word_percent": 1.9893328032862916,
+          "selected_union_words": 3603,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 154
+    },
+    "diacritic_loss-mild-seed588": {
+      "families": [
+        "diacritic_loss"
+      ],
+      "seed": 588,
+      "level": "mild",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 3071,
+          "changed_words": 3629,
+          "changed_word_percent": 1.999614293192275,
+          "selected_union_words": 3629,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 3066,
+          "changed_words": 3624,
+          "changed_word_percent": 2.000927582322931,
+          "selected_union_words": 3624,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 153
+    },
+    "typo_swap-mild-seed588": {
+      "families": [
+        "typo_swap"
+      ],
+      "seed": 588,
+      "level": "mild",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 3090,
+          "changed_words": 3629,
+          "changed_word_percent": 1.999614293192275,
+          "selected_union_words": 3629,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 3085,
+          "changed_words": 3624,
+          "changed_word_percent": 2.000927582322931,
+          "selected_union_words": 3624,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 153
+    },
+    "combined-mild-seed588": {
+      "families": [
+        "typo_swap",
+        "case_loss",
+        "diacritic_loss"
+      ],
+      "seed": 588,
+      "level": "mild",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 7178,
+          "changed_words": 10691,
+          "changed_word_percent": 5.890844973413781,
+          "selected_union_words": 10691,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 7144,
+          "changed_words": 10657,
+          "changed_word_percent": 5.884074294927008,
+          "selected_union_words": 10657,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 154
+    },
+    "case_loss-medium-seed588": {
+      "families": [
+        "case_loss"
+      ],
+      "seed": 588,
+      "level": "medium",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 6940,
+          "changed_words": 9074,
+          "changed_word_percent": 4.99986224756867,
+          "selected_union_words": 9074,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 6892,
+          "changed_words": 9019,
+          "changed_word_percent": 4.979681530069127,
+          "selected_union_words": 9019,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 154
+    },
+    "diacritic_loss-medium-seed588": {
+      "families": [
+        "diacritic_loss"
+      ],
+      "seed": 588,
+      "level": "medium",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 6212,
+          "changed_words": 9074,
+          "changed_word_percent": 4.99986224756867,
+          "selected_union_words": 9074,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 6191,
+          "changed_words": 9052,
+          "changed_word_percent": 4.997901897126703,
+          "selected_union_words": 9052,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 156
+    },
+    "typo_swap-medium-seed588": {
+      "families": [
+        "typo_swap"
+      ],
+      "seed": 588,
+      "level": "medium",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 6232,
+          "changed_words": 9074,
+          "changed_word_percent": 4.99986224756867,
+          "selected_union_words": 9074,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 6221,
+          "changed_words": 9063,
+          "changed_word_percent": 5.003975352812562,
+          "selected_union_words": 9063,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 155
+    },
+    "combined-medium-seed588": {
+      "families": [
+        "typo_swap",
+        "case_loss",
+        "diacritic_loss"
+      ],
+      "seed": 588,
+      "level": "medium",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 11596,
+          "changed_words": 25969,
+          "changed_word_percent": 14.30917155687798,
+          "selected_union_words": 25969,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 11525,
+          "changed_words": 25885,
+          "changed_word_percent": 14.29194549349588,
+          "selected_union_words": 25885,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 159
+    },
+    "case_loss-heavy-seed588": {
+      "families": [
+        "case_loss"
+      ],
+      "seed": 588,
+      "level": "heavy",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 11628,
+          "changed_words": 18148,
+          "changed_word_percent": 9.99972449513734,
+          "selected_union_words": 18148,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 11513,
+          "changed_words": 18012,
+          "changed_word_percent": 9.945007619426224,
+          "selected_union_words": 18012,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 153
+    },
+    "diacritic_loss-heavy-seed588": {
+      "families": [
+        "diacritic_loss"
+      ],
+      "seed": 588,
+      "level": "heavy",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 9249,
+          "changed_words": 18148,
+          "changed_word_percent": 9.99972449513734,
+          "selected_union_words": 18148,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 9213,
+          "changed_words": 18108,
+          "changed_word_percent": 9.998012323593718,
+          "selected_union_words": 18108,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 158
+    },
+    "typo_swap-heavy-seed588": {
+      "families": [
+        "typo_swap"
+      ],
+      "seed": 588,
+      "level": "heavy",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 9365,
+          "changed_words": 18148,
+          "changed_word_percent": 9.99972449513734,
+          "selected_union_words": 18148,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 9342,
+          "changed_words": 18124,
+          "changed_word_percent": 10.006846440954968,
+          "selected_union_words": 18124,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 155
+    },
+    "combined-heavy-seed588": {
+      "families": [
+        "typo_swap",
+        "case_loss",
+        "diacritic_loss"
+      ],
+      "seed": 588,
+      "level": "heavy",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 14042,
+          "changed_words": 49630,
+          "changed_word_percent": 27.346612667713586,
+          "selected_union_words": 49630,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 13912,
+          "changed_words": 49457,
+          "changed_word_percent": 27.306808895956184,
+          "selected_union_words": 49457,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 160
+    },
+    "case_loss_full": {
+      "families": [
+        "case_loss"
+      ],
+      "seed": null,
+      "level": "full",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 14130,
+          "changed_words": 24408,
+          "changed_word_percent": 13.449045375650881,
+          "selected_union_words": 24408,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 13976,
+          "changed_words": 24224,
+          "changed_word_percent": 13.374853684931205,
+          "selected_union_words": 24224,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 154
+    },
+    "diacritic_loss_full": {
+      "families": [
+        "diacritic_loss"
+      ],
+      "seed": null,
+      "level": "full",
+      "cohorts": {
+        "primary": {
+          "rows": 14600,
+          "words": 181485,
+          "changed_rows": 13926,
+          "changed_words": 75769,
+          "changed_word_percent": 41.749455877896246,
+          "selected_union_words": 75769,
+          "label_support": {
+            "O": 152628,
+            "PERIOD": 15465,
+            "COMMA": 12164,
+            "QUESTION_MARK": 1228
+          },
+          "invariants_passed": true
+        },
+        "sensitivity": {
+          "rows": 14445,
+          "words": 181116,
+          "changed_rows": 13793,
+          "changed_words": 75576,
+          "changed_word_percent": 41.72795335586033,
+          "selected_union_words": 75576,
+          "label_support": {
+            "O": 152428,
+            "PERIOD": 15325,
+            "COMMA": 12152,
+            "QUESTION_MARK": 1211
+          },
+          "invariants_passed": true
+        }
+      },
+      "tokenization": {
+        "rows": 14600,
+        "words": 181485,
+        "unknown_subwords": 0,
+        "missing_words": 0,
+        "rows_over_limit": 0,
+        "all_first_subword_targets_preserved": true
+      },
+      "max_input_length": 172
+    }
+  }
+}

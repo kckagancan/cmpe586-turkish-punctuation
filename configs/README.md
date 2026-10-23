@@ -111,3 +111,32 @@ five post-training validation conditions. It references the byte-identical
 `ablation-case-loss-inputs.json` records the 31-file input ZIP SHA and epoch
 content/audit hashes. The omitted-family views are prepared locally once and
 restored on Colab. See [preparation](../docs/case-loss-ablation-preparation.md).
+
+## Held-out evaluation protocol
+
+`held-out-test.json` freezes the four selected model identities, validation-derived
+122-evaluation matrix, original noise recipe, two reporting cohorts and matched
+inference/metric rules before test scoring. The 14,600-row primary cohort remains
+the released clean-v1 eligible subset; the 14,445-row exact-input-overlap
+sensitivity view filters those same predictions without additional inference.
+
+`python scripts/freeze_heldout_protocol.py` verifies model-selection metadata,
+pinned sources and original row IDs, then snapshots the protocol/config/row masks.
+It reads test inputs for structural auditing but computes no predictions/scores.
+This config is a protocol plan, not an input to the validation-only evaluator.
+Separate test preparation and orchestration are implemented; actual GPU
+readiness completed on 2026-10-23; all 122 formal conditions and the Colab
+saved-prediction audit of 244 cohort score sets subsequently completed.
+`held-out-execution.json` binds the unchanged protocol
+hash/freeze identity to the new input/output paths, fixed model order and reused
+validation probe manifest. It keeps test scoring off by default. This execution
+wiring does not edit the frozen protocol's historical phase fields.
+See [protocol](../docs/held-out-test-protocol.md) and
+[freeze evidence](../docs/held-out-test-preparation.md), plus
+[input/execution preparation](../docs/held-out-test-execution.md) and
+[actual GPU launch](../docs/held-out-test-launch.md).
+
+The configs and frozen numerical sources remain unchanged after scoring.
+Completed analysis, local verification and result archive locations are recorded
+in [held-out completion](../docs/held-out-test-completion.md);
+[all condition results](../docs/held-out-test-results.md) keep validation/test distinct.

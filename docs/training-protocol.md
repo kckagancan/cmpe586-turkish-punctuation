@@ -17,8 +17,19 @@ diacritic loss, swaps and combined noise, with −0.0485 pp on clean text.
 See the [comparison and limitations](augmented-noise-pilot.md). The GPU severity
 grid and three corruption seeds subsequently completed: **117 evaluations**,
 verified on Colab and again locally. See the
-[full-grid results](robustness-grid-results.md). The training ablation and
-held-out test evaluation remain unperformed.
+[full-grid results](robustness-grid-results.md). The case-loss training ablation
+subsequently completed with explicit user authorization on 2026-10-22: three
+epochs / 10,968 updates, selected epoch 3, clean validation macro-F1 0.841310171.
+[Completion checks and archive handoff](case-loss-ablation-training-status.md).
+Its clean + four medium/seed-586 GPU validation comparison subsequently completed
+and all 20 new/reference saved results were verified locally. Removing case loss
+reduced case-loss/combined F1 by 0.7383/0.8387 pp versus full augmentation, with
+a +0.1430 pp clean-score change. See the [ablation results and limitations](case-loss-ablation-results.md).
+Held-out test evaluation remains unperformed.
+The subsequent [held-out protocol](held-out-test-protocol.md) freezes the selected
+models, 122-evaluation matrix, metrics and exact-input-overlap sensitivity before
+scoring. Its [structural preparation record](held-out-test-preparation.md) is not
+runtime readiness or a completed test result.
 Its 58-file local model/results archive and four offline model loads passed
 verification. After action-time user confirmation, the run's two optimizer slots,
 epoch-01/02 Drive exports and temporary transfer ZIP were permanently deleted;
@@ -203,9 +214,10 @@ macro/micro/per-class P/R/F1 and confusion matrices.
 
 After selection, score the frozen validation severity/seed grid on GPU for both
 arms and the published reference, with paired row IDs and identical saved inputs.
-Existing pilot scores remain development observations. The current evaluation
-runner enforces its original CPU reference settings, so GPU evaluation needs a
-matching clean reference and documented runner integration first.
+Existing pilot scores remain development observations. At initial protocol
+writing the evaluation runner enforced CPU reference settings. The subsequently
+completed GPU integration uses fresh matched GPU clean anchors, calibration,
+runtime/source identities and condition commits; see the [GPU grid protocol](robustness-grid.md).
 
 For final-test experiments, freeze the model-selection rule, run matrix, metrics,
 seeds and severity conditions before scoring any test condition. Generate noise
@@ -440,6 +452,8 @@ model/optimizer/scheduler. A failure during validation can resume without
 repeating that epoch's training. Updates after the last committed checkpoint are
 replayed, with corresponding uncommitted event entries removed.
 
-The augmented view preparer, augmented runner integration and training ablations
-follow review/calibration of this clean path. No augmented training command is
-advertised as implemented yet.
+This section originally described the first clean runner. The augmented view
+preparer, paired augmented runner and case-loss ablation were subsequently
+implemented, calibrated and completed. Their fixed commands and evidence are
+linked in the current status at the top of this protocol; these historical clean
+examples do not start a new experiment.

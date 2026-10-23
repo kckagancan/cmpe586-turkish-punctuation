@@ -1,0 +1,350 @@
+{
+  "version": "held-out-test-v1",
+  "specified_on": "2026-10-22",
+  "protocol": "docs/held-out-test-protocol.md",
+  "phase": "protocol_and_cohort_freeze_only",
+  "split": "test",
+  "data_manifest": {
+    "path": "docs/data-manifest.json",
+    "sha256": "54143c94c5d6411e37fcb1c8acc8610b84b0774409d55bd4ddb3149d916f31fb"
+  },
+  "clean_preprocessing": {
+    "config": "configs/preprocessing.json",
+    "config_sha256": "505d070f7316a371d5c36c55158cc476d93c10e55854e8edbb8ec87b0eb09025",
+    "existing_manifest": "data/processed/clean-v1/manifest.json",
+    "existing_manifest_sha256": "202f34cb1de4deda3f65bdea55b203a8740670f4418a305112542afbb185c14a",
+    "expected_eligible_records": 14600,
+    "expected_eligible_word_targets": 181485,
+    "expected_quarantined_records": 61,
+    "primary_rule": "retain_all_clean_v1_eligible_test_rows"
+  },
+  "sensitivity": {
+    "name": "exclude_exact_train_or_validation_inputs",
+    "reference_splits": [
+      "train",
+      "validation"
+    ],
+    "reference_rows": "all_released_rows",
+    "match": "exact_original_token_list_case_sensitive_without_normalization",
+    "fingerprint": "SHA256_UTF8_JSON_tokens_ensure_ascii_false_compact_separators",
+    "labels_used_for_membership": false,
+    "within_test_duplicates": "retain_released_rows",
+    "apply_to": "same_saved_primary_predictions_after_corruption",
+    "regenerate_noise_or_inference": false,
+    "interpretation": "exact_input_overlap_sensitivity_not_document_independence_guarantee"
+  },
+  "selection": {
+    "rule": "highest_clean_validation_punctuation_macro_f1_earliest_epoch_on_exact_tie",
+    "test_selects_checkpoint_or_hyperparameter": false,
+    "selected_epoch_for_all_fine_tuned_models": 3,
+    "selected_update_for_all_fine_tuned_models": 10968
+  },
+  "models": {
+    "published": {
+      "reference_config": "configs/published-robustness-grid.json",
+      "reference_config_sha256": "780eb57a371401855c78075ac442de5b48128029ed30985dad1d632635baabb2",
+      "reference_summary": "artifacts/evaluations/published-bert-robustness-grid-gpu-v1/summary.json",
+      "reference_summary_sha256": "f08cfae00367b3c390a2ab9e47076d0ede0782ccbaa3597398f696d6286e27d9",
+      "kind": "published_checkpoint",
+      "model_id": "uygarkurt/bert-restore-punctuation-turkish",
+      "revision": "dd8b9481ed3b3c05110d7e041ecbeb6a1c23b8b0",
+      "model_tensors_sha256": "391cf196c87a2a1a03bce3516f1ba933acb4cf7d10919f91ea141512f7232bc5",
+      "historical_test_exposure": "unknown"
+    },
+    "clean": {
+      "reference_config": "configs/clean-robustness-grid.json",
+      "reference_config_sha256": "efb536e7ed0f18b903bccfd5eecbdf6bd4ad72a6480f60582440d03ca433a12d",
+      "reference_summary": "artifacts/evaluations/finetuned-clean-seed586-robustness-grid-gpu-v1/summary.json",
+      "reference_summary_sha256": "be909a2361d855b692b59cb5c76b17f03ebfa089cb859f7d393d7647d4df2ca4",
+      "kind": "fine_tuned_export",
+      "training_identity": "5ddecc9b8bfaf0b9442a7942caa45a64173e037b0ea7309692c12e5767603f37",
+      "training_arm": "clean",
+      "training_seed": 586,
+      "selected_epoch": 3,
+      "selected_update": 10968,
+      "local_run_directory": "artifacts/training/training-v1/train-clean-seed-586-v1/completed-archive/run",
+      "storage_run_directory": "training-v1/train-clean-seed-586-v1",
+      "local_model_directory": "artifacts/training/training-v1/train-clean-seed-586-v1/completed-archive/run/models/epoch-03",
+      "run_sha256": "dfc9b1e90b219e2f0fcb3e34ae1508b613366aeac8e399cca4f00a45ca915ce2",
+      "summary_sha256": "aff829f67f74d56aae5ff8582ca2f12136929a1884481a47853ceb79a12e9bef",
+      "export_sha256": "b40aabd3539b24039fb49631a917ed649ab8fe0769e95246a26961c41eed7ae8",
+      "model_tensors_sha256": "487a8c7c38d05787f8527eca642b4d2a80bb94a814b960479b9668a87492cd96",
+      "export_file_sha256": {
+        "config.json": "f49ac037e4391ad9de81f79f851e1be8814bec0742a782cba5bad76da929b3ee",
+        "model.safetensors": "e3ab02255bc6ea00ae3df49ecb3fd292caaae1bca11f792984aaa03191ab4a56",
+        "special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+        "tokenizer.json": "d424e0bceb7f017dfced77157d14647505b28b41bfc8d9bffd5631f1b1fe61e5",
+        "tokenizer_config.json": "e9ac4e019a4f69d08cf102e59bf0a07ad8f7b7311ce8f661ef83076878064045",
+        "vocab.txt": "ca72d2012b1e46ed42f5df2dc9675f9da0b37a481601785cb4dff91f67fcca65"
+      }
+    },
+    "augmented": {
+      "reference_config": "configs/augmented-robustness-grid.json",
+      "reference_config_sha256": "df31a7dbe06bf3bc0e38871fdff678fd21cdf02c1ae87d01496c545b1c59440c",
+      "reference_summary": "artifacts/evaluations/finetuned-augmented-seed586-robustness-grid-gpu-v1/summary.json",
+      "reference_summary_sha256": "6da66ad6ef93e4f6557ca7a0f1df14736ace7725e68562f7171ac8da4dab83cf",
+      "kind": "fine_tuned_export",
+      "training_identity": "3cdf62cc3be4bbd21e48dc17aee7b450f90e6b1e2b6041dea185e3d8f0ceb01e",
+      "training_arm": "augmented",
+      "training_seed": 586,
+      "selected_epoch": 3,
+      "selected_update": 10968,
+      "local_run_directory": "artifacts/training/training-v1/train-augmented-seed-586-v1/completed-archive/run",
+      "storage_run_directory": "training-v1/train-augmented-seed-586-v1",
+      "local_model_directory": "artifacts/training/training-v1/train-augmented-seed-586-v1/completed-archive/run/models/epoch-03",
+      "run_sha256": "4cb635ffb5a661538fbe5e86fb7a8efbd2d6baafb52bdeb86c1f2c83ea5f4a73",
+      "summary_sha256": "72875146d81184bdac36e2c3d0dbf402aff9153ed93c2b600d6102f079be1de6",
+      "export_sha256": "d8da85ceb422dcdacee07af7fd6a6b9aa2715a64abce74cea8dc87a854351c66",
+      "model_tensors_sha256": "f7e03bcf899af866cd7711a2747974c84fe6448b2deab002c3834811fe9c648b",
+      "export_file_sha256": {
+        "config.json": "f49ac037e4391ad9de81f79f851e1be8814bec0742a782cba5bad76da929b3ee",
+        "model.safetensors": "0a5231879488bf716c00e0c474906c2e584092ee2020a8b467d682d5155e919a",
+        "special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+        "tokenizer.json": "d424e0bceb7f017dfced77157d14647505b28b41bfc8d9bffd5631f1b1fe61e5",
+        "tokenizer_config.json": "e9ac4e019a4f69d08cf102e59bf0a07ad8f7b7311ce8f661ef83076878064045",
+        "vocab.txt": "ca72d2012b1e46ed42f5df2dc9675f9da0b37a481601785cb4dff91f67fcca65"
+      }
+    },
+    "without_case_loss": {
+      "reference_config": "configs/ablation-case-loss-evaluation.json",
+      "reference_config_sha256": "0e698a4a08843ef7b4489382ad0f05da10c643dd568f1a1d0a913d63ec29a361",
+      "reference_summary": "artifacts/evaluations/finetuned-augmented-without-case-loss-seed586-medium-gpu-v1/summary.json",
+      "reference_summary_sha256": "fc4ada2d2339ef7330e45b69875d4989ce62332f2cfd0be2b563a11ced79b4f2",
+      "kind": "fine_tuned_export",
+      "training_identity": "9a74ed0ee70110b75111f9e5a43e0cba1236cca8dafaee22eb3a371da34e6928",
+      "training_arm": "augmented",
+      "training_seed": 586,
+      "selected_epoch": 3,
+      "selected_update": 10968,
+      "local_run_directory": "artifacts/training/training-v1/train-augmented-without-case-loss-seed-586-v1/completed-archive/run",
+      "storage_run_directory": "training-v1/train-augmented-without-case-loss-seed-586-v1",
+      "local_model_directory": "artifacts/training/training-v1/train-augmented-without-case-loss-seed-586-v1/completed-archive/run/models/epoch-03",
+      "run_sha256": "c55655150e6665782acd4d4ed1e126ace5247501d7685c3c58b90cb72a6a98bf",
+      "summary_sha256": "91a05bc7455627b3cca2416b1c5e2415c72462380c64d09ff3f7b879aece07d7",
+      "export_sha256": "e345b41ae94fd26f27019c63dcf1b2e393ac49457b0ad6204ff28dec4e7f9802",
+      "model_tensors_sha256": "ed61be05e2545fe4bb6b6ab9c4308cbe871e93109a6bfac469a6e1378ed66b89",
+      "export_file_sha256": {
+        "config.json": "f49ac037e4391ad9de81f79f851e1be8814bec0742a782cba5bad76da929b3ee",
+        "model.safetensors": "4fc34a7cf8e19575cb0f69419bda2fe8609b9dbdc929bb2e2ade43bd3d5c658a",
+        "special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+        "tokenizer.json": "d424e0bceb7f017dfced77157d14647505b28b41bfc8d9bffd5631f1b1fe61e5",
+        "tokenizer_config.json": "e9ac4e019a4f69d08cf102e59bf0a07ad8f7b7311ce8f661ef83076878064045",
+        "vocab.txt": "ca72d2012b1e46ed42f5df2dc9675f9da0b37a481601785cb4dff91f67fcca65"
+      }
+    }
+  },
+  "run_matrix": {
+    "main_models": [
+      "published",
+      "clean",
+      "augmented"
+    ],
+    "main_conditions": [
+      "clean-anchor",
+      "case_loss-mild-seed586",
+      "diacritic_loss-mild-seed586",
+      "typo_swap-mild-seed586",
+      "combined-mild-seed586",
+      "case_loss-medium-seed586",
+      "diacritic_loss-medium-seed586",
+      "typo_swap-medium-seed586",
+      "combined-medium-seed586",
+      "case_loss-heavy-seed586",
+      "diacritic_loss-heavy-seed586",
+      "typo_swap-heavy-seed586",
+      "combined-heavy-seed586",
+      "case_loss-mild-seed587",
+      "diacritic_loss-mild-seed587",
+      "typo_swap-mild-seed587",
+      "combined-mild-seed587",
+      "case_loss-medium-seed587",
+      "diacritic_loss-medium-seed587",
+      "typo_swap-medium-seed587",
+      "combined-medium-seed587",
+      "case_loss-heavy-seed587",
+      "diacritic_loss-heavy-seed587",
+      "typo_swap-heavy-seed587",
+      "combined-heavy-seed587",
+      "case_loss-mild-seed588",
+      "diacritic_loss-mild-seed588",
+      "typo_swap-mild-seed588",
+      "combined-mild-seed588",
+      "case_loss-medium-seed588",
+      "diacritic_loss-medium-seed588",
+      "typo_swap-medium-seed588",
+      "combined-medium-seed588",
+      "case_loss-heavy-seed588",
+      "diacritic_loss-heavy-seed588",
+      "typo_swap-heavy-seed588",
+      "combined-heavy-seed588",
+      "case_loss_full",
+      "diacritic_loss_full"
+    ],
+    "ablation_model": "without_case_loss",
+    "ablation_conditions": [
+      "clean-anchor",
+      "case_loss-medium-seed586",
+      "diacritic_loss-medium-seed586",
+      "typo_swap-medium-seed586",
+      "combined-medium-seed586"
+    ],
+    "primary_model_condition_evaluations": 122,
+    "reporting_cohorts": [
+      "clean_v1_eligible",
+      "exclude_exact_train_or_validation_inputs"
+    ],
+    "score_sets_including_sensitivity": 244,
+    "primary_comparison": "augmented_minus_clean_across_all_matched_conditions",
+    "secondary_comparison": "augmented_minus_without_case_loss_on_fixed_five_conditions",
+    "all_conditions_must_be_reported": true,
+    "ablation_scope_reason": "mirror_fixed_validation_ablation_clean_plus_four_medium_seed586_scope"
+  },
+  "noise": {
+    "recipe": "configs/noise.json",
+    "recipe_sha256": "2d7d767df17d2eb91b5aac6b250ba43a5a5f9f37a2af0283436254cf96e21a9d",
+    "recipe_version": "noise-v1",
+    "selection_split_key": "test",
+    "seeds": [
+      586,
+      587,
+      588
+    ],
+    "levels": {
+      "mild": 2,
+      "medium": 5,
+      "heavy": 10
+    },
+    "families": [
+      "case_loss",
+      "diacritic_loss",
+      "typo_swap",
+      "combined"
+    ],
+    "full_stress_conditions": [
+      "case_loss_full",
+      "diacritic_loss_full"
+    ],
+    "budget_denominator": "all_original_words_in_primary_eligible_test_cohort",
+    "sensitivity_plans": "filter_original_plans_and_predictions_never_resample",
+    "combined_order": [
+      "typo_swap",
+      "case_loss",
+      "diacritic_loss"
+    ],
+    "missing_word_or_overlength": "fail_whole_condition_without_row_drops_or_truncation",
+    "new_families_or_budgets_after_test_scores": false
+  },
+  "inference": {
+    "reference_runtime_receipt": "artifacts/evaluation-preparation/robustness-grid-gpu-v1/calibration.json",
+    "reference_runtime_receipt_sha256": "6b853bfb049b435b46c18b4963d84be2d99b9bba1c4e9a68f7b30ff7fbaa1510",
+    "device": "cuda",
+    "gpu": "Tesla T4",
+    "batch_size": 16,
+    "cpu_threads": 4,
+    "seed": 586,
+    "precision": "float32",
+    "attention_implementation": "sdpa",
+    "sdpa_backend": "math",
+    "tf32": false,
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8",
+    "max_input_length": 512,
+    "batch_order": "clean_length_ascending_then_source_row_id",
+    "shared_order_and_batch_membership_across_models_and_conditions": true,
+    "fresh_test_clean_anchor_per_model": true,
+    "calibration": "validation_inputs_only_no_optimizer_updates_no_test_scores",
+    "no_cpu_or_mixed_precision_substitution": true
+  },
+  "metrics": {
+    "primary": "punctuation_macro.f1",
+    "punctuation_labels": [
+      "PERIOD",
+      "COMMA",
+      "QUESTION_MARK"
+    ],
+    "all_labels": [
+      "O",
+      "PERIOD",
+      "COMMA",
+      "QUESTION_MARK"
+    ],
+    "label_to_id": {
+      "O": 0,
+      "PERIOD": 1,
+      "COMMA": 2,
+      "QUESTION_MARK": 3
+    },
+    "alignment": "first_subword",
+    "ignore_index": -100,
+    "zero_division": 0,
+    "retain_O_for_false_positive_and_false_negative_counts": true,
+    "report": [
+      "macro_precision_recall_f1",
+      "micro_precision_recall_f1",
+      "per_class_precision_recall_f1_support_confusion",
+      "own_clean_to_noisy_drop_pp",
+      "paired_augmented_minus_clean_pp",
+      "paired_augmented_minus_without_case_loss_pp",
+      "realized_changed_word_coverage_by_cohort"
+    ],
+    "aggregate": "mean_and_sample_sd_ddof1_across_three_corruption_seeds_only",
+    "clean_and_full_stress_endpoints": "single_deterministic_result_no_seed_sd",
+    "ablation": "seed586_values_only_no_seed_sd",
+    "p_values_or_equivalence_claims": false,
+    "global_pooled_robustness_score": false
+  },
+  "qualitative_analysis": {
+    "conditions": [
+      "clean-anchor",
+      "case_loss-heavy-seed586",
+      "combined-heavy-seed586",
+      "case_loss-medium-seed586",
+      "combined-medium-seed586"
+    ],
+    "examples_per_category_and_class": 2,
+    "selection": "first_matching_source_row_id_then_word_index",
+    "categories": [
+      "new_error",
+      "recovered_error",
+      "changed_error",
+      "unchanged_error"
+    ],
+    "classes": [
+      "PERIOD",
+      "COMMA",
+      "QUESTION_MARK"
+    ],
+    "distinguish_edited_words_from_unchanged_words_with_edited_context": true,
+    "representative_sampling_claim": false,
+    "raw_examples_in_git": false
+  },
+  "paths": {
+    "freeze_directory": "artifacts/evaluation-preparation/held-out-test-v1/protocol-freeze-r2",
+    "future_inputs": "data/processed/noise-held-out-test-v1",
+    "future_output_root": "artifacts/evaluations/held-out-test-v1"
+  },
+  "execution": {
+    "training_enabled": false,
+    "test_scoring_enabled_by_default": false,
+    "current_step_generates_noise": false,
+    "require_separate_test_preparer_runner_readiness": true,
+    "current_validation_commands_must_not_be_relaxed": true,
+    "resume_requires_identical_protocol_config_cohort_sources_models_and_runtime": true,
+    "changed_recipe_after_any_test_score": "retain_existing_evidence_create_a_new_version_do_not_tune_on_test"
+  },
+  "limitations": [
+    "one_training_seed_only",
+    "synthetic_noise_not_all_real_informal_Turkish",
+    "component_removal_lowers_total_training_noise",
+    "dataset_license_and_exact_split_provenance_unresolved",
+    "document_level_independence_unverified",
+    "published_checkpoint_prior_test_exposure_unknown",
+    "development_used_validation_including_ablation_results_this_is_not_blind_preregistration"
+  ],
+  "freeze_revision": 2,
+  "supersedes_freeze": {
+    "identity": "c6a74ed985476a41413e2111e6047d78e2684fd99ce02accca66854b2fc36f60",
+    "directory": "artifacts/evaluation-preparation/held-out-test-v1/protocol-freeze",
+    "reason": "Editorial citation correction: Nagy et al. 2021 Results is section 4, not 4.2; experimental decisions unchanged; no test scoring."
+  }
+}

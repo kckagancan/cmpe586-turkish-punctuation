@@ -1,0 +1,36 @@
+{
+  "version": "held-out-test-v1",
+  "split": "test",
+  "primary": {
+    "records": 14600,
+    "word_targets": 181485
+  },
+  "quarantined_records": 61,
+  "sensitivity": {
+    "records": 14445,
+    "word_targets": 181116,
+    "excluded_union_records": 155,
+    "exact_train_overlap_records": 148,
+    "exact_validation_overlap_records": 90,
+    "overlap_with_both_records": 83
+  },
+  "cohort_row_ids_sha256": {
+    "primary_row_ids": "336a213616d38821ee36d5656f5f4662dfbfa44f3dc497a0014199b2f36ffe11",
+    "quarantined_row_ids": "1436663a16b2aae6e412c3c0c95d8a9514b3485c41f948a97af2207827758c62",
+    "sensitivity_row_ids": "99ac4c8e700d435b214ecc5d3e0bd0a27e2467fdda325508d2c63002527955db",
+    "excluded_exact_overlap_row_ids": "7988f8384deb13f512e75394132ba7d190c2960669ab64f82fe9676dc5325bfb",
+    "exact_train_overlap_row_ids": "3009281f68ab82beac884ab8eccb8c6443f0a3a8954d1dbfbf4791f1738e7f50",
+    "exact_validation_overlap_row_ids": "ba022fa7699009544625c779f6fcabeec9e7e70a251ff350c4493f5e07e95f37"
+  },
+  "raw_source_sha256": {
+    "train": "721348f5a47c33e4b4cea265ab9fea3ccec54751442ab75379343682b89b7e4a",
+    "validation": "5b275daea819fb92c1b758afc09a497b6e6ba338b86fbcf3003b51ffc6ad05c2",
+    "test": "8890aac1db401299afe7c00f3cb04ea1df4bf03b96b748f2c958429d5836a52f"
+  },
+  "model_condition_evaluations": 122,
+  "score_sets_including_sensitivity": 244,
+  "test_inputs_read_for_structural_audit": true,
+  "noise_generated": false,
+  "models_loaded": false,
+  "test_predictions_or_scores_computed": false
+}

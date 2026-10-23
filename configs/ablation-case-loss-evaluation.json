@@ -1,0 +1,39 @@
+{
+  "run_name": "finetuned-augmented-without-case-loss-seed586-medium-gpu-v1",
+  "split": "validation",
+  "prepared_directory": "data/processed/noise-v1",
+  "trained_model": {
+    "run_directory": "artifacts/training/training-v1/train-augmented-without-case-loss-seed-586-v1/completed-archive/run",
+    "run_identity": "9a74ed0ee70110b75111f9e5a43e0cba1236cca8dafaee22eb3a371da34e6928",
+    "arm": "augmented",
+    "model_tensors_sha256": "ed61be05e2545fe4bb6b6ab9c4308cbe871e93109a6bfac469a6e1378ed66b89"
+  },
+  "published_comparison_directory": "artifacts/evaluations/published-bert-robustness-grid-gpu-v1",
+  "output_directory": "artifacts/evaluations/finetuned-augmented-without-case-loss-seed586-medium-gpu-v1",
+  "batch_order": "clean_length_ascending",
+  "recompute_clean_anchor": true,
+  "conditions": [
+    "case_loss-medium-seed586",
+    "diacritic_loss-medium-seed586",
+    "typo_swap-medium-seed586",
+    "combined-medium-seed586"
+  ],
+  "batch_size": 16,
+  "device": "cuda",
+  "cpu_threads": 4,
+  "seed": 586,
+  "progress_every_records": 2000,
+  "error_examples_per_category_and_class": 2,
+  "primary_metric": "punctuation_macro.f1",
+  "punctuation_labels": [
+    "PERIOD",
+    "COMMA",
+    "QUESTION_MARK"
+  ],
+  "zero_division": 0,
+  "runtime_policy": "fresh_gpu_anchor",
+  "storage_run_directory": "training-v1/train-augmented-without-case-loss-seed-586-v1",
+  "comparison_condition_policy": "verified_ablation_subset_v1",
+  "ablation_plan_sha256": "46a3412ee64724b3c1574e71832e767a62d08b4122126026a6319a76e993015a",
+  "published_comparison_summary_sha256": "f08cfae00367b3c390a2ab9e47076d0ede0782ccbaa3597398f696d6286e27d9"
+}

@@ -84,7 +84,7 @@ After successful formal training, follow the existing manual archive download,
 local model/metric verification and explicitly scoped cleanup workflow. No
 automatic or account-wide Drive deletion is added.
 
-## Current status
+## Preparation completion snapshot
 
 Local view preparation, complete re-tokenization, paired masks/operations audit,
 ZIP/member hash verification and notebook/config preparation passed.
@@ -114,12 +114,14 @@ config pins, shared initialization, matching paired-view audit, reference-run
 metadata, completed events and no retained calibration weights. The final
 `colab-preparation-verification.json` records `verified_ready`.
 
-The live notebook's calibration/training/archive switches are off and its final
-status cell passed. Nothing is running. Formal ablation training has **not
-started**; no ablation performance result exists yet. The user's requested stop
-point is preserved. Recheck the live runtime and readiness on a later authorized
-start; a disconnected VM may need setup again, while verified Drive inputs and
-calibration receipts remain reusable when their pins still match.
+At the preparation stop point, the live notebook's calibration/training/archive switches were off and its final
+status cell passed. Formal training had not started. This preserved the user's
+then-requested stop point. On **2026-10-22**, the user separately authorized the
+formal run. The current VM readiness gate passed again and training started;
+the existing calibration was reused. See the
+[formal launch and handoff record](case-loss-ablation-training-status.md) for
+the running job and initial-update evidence. No ablation quality result is
+available at that handoff.
 
 Operational receipts are outside Git under
 `artifacts/training/training-v1/ablation-without-case-loss-preparation-seed-586/`.
