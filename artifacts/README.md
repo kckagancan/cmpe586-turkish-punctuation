@@ -212,5 +212,174 @@ veya tamamlanmış bir ablation training sonucu değildir.
 
 `live-*.py` yürütülen hazırlık ve kapanış hücrelerini; `preparation-ready.jpg`
 son notebook durumunu, `files-changed.md` bu görevdeki tam dosya envanterini tutar.
-Notebook'taki çalışma anahtarları kapalı; formal ablation başlamadı ve çalışan
-iş yok. [Hazırlık raporu](../docs/case-loss-ablation-preparation.md).
+Hazırlık aşamasındaki duruşta çalışma anahtarları kapalıydı ve formal ablation
+başlamamıştı. [Hazırlık raporu](../docs/case-loss-ablation-preparation.md).
+
+## Case-loss ablation tamamlanma ve arşiv
+
+`training/training-v1/train-augmented-without-case-loss-seed-586-v1/launch/`
+ilk 25 update/run-identity kontrolünü ve başlangıç runtime/readiness kayıtlarını
+saklar. Formal koşu 2026-10-22'de tamamlandı: üç epoch / 10.968 update,
+seçilen epoch 3, clean validation macro-F1 %84,1310.
+
+Aynı koşunun `completion-2026-10-22/` klasöründe küçük metadata kopyaları,
+`completion-verification.json`, `archive-receipt.json`, denetim kaynakları ve tam
+`files-changed.md` envanteri tutulur. İlk denetimin kaynak-sırası varsayımı
+düzeltilmiştir; başarısız ilk kaynak ve düzeltme açıklaması da korunur. Son
+denetim, runner'ın sabit uzunluk sırasını ve ham validation hedeflerini doğrular.
+Tüm epoch skorları yeniden hesaplanmıştır; yeni inference yapılmamıştır.
+
+Model/sonuç ZIP'i `ablation-without-case-loss-seed586-models-9a74ed0ee701.zip`
+adıyla Drive'da hazırdır: 1.772.191.681 byte, 58 kaynak dosya ve manifest.
+ZIP/member ve Drive readback hash kontrolleri geçti. Kullanıcının indirdiği
+ZIP'in hash'i eşleşti; koşu artifact köküne kopyalanıp `completed-archive/`
+altına güvenli çıkarıldı. **Dört model offline yüklendi**; finite tensor hash'leri,
+tokenizer ve etiket eşlemeleri doğrulandı. Üç epoch'un kaydedilmiş skorları da
+yerel ham validation hedeflerinden yeniden hesaplanıp eşleştirildi.
+
+`local-archive-verification.json` ve `local-model-verification.json` bu denetimleri
+saklar. Ardından yalnızca bu koşunun 19 dosyası temizlendi: iki optimizer slotu,
+epoch-01/02 Drive model dosyaları ve geçici ZIP. Boş klasörler kalır; epoch-03,
+metadata ve ortak kaynaklar Drive'da korunur. Kapsam, tekil işlem yanıtları ve
+sonraki listelemeler `drive-cleanup-candidate.json`, `drive-cleanup-execution.json`
+ve `drive-cleanup-result.json` içinde. Optimizer state'ler tamamlanmış koşu
+arşivine dahil değil. Arşivleme aşamasında noisy ablation değerlendirmesi yoktu;
+sonraki değerlendirme aşağıda izlenir. Held-out test yapılmadı.
+[Tamamlanma raporu](../docs/case-loss-ablation-training-status.md).
+
+## Ablation evaluation preparation receipts
+
+`evaluation-preparation/ablation-case-loss-medium-gpu-v1/` stores the ignored
+local source-transfer bundle, exact Colab readiness/deployment/launch readbacks,
+initial observation log, local source verification and a complete local inventory.
+The completed result run is restored locally at
+`evaluations/finetuned-augmented-without-case-loss-seed586-medium-gpu-v1/`.
+Its `analysis/` and condition commits remain byte-identical to Drive.
+`completion-2026-10-22/` contains 62 exact Drive result/preparation files,
+the transfer receipt, `local-verification.json`, `report-generation.json`,
+complete inventory and the 730,799-byte results-only ZIP. The ZIP SHA-256 is
+`5a2e803a4a08ec13816320765d53ace4b24d0915b51c44ab3a29531af5e4bfd0`.
+All 20 matching saved condition metrics passed local raw-target recomputation;
+no inference, training, weights download or Drive deletion occurred in finalization.
+The previously verified 1.77 GB training/model archive remains separate.
+See [method and execution](../docs/case-loss-ablation-evaluation.md).
+
+## Held-out protocol freeze
+
+`evaluation-preparation/held-out-test-v1/protocol-freeze-r2/` contains the immutable
+protocol/config/source/model-metadata snapshots, `freeze.json`, `cohorts.json`,
+aggregate counts and last-written `complete.json`. Freeze identity:
+`ba6bf8decbd62a64f898a4eb47054776a97b3131fc8c6a20d8a50e22c6dc9653`.
+Primary test IDs: 14,600; sensitivity IDs: 14,445, excluding the union of 155
+exact train/validation input overlaps. Full row IDs remain ignored; only the
+aggregate summary is published under `docs/`.
+
+Structural source and model-selection metadata were audited without loading or
+rehashing weights. No test noise, predictions, scores or training outputs were
+created. Operational receipts and complete inventory belong in the sibling
+`protocol-preparation-2026-10-22/` directory, leaving the committed freeze intact.
+See [protocol preparation](../docs/held-out-test-preparation.md).
+
+## Held-out input and execution preparation
+
+`data/processed/noise-held-out-test-v1/` (at the repository root) contains 39
+audited test views, 274 files plus the immutable hash commit. Every view retains
+14,600 rows / 181,485 original word targets; independent re-tokenization passed.
+No model predictions or scores existed at that local preparation handoff.
+
+`evaluation-preparation/held-out-test-v1/transfer-v1/` contains the 72,979,242-byte
+inputs ZIP (312 members + manifest), 74,440-byte source ZIP (33 + manifest), and
+`transfer.json`. Full ZIP/member hashes and restoration against existing local
+bytes passed; models are not included. Preparation/verification/transfer logs
+are in the parent directory; `input-execution-2026-10-22/` stores final checks and
+the complete inventory. The protocol freeze remains unchanged.
+
+Future Drive readiness: `preparation/held-out-test-v1/runtime-v1/`.
+Future inference: `artifacts/evaluations/held-out-test-v1/`; future saved-prediction
+analysis: its `analysis-v1/`. These future paths are not evidence of completed
+runs. No actual GPU readiness, test inference, upload or Drive cleanup ran in
+this preparation. [Execution details](../docs/held-out-test-execution.md).
+
+## Held-out GPU launch — 2026-10-23
+
+`evaluation-preparation/held-out-test-v1/launch-2026-10-23/` contains the observed
+Drive deployment IDs, original failed restoration source/log, corrected
+restoration receipt/log, exact downloaded readiness/launch records and local
+receipt/source/input verification. GPU readiness identity:
+`f52980b75c4fafaac6138613f131eb1ca5d6b66a5436689fa4f424588793f2c7`.
+All 39 full re-tokenizations, four model tensor identities and eight validation-only
+GPU probes passed. No scientific recipe or historical snapshot changed.
+
+Formal held-out PID 7592 started at 12:25:56 Istanbul time. The active remote
+output is `artifacts/evaluations/held-out-test-v1/` under the project Drive root;
+streaming logs and startup evidence are in its separate dated preparation folder.
+This dated launch handoff is superseded by the completed run/archive below.
+Initial observations and its original inventory remain in the dated launch folder.
+See [GPU restoration and launch](../docs/held-out-test-launch.md).
+
+## Held-out completed results — 2026-10-23
+
+`evaluations/held-out-test-v1/` contains 526 exact downloaded Drive files: all
+122 condition prediction/metric/example/commit sets, source/config provenance,
+final progress and the original committed `analysis-v1/`. Run identity:
+`60e31867535de346accb64be45df04984434f6ff328b31c8819115cb689538a0`.
+
+`evaluation-preparation/held-out-test-v1/completion-2026-10-23/` contains the
+15,826,627-byte original transfer ZIP, exact transfer receipt and Colab audit log,
+local CPU `local-analysis/`, archive/report verification receipts and inventory.
+All 122 conditions / 244 cohort scores were independently recomputed locally;
+the analyses match except creation time and their aggregate CSV/Markdown match
+byte for byte. No model load or new inference was required.
+
+The final `held-out-test-v1-results.zip` has **570 files plus manifest**,
+**16,011,054 bytes**, SHA-256
+`2463a23ed22dc9543341393bedfb902f693448330da860374c708748d4830925`.
+It includes predictions/results, frozen protocol/masks, readiness/launch receipts,
+local audit log and verification source. Every member has a byte count and SHA
+and passed readback. Model weights/optimizer state are excluded; existing verified
+training archives remain separate. Original Drive evaluation copies were later
+removed after verified local backup; see the scoped cleanup record below.
+
+Only aggregate tables, condition summaries, diagnostic counts and figures go
+under `docs/`; full texts, row masks, predictions and raw examples stay ignored.
+[Results](../docs/held-out-test-results.md), [completion record](../docs/held-out-test-completion.md).
+
+## Drive storage audit — 2026-10-23
+
+`storage-audit/drive-2026-10-23-v1/` stores the complete metadata-only Drive tree
+(424 folders / 1,439 files / 2,859,545,316 logical bytes), every file's classification,
+and a proposed 1,148-file / 925,753,181-byte cleanup scope. Local candidate files
+match verified archives by size/SHA; current Drive sizes match. Current remote
+contents still require hash readback before any agreed cleanup. No Drive file
+was changed or deleted; this inventory is not a quota measurement or deletion approval.
+
+`augmented-training-inputs-seed586.zip` is a new local-only backup of the existing
+31-file augmented training-view tree: 44,255,470 bytes, SHA-256
+`0296e955bb772835d47bfe8529e317cf49fdb4f6cfde252f8e2b95c74d02652d`.
+All original epoch/source hashes and ZIP member readbacks passed; no inputs were
+regenerated and no models were loaded. Other verified input/result archives were
+reused. `inventory.json` and `files-changed.md` list all new evidence and edits.
+Models/shared initialization and every local archive remain protected.
+See [inventory and concrete proposal](../docs/drive-storage-audit.md).
+
+## Verified Drive cleanup — 2026-10-23
+
+The initial audit above is historical. `storage-audit/drive-2026-10-23-v1/cleanup-2026-10-23/`
+contains the authorized cleanup's complete evidence: exact remote content
+hashes, both preflight metadata snapshots, manifest-resolution evidence,
+versioned candidate list, local manifest supplement, deletion intents and
+1,148 per-file receipts, post-cleanup metadata and verification, final checks
+and complete `inventory.json` / `files-changed.md`.
+
+The remote augmented preparation manifest differs from the local preparation
+manifest only in runtime/timing fields. Its exact historically verified local
+counterpart is preserved in the **9,705-byte supplement ZIP**, SHA
+`edd9e56f606285f2d2a5e5c420f267f0dd00bacce920c2a8425ec90ed0cb036a`.
+The original candidate manifest and local augmented-input ZIP remain untouched;
+use the supplement to restore the exact original Drive manifest.
+
+All 1,148 reviewed Drive file IDs / 925,753,181 bytes were removed. The fresh
+post-inventory contains 292 files / 1,934,065,963 logical bytes; all 291 original
+protected IDs plus the new remote readback receipt remain. All eight backup ZIP
+hashes still match. Models/local results remain, and no experiment was repeated.
+See [completed scoped cleanup](../docs/drive-cleanup.md).

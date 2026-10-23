@@ -1,415 +1,139 @@
-# CMPE 586 — Turkish Punctuation Restoration
+# Turkish Punctuation Restoration under Writing Noise
 
-**Robustness of Turkish Punctuation Restoration under Informal Writing Noise**
+**A controlled robustness study of casing loss, Turkish character folding, and
+typing errors.** CMPE 586 course project by **Kagan Can**.
 
-CMPE 586 Transformer/NLP ders projesi. Türkçe noktalama geri yükleme modellerinin
-büyük/küçük harf kaybı, Türkçe karakterlerin sadeleştirilmesi ve yazım hataları
-altındaki dayanıklılığı incelenecek.
+[Read the paper](output/pdf/turkish-punctuation-report.pdf) ·
+[Full results](docs/held-out-test-results.md) ·
+[Methods and evidence](docs/README.md) ·
+[Reproduce the report](report/README.md)
 
-Yeni bir çalışma/chat için: [güncel durum ve sıradaki iş](PROJECT_STATUS.md).
-Kalıcı agent kuralları [AGENTS.md](AGENTS.md), ortam ve çalışma düzeni
-[PROJECT_SETUP.md](PROJECT_SETUP.md) içindedir. Ayrı yazma görevleri paralel
-yürütülürse ayrı Git worktree kullanılır; aynı Colab/Drive koşusuna tek chat yazar.
+How much does a punctuation model rely on clean spelling and capitalization?
+This project compares a published Turkish punctuation BERT with matched clean
+and noise-augmented BERTurk fine-tuning, then removes case loss from augmentation
+to examine its contribution. All completed results, including unfavorable
+ablation differences, are retained.
 
-**Durum:** Yerel ortam ve public repo hazır. Veri incelendi; `clean-v1` model
-girdileri hazırlandı ve yayımlanmış BERT üç elle yazılmış örnekte çalıştırıldı.
-Veri lisansı ve kesin kaynak/split geçmişi henüz doğrulanmadı.
-Hazır modelin temiz validation ölçümü tamamlandı: noktalama macro-F1 **%83,64**.
-Hazır modelin dört medium koşulluk validation pilotu tamamlandı; held-out test değerlendirmesi henüz yok.
-Temiz ölçümün yöntemi ve sınıf sonuçları: [clean validation raporu](docs/clean-validation.md).
-Gürültü kuralları, dönüşümler ve model çalıştırmadan veri hazırlama komutu hazır.
-38 validation varyantının veri/hizalama kontrolü geçti: [noise veri raporu](docs/noise-audit.md).
-Pilot macro-F1: case loss **%81,23**, Türkçe karakter kaybı **%83,43**, harf takası
-**%82,90**, combined **%80,34**. Yöntem, sınıf skorları ve hata analizi:
-[pilot raporu](docs/noise-pilot.md).
-Kontrollü fine-tuning için başlangıç ayarları ve karşılaştırma kuralları belirlendi:
-[eğitim protokolü](docs/training-protocol.md). Clean training pipeline ve Colab
-notebook'u hazır. T4 üzerinde 30 update'lik GPU calibration tamamlandı;
-[ölçümler ve sınırlar](docs/training-calibration.md). İlk clean fine-tuning
-2026-10-19'da tamamlandı: 3 epoch / 10.968 update, seçilen epoch 3,
-clean validation macro-F1 **%84,04**, training loop **72,2 dakika**.
-Sonuçlar ve kapsam: [koşu raporu](docs/clean-training-status.md).
-Clean modelin medium/seed-586 noise pilotu da tamamlandı: case loss **%81,23**,
-diacritic loss **%83,80**, typo swap **%83,20**, combined **%80,10** macro-F1.
-Clean control, training sonundaki 179.164 kelime tahminini aynen yeniden üretti.
-Hazır modelle eşleşen kıyas, sınıf skorları ve hata analizi:
-[clean model noise raporu](docs/clean-noise-pilot.md).
-Koşunun bütün epoch modelleri ve sonuçları yerelde arşivlenip doğrulandı;
-gereksiz Drive kopyaları temizlendi: [yedek denetimi](docs/backup-verification.md).
-Augmentation uygulandı; üç epoch'un noisy view'ları, kelime hedefleri ve yeniden
-tokenization kontrolleri yerelde ve Colab'da geçti. İki sabit checkpoint slotunun
-küçük Drive kontrolü ve T4 üzerinde 30 update calibration tamamlandı
-(peak allocated 2,434 GiB). Ayrıntılar ve kapsam:
-[augmentation hazırlık raporu](docs/augmentation-preparation.md).
-İlk formal augmented training 2026-10-22'de tamamlandı: 3 epoch / 10.968 update,
-seçilen epoch 3, clean validation macro-F1 **%83,99**, loop süresi **82,9 dakika**.
-Eşleşen medium-noise validation pilotu da tamamlandı: augmented macro-F1
-case loss **%82,24**, diacritic loss **%83,97**, typo swap **%83,53**, combined
-**%81,84**. Clean fine-tuning'e göre dört noisy koşulda +0,17–1,75 puan kazanç,
-clean skorda −0,0485 puan fark gözlendi. Tek training/corruption seed'li bu pilot
-held-out test sonucu değildir: [karşılaştırma ve hata analizi](docs/augmented-noise-pilot.md).
-Model/sonuç ZIP'i yerelde arşivlendi; 58 dosyanın hash'i, dört modelin offline yüklenmesi ve kaydedilmiş
-validation skorları doğrulandı. Gereksiz Drive kopyaları onay sonrası temizlendi:
-[koşu ve arşiv durumu](docs/augmented-training-status.md).
-Mild/medium/heavy × üç corruption seed ve iki full-loss endpoint için ayrı,
-eşleşen GPU akışında **117 validation ölçümü tamamlandı**. Kaydedilen sonuçlar
-hem Colab'da hem yerelde ham hedeflerden yeniden doğrulandı. Augmented modelin
-clean modele göre combined-heavy kazancı **+3,8623 F1 puan**; clean skordaki
-farkı **−0,0485 puan**. Üç corruption seed'in ortalama/SD değerleri, sınıf
-sonuçları ve grafikler: [robustness sonuçları](docs/robustness-grid-results.md).
-Tek training seed kullanıldı; ablation ve held-out test henüz yapılmadı.
-Arşiv ve doğrulama durumu: [çalışma kaydı](docs/robustness-grid.md).
-Case-loss training ablation için üç epoch'un verisi, paired row/word-plan
-kontrolleri, transfer ZIP'i ve ayrı `05` notebook'u hazırlandı. Drive restoration,
-30-update T4 calibration ve final readiness geçti; kayıtlar yerelde doğrulandı.
-Formal ablation başlamadı. Güncel hazırlık durumu:
-[ablation hazırlık kaydı](docs/case-loss-ablation-preparation.md).
-Notebook'un training/calibration anahtarları kapalı; arşivleme de ayrı ve kapalı
-bir hücrede. Özet hücresi, bağlantı yenilendiğinde kalıcı Drive sonucunu okuyabilir.
+## Main finding
 
-## Çalışma düzeni
+Noise augmentation improves robustness in this fixed experiment while giving a
+small positive clean-test macro-F1 difference.
 
-- **VS Code + `.py`:** tekrar kullanılabilir veri, noise, eğitim ve değerlendirme kodu.
-- **Notebook:** veri inceleme, küçük örnekler, görselleştirme ve Colab'dan çalıştırma.
-- **Yerel CPU:** geliştirme ve küçük kontroller.
-- **Colab GPU:** fine-tuning ve kapsamlı deneyler; GPU erişimi oturuma bağlıdır.
+| Held-out punctuation macro-F1 (%) | Published reference | Clean-trained | Augmented | Augmented − clean (pp) |
+| --- | ---: | ---: | ---: | ---: |
+| Clean | 84.0071 | 84.3437 | **84.4824** | +0.1387 |
+| Case loss, heavy | 79.2674 ± 0.2516 | 79.1340 ± 0.2251 | **81.3246 ± 0.1641** | +2.1906 ± 0.0618 |
+| Combined, heavy | 77.2021 ± 0.1631 | 76.7502 ± 0.3021 | **80.5289 ± 0.0906** | +3.7787 ± 0.2191 |
 
-Notebook'lar `src/` içindeki ortak kodu kullanacak. Böylece yerelde geliştirilen
-kod Colab'da da aynı şekilde kullanılabilecek.
+Primary cohort: **14,600 rows / 181,485 original word targets**. Noisy values are
+means ± sample SD over **three corruption seeds** for fixed trained models.
+Paired gains are computed per seed. There is **one training seed**, so these SDs
+do not measure training uncertainty or establish statistical significance.
 
-## Yerel kurulum
+![Primary held-out robustness curves for the three main models](report/figures/robustness.png)
 
-Python 3.11 ve `cmpe586` Conda ortamı kullanılır. Projeyi ilk kez kurarken:
+The case-loss removal arm uses the same training budget and remaining noise
+plans. Retaining case loss improves matched medium/seed586 case-loss F1 by
+**0.9585 pp** and combined F1 by **0.8799 pp**. Small folding/swap differences
+favor removal. Its omitted budget is **not redistributed**, so this is a
+component-removal study with less total noise, not an equal-dose component ranking.
+
+## What is controlled?
+
+- **Training:** same saved initialization, eligible rows, row order, optimizer,
+  and 3 epochs / 10,968 updates for clean, augmented, and removal arms.
+- **Selection:** highest clean-validation punctuation macro-F1; all arms select
+  epoch 3. Noisy validation and test scores select no checkpoints.
+- **Noise:** deterministic case loss, Turkish letter folding, one adjacent
+  interior swap, and their composition; 2/5/10% single-family word budgets.
+- **Alignment:** preserve every word ID and target; retokenize changed words;
+  supervise first subwords and ignore padding/continuations with `-100`.
+- **Evaluation:** 117 main validation conditions; five new ablation conditions
+  with 15 reused references; a frozen **122-condition held-out matrix**.
+- **Sensitivity:** exclude 155 exact train/validation input matches using the
+  same predictions, yielding **244 cohort score sets** without extra inference.
+
+```mermaid
+flowchart LR
+    A[Original words and punctuation targets] --> B[Deterministic noise plans]
+    B --> C[Retokenize and align first subwords]
+    C --> D[Fixed punctuation model]
+    D --> E[Word predictions]
+    A --> F[Original-target metrics]
+    E --> F
+```
+
+Combined noise has a **larger union coverage** than each component: heavy means
+10% per family, about 27.32% changed test words at seed586. Full-loss endpoints
+are reported separately. The primary metric equally averages PERIOD, COMMA,
+and QUESTION_MARK F1; O positions still count toward errors.
+
+## Explore without downloading models or data
+
+The [paper PDF](output/pdf/turkish-punctuation-report.pdf),
+[complete result tables](docs/held-out-test-results.md),
+[aggregate CSV](docs/held-out-test-aggregates.csv),
+[supports/confusion matrices](docs/held-out-test-condition-summary.json), and
+[fixed diagnostics](docs/held-out-test-diagnostics.csv) are in this repository.
+
+With Python 3.11+, these checks use the standard library only:
 
 ```bash
 git clone https://github.com/kckagancan/cmpe586-turkish-punctuation.git
 cd cmpe586-turkish-punctuation
-conda env create -f environment.yml
-conda activate cmpe586
-python -m pip install 'torch>=2.6,<3' --index-url https://download.pytorch.org/whl/cpu
-python -m pip install -e '.[dev]'
-python -m ipykernel install --prefix "$CONDA_PREFIX" --name cmpe586 --display-name 'Python (cmpe586)'
-python scripts/check_setup.py
+python scripts/build_report_tables.py --check
+python scripts/check_repository.py
 ```
 
-Ortam bu bilgisayarda zaten kurulmuşsa günlük başlangıç:
+They verify public report bindings and repository hygiene. They do not rerun
+training, inference, or the historical unit suite. [Report build instructions](report/README.md)
+explain PDF reproduction; [experiment reproduction](docs/reproduction.md)
+describes the separately held inputs, exact recipes, GPU requirements, and archives.
 
-```bash
-conda activate cmpe586
-code .
-```
+## Repository map
 
-VS Code'da **Python: Select Interpreter** üzerinden `cmpe586` ortamını seç.
-Notebook açınca sağ üstteki kernel seçiminde aynı ortamı kullan.
-Terminalde `conda activate` çalıştırmak editörün Python seçimini değiştirmeyebilir;
-import uyarısı varsa seçili interpreter'ı ayrıca kontrol et.
-Python ve Jupyter VS Code eklentileri önerilen eklentiler arasında tanımlı.
+| Path | Contents |
+| --- | --- |
+| [`report/`](report/) | Editable NeurIPS preprint source, generated tables, source bindings |
+| [`output/pdf/`](output/pdf/) | Public report PDF |
+| [`docs/`](docs/README.md) | Current results/methods and dated research records |
+| [`src/turkish_punctuation/`](src/turkish_punctuation/) | Shared noise, alignment, training, inference, metrics |
+| [`configs/`](configs/README.md) | Frozen experimental recipes and model identities |
+| [`notebooks/`](notebooks/) | Colab orchestration; execution switches off and outputs cleared |
+| [`scripts/`](scripts/) | Preparation, verification, analysis, and reporting entry points |
+| [`data/`](data/README.md), [`artifacts/`](artifacts/README.md) | Documentation only; actual data/models/results are ignored |
 
-Ortamı yeniden kontrol etmek için `python scripts/check_setup.py` çalıştırılabilir.
-`notebooks/01_data_inspection.ipynb` veri setinin tüm bölümlerini okur;
-yapı kontrollerini, etiket dağılımlarını ve boş token'ları gösterir.
-Ortak okuyucu ve doğrulama kodu `src/turkish_punctuation/data.py` içindedir;
-notebook ve genel inceleme aracı aynı kodu kullanır.
-Tarayıcı tabanlı Jupyter tercih edilirse `jupyter lab` çalıştırılabilir.
+## Scope and limitations
 
-Tokenizer ve kelime–alt parça hizalaması incelemesi:
+This is a single-architecture, single-training-seed study of defined synthetic
+noise, with a fixed compute budget. It does not establish convergence, broad
+natural-noise performance, or a state-of-the-art result. The published checkpoint
+is an external reference with uncontrolled training history.
 
-```bash
-python scripts/inspect_tokenizer.py --download-tokenizer
-```
+Dataset licensing, exact split provenance, document independence, and published-model
+prior test exposure remain unresolved. The exact-input sensitivity filter does
+not resolve these issues. The held-out plan was frozen after validation development;
+it is **validation-informed**, not a blind preregistration. Future test-informed
+changes are exploratory. See the [paper](output/pdf/turkish-punctuation-report.pdf)
+and [protocol](docs/held-out-test-protocol.md) for the complete limitations.
 
-Bu komut sabit sürümdeki BERT tokenizer dosyalarını `.cache/huggingface/` içine
-indirir; model ağırlığı indirmez. Sonraki çalıştırmalarda çevrimdışı önbelleği
-kullanmak için `--download-tokenizer` seçeneğini çıkar.
-Sonuçlar `docs/tokenization-audit.json` içinde; yorumları
-[veri inceleme raporunun tokenizer bölümünde](docs/data-audit.md#tokenizer-and-alignment-audit).
-İnceleme hiçbir temizlenmiş eğitim/test bölümü oluşturmaz.
+Data, weights, raw examples/predictions, private course metadata, and run receipts
+are excluded from Git. Source URLs/hashes and aggregate evidence are published.
+Historical config status strings are retained to preserve frozen identities;
+[PROJECT_STATUS.md](PROJECT_STATUS.md) gives the current state.
 
-Model girdilerini hazırlamak için, tokenizer önbellekteyken:
+## Credit and citation
 
-```bash
-python scripts/prepare_data.py
-```
+Original project code and documentation are available under [MIT](LICENSE).
+External data, model assets and the NeurIPS template retain their separate terms.
 
-`configs/preprocessing.json` içindeki `clean-v1` politikası, boş kelime içeren
-kaydın tamamını ayrı tutar. Ham dosyalar değişmez. Yerel çıktı
-`data/processed/clean-v1/` altında oluşur: `dataset/` token ID'lerini ve hizalanmış
-etiketleri; `quarantine/` ayrılan orijinal kayıtları; `manifest.json` kaynakları,
-ayarları, kayıt ID'lerini ve sınıf sayılarını saklar. Mevcut çıktı üzerine yazılmaz.
-Bu alt kümedeki skorlar, yayımlanmış tam test skorlarıyla doğrudan eşdeğer değildir.
-Tüm modeller ve noise koşulları aynı uygun kayıtları kullanacak; noise sonrasında
-yeni hizalama/uzunluk sorunu oluşursa kayıt sessizce atılmayacak, işlem duracak.
+Data/published model: [Kurt & Çayır (2023)](https://github.com/uygarkurt/Turkish-Punctuation-Restoration).
+Base encoder: [BERTurk](https://github.com/stefan-it/turkish-bert).
+The paper cites the noise and evaluation literature used in this project;
+[third-party notices](THIRD_PARTY_NOTICES.md) distinguish their terms from our artifacts.
+AI assistance supported development and writing, as disclosed in the paper.
+Use [CITATION.cff](CITATION.cff) to cite this project.
 
-Ortak hazırlama ve DataLoader kodu `src/turkish_punctuation/preprocessing.py`
-içindedir. Hugging Face `Dataset`/`DataCollatorForTokenClassification` ve PyTorch
-`DataLoader` kullanılır. Padding batch içinde dinamik yapılır; padding etiketleri
-`-100` olur. `row_id` hata analizi için saklanır ve model girdilerinden çıkarılır.
-Hazırlama komutu her split'in ilk sıralı batch'ini oluşturup boyutlarını kaydeder;
-bu adım model çalıştırmaz veya eğitim yapmaz. Önizlemedeki batch size 8, gelecekteki
-GPU eğitimi için verilmiş bir batch size kararı değildir.
-
-Yayımlanmış BERT modelini ilk kez indirip üç elle yazılmış örnekte çalıştırmak için:
-
-```bash
-python scripts/inspect_model.py --download-model
-```
-
-Sabit sürümdeki ağırlık dosyası yaklaşık 440 MB'tır ve `.cache/huggingface/` altında
-saklanır. Sonraki çalıştırmalarda `--download-model` olmadan yerel önbellek kullanılır.
-`src/turkish_punctuation/inference.py`, checkpoint'in sınıf eşlemesini ve ağırlıkların
-eksiksiz yüklenmesini kontrol eder; tahmini `eval()` ve `torch.inference_mode()` ile
-yapar. Kelime başına ilk subword'ün dört sınıf skoru (logits) arasından en büyüğü
-seçilir. Model girdilerine referans etiketler gönderilmez.
-
-Örnek tahminler, kelime düzeyindeki logits ve mimari bilgileri yerel
-`artifacts/model-preview.json` dosyasına yazılır. Bu küçük örnekler veri setinden
-seçilmemiştir ve model başarımını ölçmez. Gerçek validation ölçümü aşağıdaki
-değerlendirme komutuyla yapılır. Tamamlanan noise pilotu aşağıda ayrıca açıklanır;
-bu bölüm yayımlanmış modelin ilk ölçümlerini anlatır. Kendi fine-tuning sonucumuz
-[clean training raporunda](docs/clean-training-status.md).
-
-Hazırlanmış clean validation bölümünü yayımlanmış modelle değerlendirmek için:
-
-```bash
-python scripts/evaluate.py
-```
-
-Bu komut yalnızca validation bölümünü değerlendirir ve yerel tokenizer/model
-önbelleğini kullanır. Ayarlar `configs/evaluation.json` içindedir. Ana skor,
-period/comma/question mark sınıflarının eşit ağırlıklı macro-F1'ıdır; micro-P/R/F1,
-sınıf bazında P/R/F1 ve dört sınıflı confusion matrix de kaydedilir. `O` konumları
-sayımda korunur: noktalama olmayan bir konuma işaret eklemek yanlış pozitiftir.
-Sıfır paydalarda skor 0'dır; padding ve devam subword'leri sayılmaz.
-
-Çıktılar `artifacts/evaluations/published-bert-clean-validation-v1/` altına yazılır:
-`metrics.json`, `predictions.jsonl`, `error_examples.json`. Mevcut çıktı üzerine
-yazılmaz; tekrar ölçüm için ayarlarda yeni run adı ve çıktı yolu kullan.
-Sonuçları anlamlandırırken bu ölçümün uygun validation alt kümesine ait olduğunu,
-hazır checkpoint'in geçmişte aynı validation ile seçilmiş olabileceğini dikkate al.
-Bu çalışma fine-tuning veya yayımlanmış tam test skorunun yeniden üretimi değildir.
-
-## Gürültü protokolü
-
-[Noise protokolü](docs/noise-protocol.md) ve [ayarları](configs/noise.json),
-literatürden esinlenerek bu görevin kelime–etiket hizalamasına göre tasarlandı.
-Tekil koşullar: Türkçe kurallarla küçük harfe çevirme, belirli Türkçe harfleri
-sadeleştirme ve kelimenin içindeki iki komşu harfi bir kez takas etme.
-Mild/medium/heavy seviyelerinde her tür için **tüm kelimelerin %2/%5/%10'u**
-değiştirilir; oran yalnızca uygun kelimeler üzerinden hesaplanmaz.
-
-Birleşik koşul aynı bileşen seçimlerini kullanır; daha fazla kelimeyi etkileyebilir.
-Tam küçük harf ve tam Türkçe karakter sadeleştirme ayrıca değerlendirilir.
-Seed'ler ve seçim kuralları ayarlarda kaydedilir. Kelime konumları ve etiketler
-korunur; her varyant yeniden tokenize edilip hizalanır. Hazırlama komutu:
-
-```bash
-python scripts/prepare_noise.py
-```
-
-Bu komut yalnızca sabit uygun validation kayıtlarından 36 seed'li koşul ve iki
-full koşul üretir. Tokenizer yerel önbellekten yüklenir; model ağırlığı yüklenmez.
-Çıktı `data/processed/noise-v1/` altında kalır: her koşulun kelimeleri, dönüşüm
-günlüğü, model girdileri, küçük örnekleri ve veri kontrolü raporu saklanır.
-Manifest ayarları, kaynak/kod hash'lerini ve kullanılan kodun kopyalarını tanımlar.
-Hizalama/uzunluk sorunu olursa işlem durur; yeni kayıt atılmaz veya kırpılmaz.
-
-Tekrar denemek için JSON ayarını kopyala, yeni çıktı yolu belirle ve
-`python scripts/prepare_noise.py --config configs/yeni-noise-ayari.json` kullan.
-Desteklenmeyen kurallar ve uygulanamayacak oranlar açık hata verir.
-Küçük validation pilotu tamamlandı; sonuçlar [pilot raporunda](docs/noise-pilot.md).
-Eğitimdeki noise karışımı [training protokolünde](docs/training-protocol.md) tanımlıdır.
-Tamamlanan veri kontrolünde kayıp kelime, `[UNK]` veya uzunluk aşımı bulunmadı;
-en uzun girdi 218 token oldu. Ayrıntılar: [noise veri raporu](docs/noise-audit.md).
-
-## Gürültülü model değerlendirmesi
-
-```bash
-python scripts/evaluate_noise.py
-```
-
-`configs/noise-evaluation.json`, dört medium/seed-586 koşulunu seçer. Komut temiz
-tahmin dosyasının hash'ini doğrular ve skorlarını yeniden hesaplar; her noise
-koşulunu yeniden tokenize edip kaydedilmiş girdilerle karşılaştırır. Model/tokenizer,
-kayıtlar, hedefler, paket sürümleri ve çıkarım ayarları temiz referansla eşleşir.
-Model yerel önbellekten bir kez yüklenir; eğitim veya test değerlendirmesi yapılmaz.
-Padding maliyetini azaltmak için kayıtlar temiz token uzunluğuna göre sıralanır;
-bütün koşullar aynı sıralamayı kullanır. Önce temiz kontrol aynı sırayla yeniden
-ölçülür ve eski temiz tahminlerle karşılaştırılır. Noise farkları bu eşleşen temiz
-kontrole göre hesaplanır; hiçbir kayıt atılmaz veya kırpılmaz.
-
-Sonuçlar `artifacts/evaluations/published-bert-noise-pilot-v2/` altında tutulur:
-her koşulun tahminleri, metrikleri, temize göre yüzde puan farkları ve eşleştirilmiş
-hata örnekleri kaydedilir. `summary.json` bütün koşulları bir araya getirir.
-`conditions/clean-anchor/` yeni temiz kontrolü saklar. Tahmin dosyaları değerlendirme
-sırasındadır; her satırın kaynak `row_id` değeri korunur.
-Örnekler, temizken doğru olup bozulan, yanlışken düzelen ve farklı bir yanlış
-tahmine dönüşen konumları içerir; kaynak sırasından seçilir ve temsilî örneklem değildir.
-
-Tamamlanmış çıktı üzerine yazılmaz. Kesilmiş aynı koşuya devam etmek için
-`python scripts/evaluate_noise.py --resume` kullanılır; kod/ayar/veri değiştiyse
-yeni çıktı yolu gerekir. `progress.json` devam eden koşulu ve tamamlanan kayıtları
-gösterir. Bu ölçüm aynı yayımlanmış checkpoint'in validation dayanıklılığıdır;
-augmentation eğitiminin katkısı daha sonra kontrollü eğitimlerle ölçülecek.
-
-Tamamlanmış pilotun eşleştirilmiş hata analizini üretmek için
-`python scripts/analyze_noise.py` kullanılır. Model yeniden çalışmaz; yerel
-`analysis/` altında sayımlar, karşılaştırma tablosu ve analiz kodunun kopyası
-saklanır. Mevcut analiz üzerine yazılmaz; yeni analiz için `--output-directory`
-seçilir. Temiz kontrolün 179.164 kelime tahmini eski referansla aynı çıktı.
-
-## Fine-tuning planı
-
-[Eğitim protokolü](docs/training-protocol.md) ve [training.json](configs/training.json),
-clean/augmented karşılaştırmasının başlangıç ayarlarını tanımlar: pinned BERTurk
-temel ağırlıkları ve yeni dört sınıflı head, LR 2e-5, 3 epoch, effective batch 32
-(8 × 4 accumulation), AdamW ve temiz validation macro-F1 ile checkpoint seçimi.
-Augmented kolda aynı kayıtların yarısı her epoch yenilenen combined-medium
-noisy input olarak sunulacak; veri boyutu ve kelime hedefi sayısı sabit kalacak.
-
-Clean training kodu ve [Colab notebook'u](notebooks/02_clean_training_colab.ipynb)
-hazır. T4 üzerinde 30 update'lik calibration başarıyla tamamlandı: batch 8 ×
-accumulation 4, ortalama 0,476 s/update, peak allocated 2,43 GiB. Üç epoch için
-yalnızca update işi yaklaşık 87 dakika tahmin ediliyor; validation ve checkpoint
-I/O buna dahil değil. [Ayrıntılı rapor](docs/training-calibration.md).
-Clean training tamamlandı. Augmented hazırlayıcı ve ayrı
-[Colab notebook'u](notebooks/03_augmented_training_colab.ipynb) hazır;
-[güncel hazırlık durumu](docs/augmentation-preparation.md) ayrıca kaydedilir.
-Komut varsayılan olarak yalnızca 30 update'lik
-calibration yapar ve CUDA ister:
-
-```bash
-python scripts/train.py --mode calibrate --download-model
-```
-
-Tam clean training ve kesilmiş aynı koşuya devam etmek için:
-
-```bash
-python scripts/train.py --mode train --download-model
-python scripts/train.py --mode train --download-model --resume
-```
-
-Colab notebook'u artık yalnızca setup, tek Drive bağlantısı, kalıcı hazırlık,
-hazırlık durumu ve ayrı kapalı training hücresini içerir. Drive zaten bağlıysa
-yeniden `drive.mount()` çağırmaz. İlk calibration sırasındaki bağlantı sorunu
-sonrasında başarılı mount gözlendi. Dosya işlemleri yalnızca
-`MyDrive/cmpe586-turkish-punctuation` altında yapılır.
-
-`scripts/prepare_training.py`, geçici oturumdaki initialization, input cache ve
-calibration raporunu bu klasöre hash kontrolüyle kopyalar; farklı mevcut
-klasörleri ezmez. Yeni oturumda kalıcı cache'i geri yükler ve train/validation ile
-başlangıç ağırlıklarını yeniden doğrular. **Hazırlık sıfır training update'i yapar**;
-bir optimizer veya training checkpoint'i oluşturmaz. `readiness.json` ve gerçek
-paket sürümleri kaydedilir. Calibration `fc17d41` commit'inde çalışmıştır; önceki
-ölçümün kaynak snapshot'ı korunur. Yeni notebook calibration'ı tekrar başlatmaz.
-Calibration ve tam training ayrı çıktı klasörleri kullanır. Calibration modelinin
-güncellenmiş ağırlıkları saklanmaz; formal training ortak initialization'dan başlar.
-Resume, aynı kod/config/girdi/paket/GPU kimliğini ve checkpoint hash'lerini ister.
-Kesintiden sonra son sağlam checkpoint'ten sonraki update'ler tekrar yürütülür.
-Notebook'ta tam training ayrı bir hücrede varsayılan olarak kapalıdır.
-Kalıcı hazırlık, training update'i çalıştırılmadan tamamlandı:
-[hazırlık durumu](docs/preparation-status.md).
-İlk formal clean training koşusu 2026-10-19'da tamamlandı; epoch skorları,
-süre ve model yolları [training raporunda](docs/clean-training-status.md) kayıtlıdır.
-
-## Colab
-
-GPU runtime açıldıktan sonra yeni oturumda repo ve proje kurulumu:
-
-```python
-!git clone https://github.com/kckagancan/cmpe586-turkish-punctuation.git
-%cd /content/cmpe586-turkish-punctuation
-%pip install -e '.[dev]'
-!python scripts/check_setup.py
-```
-
-Colab'ın hazır GPU PyTorch kurulumunu kullan; yerel CPU kurulum komutunu Colab'da
-çalıştırma. Bağımlılık kurulumu yüklü paketleri değiştirirse runtime'ı yeniden
-başlatmak gerekebilir. İlk calibration, runtime **2026.07**, Python **3.12.13**,
-PyTorch **2.11.0+cu128** ve **T4** ile çalıştı. Proje Python 3.11/3.12 destekler;
-runtime'ın gerçek sürümünü kontrol et.
-Notebook kurulumu `requirements/colab.constraints.txt` ile gözlenen ana paket
-sürümlerini kullanır; bu tam bir environment lock değildir ve Colab'ın GPU
-PyTorch kurulumunu değiştirmez. Hazırlık raporu ayrıca tam `pip freeze` çıktısını
-saklar. Notebook test split'ini indirmez/hazırlamaz ve training anahtarı varsayılan
-olarak kapalıdır. Kullanım ve kod haritası:
-[training protocol](docs/training-protocol.md#9-implementation-and-first-colab-run).
-
-## Klasörler
-
-```text
-src/turkish_punctuation/  Ortak Python kodu
-scripts/                 Çalıştırılabilir yardımcı dosyalar
-notebooks/               İnceleme ve Colab notebook'ları
-configs/                 Tokenizer, hazırlama ve deney ayarları
-data/raw/                Yerel orijinal veri (Git dışında)
-data/processed/          İşlenmiş veri (Git dışında)
-artifacts/               Model ve deney çıktıları (Git dışında)
-docs/                    Proje kararları ve araştırma notları
-requirements/            Doğrulanmış yerel ortamın paket sürümleri
-```
-
-## Git ile çalışma
-
-Küçük, anlamlı adımları commit et; veri ve ağırlıkları repoya koyma.
-Notebook commit etmeden önce **Clear All Outputs** yapıp kaydet.
-
-```bash
-git status
-git diff
-git add <degistirdigin-dosyalar>
-git commit -m "Describe the change"
-git push
-```
-
-Deneysel veya büyük bir değişikliğe başlarken:
-
-```bash
-git switch -c feature/short-description
-```
-
-İsteğe bağlı kod kontrolü ve biçimlendirme:
-
-```bash
-ruff check .
-ruff format .
-```
-
-Veri okuyucu, hizalama, hazırlama ve inference akışının çevrimdışı testleri:
-
-```bash
-python -m unittest discover -s tests -v
-```
-
-Testler küçük yerel tokenizer ve rastgele ağırlıklı küçük BERT fixture'ları kullanır;
-veri/model indirme veya GPU gerektirmez. Bunlar araştırma deneyleri değildir.
-Tam dosya ve çıktı kontrolünün bulguları: [kod incelemesi](docs/code-review.md).
-
-## Tekrarlanabilirlik
-
-`pyproject.toml` desteklenen paket aralıklarını belirtir.
-`requirements/local-cpu.lock.txt` ilk doğrulanan yerel Python 3.11 CPU ortamındaki
-paket sürümlerini kaydeder; Colab için doğrudan GPU ortam kilidi değildir.
-Yerel ortamı aynı sürümlerle yeniden kurmak için Conda ortamını oluşturduktan sonra:
-
-```bash
-python -m pip install -r requirements/local-cpu.lock.txt --extra-index-url https://download.pytorch.org/whl/cpu
-python -m pip install -e . --no-deps
-```
-
-Deneyler başladığında veri sürümü, seed, ayarlar, Git commit'i ve sonuçlar
-birlikte kaydedilecek.
-
-2026-10-17 yerel kurulum kontrolü: Python 3.11.17, PyTorch 2.14.1+cpu,
-Transformers 4.57.6. Paket uyumluluk kontrolü, BERT/ELECTRA/ConvBERT sınıflarının
-yüklenmesi ve başlangıç notebook'unun gerçek kernel ile çalıştırılması başarılı.
-Bu kontroller model eğitimi veya deney sonucu değildir.
-
-## Araştırma kapsamı
-
-Üç kıyas noktası: yayımlanmış hazır model, temiz veriyle fine-tune baseline ve
-aynı mimarinin sentetik noise ile artırılmış veriyle fine-tune sürümü.
-Araştırma soruları ve alınmış kararlar için [proje notları](docs/project-brief.md).
-
-Başlangıç kaynağı: [Kurt & Çayır (2023) resmi deposu](https://github.com/uygarkurt/Turkish-Punctuation-Restoration).
-İndirme, sınıf dağılımı, boş token'lar ve tekrarlarla ilgili bulgular:
-[ilk veri incelemesi](docs/data-audit.md). Model lisansı ile veri lisansı ayrı ele alınır.
+Türkçe: Bu proje, Türkçe noktalama modellerinin kontrollü yazım bozulmalarındaki
+dayanıklılığını inceler. Rapor İngilizcedir; ayrıntılı yöntem ve deney kayıtları
+doküman dizininde korunur. Geliştirme ortamı: [PROJECT_SETUP.md](PROJECT_SETUP.md).

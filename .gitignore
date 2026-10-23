@@ -44,3 +44,23 @@ mlruns/
 *.safetensors
 *.ckpt
 *.log
+
+# Paper build intermediates and private course submission metadata
+report/private-author.tex
+report/course-submission.tex
+report/*.aux
+report/*.out
+report/*.toc
+report/*.bbl
+report/*.blg
+report/*.synctex.gz
+report/*.xdv
+report/*.pdf
+!report/figures/
+output/**
+!output/pdf/
+output/pdf/**
+!output/pdf/turkish-punctuation-report.pdf
+tmp/
+*.zip
+*.tar.gz

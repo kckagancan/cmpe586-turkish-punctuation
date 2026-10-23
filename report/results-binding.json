@@ -1,0 +1,16 @@
+{
+  "version": "paper-tables-v1",
+  "analysis_identity": "e39f8803a6e6614363a6db97c1edce870757a2e909dec9dba5e93d0d9edc7f91",
+  "run_identity": "60e31867535de346accb64be45df04984434f6ff328b31c8819115cb689538a0",
+  "training_or_inference_performed": false,
+  "sources": {
+    "docs/held-out-test-aggregates.csv": "72e4f39b38906d1978b28702517991ef0ce2466e89d02f59011791ab5bf1e8d9",
+    "docs/held-out-test-diagnostics.csv": "c94f7a7d802eda5c6e14665103c4f7ccd871475be038e63b5e1927d21d1aed78",
+    "docs/held-out-test-input-coverage.csv": "3f2cf6b68c7eefb49532beeec46f44d8d5a142414f674e963e7291700954c3ad",
+    "docs/held-out-test-condition-summary.json": "384b77bf9635a6279356d921bcd4d17634627abb0eec881ee08640d3c303a955",
+    "docs/held-out-test-cohort-summary.json": "5615e765c5af3e5dada366d072f7ff69183e406d337e68f051b41c5610083b2b",
+    "configs/held-out-test.json": "0612db6c1498438d1992964a7e0d8101577de7daf8270a172b5088b1b9cf86bc",
+    "docs/case-loss-ablation-clean-validation.csv": "e7fec51c6b9a61b3a1ea2e7f56eb552acf89e4a5548e3f0b81eec53115620c01"
+  },
+  "generated_tables_sha256": "ae1cb08ade719e8ab285a59eb48e99cae54b4e7199b458b7aa025b688bcb827f"
+}

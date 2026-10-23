@@ -1,2 +1,13 @@
 * text=auto eol=lf
 *.ipynb text eol=lf
+
+# Preserve the exact audited CSV bytes used by report/source SHA bindings.
+*.csv -text
+*.csv whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
+# Binary publication assets must not undergo line-ending conversion.
+*.pdf -text
+*.png -text
+
+# The official vendored style is hash-verified and kept byte-for-byte unchanged.
+report/neurips_2026.sty -whitespace

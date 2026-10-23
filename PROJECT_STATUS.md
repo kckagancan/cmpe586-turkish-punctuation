@@ -1,75 +1,104 @@
 # Current project state
 
-Updated **2026-10-22**. Read this first, then only the relevant linked details.
-This document tracks current work; it does not authorize starting a new experiment.
+Updated **2026-10-23**. The experiments and final report are complete.
+Read this first, then the relevant linked record. This file authorizes no new run.
 
-## Objective and confirmed method
+## Project and delivered report
 
 **Robustness of Turkish Punctuation Restoration under Informal Writing Noise**
-(CMPE 586). Compare a published punctuation BERT, clean BERTurk fine-tuning and
-the same initialized BERTurk with synthetic-noise augmentation. Labels: O,
-PERIOD, COMMA, QUESTION_MARK; first-subword supervision. Preserve word targets.
+(CMPE 586), **Kagan Can**. Compare published punctuation BERT, matched clean and
+noise-augmented BERTurk fine-tuning, and a case-loss removal arm.
 
-Training-v1 uses three epochs, 10,968 updates, batch 8 × accumulation 4, LR 2e-5,
-FP32/eager, seed 586; select by clean validation macro-F1. Noise-v1 has case loss,
-Turkish diacritic loss and internal adjacent typo swaps, 2/5/10% component word
-budgets. Combined coverage is larger. Corruption seeds are not training seeds.
+- [Public report PDF](output/pdf/turkish-punctuation-report.pdf): **10 pages**;
+  7 main-text pages, references, and 2 pages of appendices; official unchanged
+  NeurIPS 2026 **preprint** style. No conference submission/acceptance claim.
+- [Editable source and build instructions](report/README.md), complete main and
+  sensitivity tables, per-class/contextual diagnostics, training history,
+  primary-source references, limits and AI-assistance disclosure.
+- Author/student number supplied by the user. The number appears only in the
+  Git-ignored local `output/pdf/course-submission.pdf` and private author file.
+  Public PDF/source excludes it. Final course-specific format is not yet supplied.
+- [README](README.md) presents results; [documentation guide](docs/README.md)
+  separates current methods/results from dated records. [Reproduction](docs/reproduction.md)
+  distinguishes public report rebuilding from exact scientific reruns.
+- Original code/docs have user-authorized [MIT licensing](LICENSE); external
+  corpus/model/template terms remain separate in [third-party notices](THIRD_PARTY_NOTICES.md).
+  [CITATION.cff](CITATION.cff) provides author/title metadata.
 
-## Completed evidence
+## Completed experiments and fixed method
 
-- Clean and augmented seed-586 training completed; both selected epoch 3.
-  Their complete model/result archives were locally verified. The retained Drive
-  exports and shared initialization remain; disposable copies were cleaned with
-  scoped approval. [Clean](docs/clean-training-status.md),
-  [augmented](docs/augmented-training-status.md).
-- Matched GPU validation grid completed: **3 × 39 = 117 evaluations**; raw-target
-  metrics, local archive hashes and seed aggregates verified. Clean macro-F1:
-  clean model 84.0365%, augmented 83.9881%. Combined-heavy mean F1:
-  clean 76.2023%, augmented 80.0646% (**+3.8623 pp**).
-  [Full report](docs/robustness-grid-results.md).
-- One training seed only; held-out test and the training ablation remain unrun.
-  Dataset license and exact source/split provenance remain unresolved.
+- All three fine-tunings used shared initialization, training seed586, identical
+  rows/order, 3 epochs / **10,968 updates**, batch8 × accumulation4, LR2e-5,
+  FP32/eager. All selected epoch3 by highest **clean-validation** punctuation
+  macro-F1, earliest exact tie. No noisy-validation checkpoint selection or
+  hyperparameter search. Three epochs are a matched budget, not proven optimal.
+- Four labels O/PERIOD/COMMA/QUESTION_MARK; first-subword supervision and ignored
+  `-100` continuation/padding. Noise preserves original word targets/IDs and
+  retokenizes. Case loss, Turkish folding, interior swaps; component budgets
+  2/5/10%. Combined has larger union coverage. Removal does not redistribute dose.
+- Main GPU validation grid: **117 conditions**. Removal validation: **5 new +
+  15 reused references**. [Grid](docs/robustness-grid-results.md),
+  [ablation](docs/case-loss-ablation-results.md).
+- Held-out: **122/122 forward conditions / 244 cohort scores**, completed
+  October23 13:43:43 Istanbul; frozen protocol r2 before project test scoring.
+  Independent local raw-target recomputation matches Colab; no extra inference.
+- Primary: **14,600 rows / 181,485 words** after 61-row empty-word quarantine.
+  Sensitivity: **14,445 / 181,116**, removing 155 exact train/validation input
+  matches from the same predictions; no resampling or independent-test claim.
 
-## Active outcome: case-loss ablation preparation
+| Primary held-out macro-F1 (%) | Clean | Augmented | Paired gain (pp) |
+| --- | ---: | ---: | ---: |
+| Clean | 84.3437 | 84.4824 | +0.1387 |
+| Combined-heavy | 76.7502 | 80.5289 | +3.7787 ± 0.2191 |
 
-User asked to finish preparation and **stop before formal ablation training**;
-they want to make a separate request before starting the study.
+Mean/SD measures three corruption seeds only. Medium/seed586 Augmented minus
+Without case loss: clean +0.0905, case +0.9585, folding −0.0205, swaps −0.1078,
+combined +0.8799 pp. [All results](docs/held-out-test-results.md),
+[protocol/literature](docs/held-out-test-protocol.md),
+[completion/archive](docs/held-out-test-completion.md).
 
-- Three local omitted-family epoch views are prepared, re-tokenized and audited.
-  Selected rows and retained word masks/operations match original augmentation.
-  No budget redistribution; changed words 4.8153 / 4.8538 / 4.8402%, versus
-  7.1204 / 7.1817 / 7.1510% originally. Maximum length 234 subwords.
-- Plan: `configs/ablation-case-loss.json`; unchanged numerical config:
-  `configs/training-augmented.json`. Input transfer:
-  `configs/ablation-case-loss-inputs.json` (42.8 MB, 31 files).
-- Orchestration: `notebooks/05_case_loss_ablation_colab.ipynb`;
-  `scripts/prepare_ablation.py` and `src/turkish_punctuation/ablation.py`.
-  [Preparation details](docs/case-loss-ablation-preparation.md).
-- ZIP upload and Colab restoration passed, using source commit `2cf928f`.
-  A fresh VM reconnected to Drive; the user completed its normal account approval.
-- **Ready:** separate 30-update T4 calibration and final readiness passed;
-  the five transferred metadata files were locally hash/identity verified.
-  Calibration identity `9a44f3c234cc…`; longest prepared batch included,
-  finite losses, weights discarded. No formal ablation output or result exists.
-  Nothing is running; live calibration/training/archive switches are off.
-- Current working Colab:
-  <https://colab.research.google.com/drive/1KKuqXRHKn4xr0nA7mXjtZexL4FrKFsV8>.
-  Inspect live runtime state before using it; prior evaluation finished.
+## Evidence, storage and publication checks
 
-## Locations and next action
+- Run `60e31867535de346accb64be45df04984434f6ff328b31c8819115cb689538a0`;
+  analysis `e39f8803a6e6614363a6db97c1edce870757a2e909dec9dba5e93d0d9edc7f91`.
+- Raw outputs: `artifacts/evaluations/held-out-test-v1/`; verified final ZIP
+  (570 files + manifest, 16,011,054 bytes), local CPU analysis and receipts:
+  `artifacts/evaluation-preparation/held-out-test-v1/completion-2026-10-23/`.
+  ZIP SHA: `2463a23ed22dc9543341393bedfb902f693448330da860374c708748d4830925`.
+- All epoch models/shared initialization remain in existing local training
+  archives; selected Drive exports are retained. [Backup map](artifacts/README.md).
+- Scoped Drive cleanup completed: **1,148 backed copies / 925,753,181 bytes**;
+  all 291 protected IDs plus new readback receipt remain. The manifest mismatch
+  was resolved with its exact historical Colab counterpart and local supplement;
+  original files/hashes remain. No further cleanup is pending.
+  [Outcome](docs/drive-cleanup.md), receipts under
+  `artifacts/storage-audit/drive-2026-10-23-v1/cleanup-2026-10-23/`.
+- Publication checks parse sources/JSON/7 cleared notebooks, verify public links,
+  report bindings and absence of data/model/private metadata in Git. PDF pages
+  are rendered/reviewed; public/private ID separation is checked. No test suite,
+  training, inference, noise generation or model loading ran for publication.
+- Local read-only repository and fatal/undefined-name lint checks pass. Seven
+  pre-existing style findings in frozen historical grid/calibration scripts are
+  retained; new publication scripts pass full Ruff. CSV bytes are preserved by
+  `.gitattributes` so fresh checkouts retain the original audited SHA bindings.
+- No live CI workflow is published: GitHub rejected the initial push because
+  its OAuth connection lacks `workflow` scope. The optional proposal is retained
+  locally; publication proceeds with the verified scripts and no scope expansion.
+- Publication receipts, exact Git/remote/CI outcome and full changed-file inventory:
+  `artifacts/publication/final-report-2026-10-23/`. Frozen recipes, numerical
+  sources and original snapshots were preserved; prior uncommitted experiment
+  work is included in the publication history.
 
-- Local ablation views:
-  `data/processed/training-augmentation-v1/seed-586-without-case_loss/`.
-- Local prep receipts/ZIP:
-  `artifacts/training/training-v1/ablation-without-case-loss-preparation-seed-586/`.
-- Drive input destination: `inputs/training-augmentation-v1/seed-586-without-case_loss`.
-- Completed calibration: `training-v1/calibration-augmented-without-case-loss-seed-586-v1`.
-- Planned formal output: `training-v1/train-augmented-without-case-loss-seed-586-v1`.
-- Local final receipt: prep directory's `colab-preparation-verification.json`;
-  full changed/generated file inventory: `files-changed.md` in that directory.
+## Next action and remaining limits
 
-Preparation is complete. The user wants to make another request before starting
-the ablation study; wait for that request. On a later authorized start, inspect
-the current VM, restore setup if disconnected, and repeat the readiness gate
-against the then-current runtime. Do not rerun calibration if its verified
-receipt still matches. Do not start the three-epoch run until explicitly asked.
+No experiment or cleanup job is running. Deliverables are ready for review and
+GitHub presentation. Adapt the paper if the instructor specifies a final template
+or page limit; no new experiment is needed for that formatting change.
+Optional CI setup needs a separately workflow-authorized GitHub connection.
+
+One training seed and synthetic noise only. Dataset licensing/exact split
+provenance and document independence remain unresolved; published-model prior
+test exposure is unknown. Validation informed development; this is not a blind
+preregistration. Future test-informed changes are exploratory and need genuinely
+unseen data for strong independent confirmation. Do not rerun completed work
+without a reason or alter frozen recipes to pass a check.

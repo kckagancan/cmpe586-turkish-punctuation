@@ -36,16 +36,18 @@ Activate the existing environment before invoking Python:
 conda activate cmpe586
 ```
 
-Commands relevant to the current ablation preparation:
+The completed project's default read-only publication checks:
 
 ```bash
-python scripts/prepare_ablation.py audit
-python scripts/prepare_ablation.py --help
+python scripts/build_report_tables.py --check
+python scripts/check_repository.py
 ```
 
-GPU calibration/formal training use `05_case_loss_ablation_colab.ipynb` and the
-commands assembled from `configs/ablation-case-loss.json`. Do not run an
-unrequested training command to check whether preparation succeeded.
+These use public files and the standard library; they do not execute the
+historical unit suite or any experiment. The final paper/build instructions are
+in `report/README.md`; the complete experimental map is `docs/reproduction.md`.
+GPU calibration/formal training remain separate deliberate operations. Do not
+run an unrequested training command to check the repository or preparation.
 
 When formatting or import checks are useful, limit them to touched files:
 

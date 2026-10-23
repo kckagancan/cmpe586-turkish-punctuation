@@ -3,8 +3,9 @@
 - `raw/`: indirilen orijinal dosyalar.
 - `processed/`: işlenmiş temiz veri ve kontrollü noise türevleri.
 
-Veri dosyaları Git'e eklenmez. Kaynak, lisans, indirme komutu, sürüm/hash ve
-split bilgileri veri seçimi kesinleştiğinde dokümante edilecek.
+Veri dosyaları Git'e eklenmez. Kaynak URL'leri, indirme komutu, sabit sürüm/hash
+ve yayımlanan split'lerin sayıları dokümante edilmiştir. Veri lisansı ve bu
+CSV'lerin kesin kaynak/split geçmişi hâlâ doğrulanmamıştır.
 
 Kurt & Çayır (2023) resmî deposundaki üç CSV, sabit bir commit üzerinden
 `raw/kurt_cayir_2023/` içine indirildi. Kaynak linkleri ve SHA-256 değerleri

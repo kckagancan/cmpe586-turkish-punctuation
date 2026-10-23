@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this project's code or aggregate results, please cite it."
+type: software
+title: "Robustness of Turkish Punctuation Restoration under Informal Writing Noise"
+authors:
+  - given-names: Kagan
+    family-names: Can
+repository-code: "https://github.com/kckagancan/cmpe586-turkish-punctuation"
+url: "https://github.com/kckagancan/cmpe586-turkish-punctuation"
+abstract: >-
+  A CMPE 586 course project comparing matched clean and noise-augmented
+  Turkish punctuation restoration, a case-loss removal arm, and controlled
+  held-out robustness evaluation. One training seed; three corruption seeds.
+keywords:
+  - Turkish
+  - punctuation restoration
+  - robustness
+  - data augmentation
+  - BERT
