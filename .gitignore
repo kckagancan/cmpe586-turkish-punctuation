@@ -63,6 +63,7 @@ output/**
 !output/pdf/
 output/pdf/**
 !output/pdf/turkish-punctuation-report.pdf
+!output/pdf/original-study-v1-public.pdf
 tmp/
 *.zip
 *.tar.gz

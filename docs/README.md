@@ -20,13 +20,15 @@ raw text, models, predictions and operational receipts remain in ignored storage
 
 ## Instructor-feedback extension (November 4)
 
-The original results and paper remain intact. The additional work currently
-contains corpus evidence, audited supplemental transfer inputs and a running
-fixed-model GPU evaluation. Verified aggregate results are pending. The original
-paper has not been rebuilt for this extension.
+The extension is complete: corpus evidence, audited inputs and52 fixed-model
+forwards with104 independently recomputed cohort score sets. The current final
+paper includes both stages. The [original report edition](report-versions.md)
+and original metrics remain available separately and unchanged.
 
 | Read | Purpose |
 | --- | --- |
+| [Verified transfer results](transfer-evaluation-results.md) | Complete four-model matrix, both cohorts, predefined contrasts, own-anchor drops and per-class evidence |
+| [Transfer completion/archive](transfer-evaluation-completion.md) | Saved-target checks, identities, local archives and no-inference-repeated record |
 | [Informal corpus selection](informal-corpus-selection.md) | Compare authentic and synthetic candidates; select MultiLexNorm Turkish train for the data-only audit |
 | [Verified corpus audit](informal-corpus-audit-results.md) | Counts, operator coverage, unseen shapes, denominators and limitations |
 | [Three-shape density and severity](informal-corpus-depth-results.md) | Completed train-only depth profile: opportunity rates, per-tweet clustering, character amplitude, duplication sensitivity and resampling stability |
@@ -37,6 +39,9 @@ paper has not been rebuilt for this extension.
 
 ## Public numeric evidence
 
+- [Supplemental aggregates and all paired per-seed contrasts](transfer-evaluation-aggregates.csv),
+  [condition scores/supports/confusions](transfer-evaluation-condition-summary.json),
+  [per-class CSV](transfer-evaluation-per-class.csv).
 - [All held-out aggregate metrics and paired contrasts](held-out-test-aggregates.csv).
 - [Condition metrics/supports/confusions](held-out-test-condition-summary.json).
 - [Fixed contextual/direct-edit outcome partitions](held-out-test-diagnostics.csv).

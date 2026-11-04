@@ -18,10 +18,12 @@ ablation differences, are retained.
 
 Instructor-feedback extension: [MultiLexNorm Turkish train analysis](docs/informal-corpus-depth-results.md)
 now anchors a [supplemental transfer protocol](docs/transfer-evaluation-protocol.md)
-for elongation, internal omission and partial folding. [Input preparation](docs/transfer-evaluation-preparation.md)
-is complete; the [supplemental GPU evaluation](docs/transfer-evaluation-execution.md)
-is running, with verified aggregate results pending. It does not replace the
-original experiment or paper.
+for elongation, internal omission and partial folding. The [completed supplemental evaluation](docs/transfer-evaluation-results.md)
+adds **52 forwards / 104 independently verified cohort scores**, with small
+positive augmented-minus-clean mean gains under all three new mechanisms.
+The current paper includes both stages; the [original report edition](docs/report-versions.md)
+and all original metrics remain available separately. This follow-up uses
+controlled distortions of already scored test texts, not new natural-text gold.
 
 ## Main finding
 
@@ -46,6 +48,15 @@ plans. Retaining case loss improves matched medium/seed586 case-loss F1 by
 **0.9585 pp** and combined F1 by **0.8799 pp**. Small folding/swap differences
 favor removal. Its omitted budget is **not redistributed**, so this is a
 component-removal study with less total noise, not an equal-dose component ranking.
+
+The supplemental corpus-anchored evaluation finds augmented-minus-clean gains
+of **0.2491 ± 0.0843 pp** for elongation, **0.2290 ± 0.0635 pp** for internal
+omission and **0.1882 ± 0.0425 pp** for partial folding. Absolute noisy-score gains
+include the **0.1387 pp** clean-anchor advantage; own-anchor drops are reported
+separately. Case-loss retention does not uniformly reduce relative degradation
+under these new mechanisms. The partial/full control matches edited words but
+changes different numbers of characters. [All contrasts and limitations](docs/transfer-evaluation-results.md)
+are reported, including unfavorable per-class differences.
 
 ## What is controlled?
 
@@ -91,6 +102,7 @@ With Python 3.11+, these checks use the standard library only:
 git clone https://github.com/kckagancan/cmpe586-turkish-punctuation.git
 cd cmpe586-turkish-punctuation
 python scripts/build_report_tables.py --check
+python scripts/build_transfer_report.py --check
 python scripts/check_repository.py
 ```
 

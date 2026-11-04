@@ -1,0 +1,16 @@
+{
+  "version": "transfer-paper-tables-v1",
+  "run_identity": "8cf43b9d6a166baf005fb0320a52177f859c4b6215d06baaa0f93be57156d200",
+  "analysis_identity": "7847a6b85dcf7d4f1296cff6495974bcbf4103c635b628fce2d8820a45ef06f6",
+  "training_or_inference_performed": false,
+  "sources": {
+    "docs/transfer-evaluation-aggregates.csv": "5db2997981f3b5eb53280221852fd67d2c647e9b40956309442097d06e680b02",
+    "docs/transfer-evaluation-condition-summary.json": "8d627c6924e933babde361d9c32f6f21e93e496b42dab64f633bb6c8948a5fd9",
+    "docs/transfer-evaluation-per-class.csv": "021d79d9187bec181cc55aa5ab0ad55af6016997801fb61fd296b5cc95a0a6e5",
+    "docs/transfer-evaluation-input-coverage.csv": "d0c6f7a000ca563dcfd186149e02cf99797b222eec141ddf6968bac701586641",
+    "configs/transfer-evaluation.json": "6088a84be9ab5ec235b27e077595c0ca2f8c078b0ec63b8b54eb498e5334f52d",
+    "configs/transfer-noise-profile.json": "5b66ecce1d40870ffca4da0ec7f933244f24c7d57dcffe10a96b07708c783e63",
+    "configs/transfer-execution.json": "7716a45909b44463ad529383f740c0f3f04d038353fbb780e00b176efff96974"
+  },
+  "generated_tables_sha256": "6f8a6e2babf1abe592bc4a540fabc45a32410a0d3a3f3c7cce5e555317422d32"
+}

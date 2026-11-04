@@ -87,9 +87,14 @@ def audit():
                             cwd=ROOT, capture_output=True, text=True)
     if report.returncode:
         errors.append('Generated paper tables/binding differ: ' + report.stderr.strip())
+    transfer = subprocess.run([sys.executable, str(ROOT / 'scripts/build_transfer_report.py'), '--check'],
+                              cwd=ROOT, capture_output=True, text=True)
+    if transfer.returncode:
+        errors.append('Supplemental paper tables/binding differ: ' + transfer.stderr.strip())
     return {'status': 'passed' if not errors else 'failed', 'counts': counts,
             'errors': errors, 'experiments_or_test_suite_run': False,
-            'models_or_data_downloaded': False, 'report_binding_check': report.returncode == 0}
+            'models_or_data_downloaded': False, 'report_binding_check': report.returncode == 0,
+            'transfer_report_binding_check': transfer.returncode == 0}
 
 
 def main():

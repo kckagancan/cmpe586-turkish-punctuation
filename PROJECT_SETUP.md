@@ -40,6 +40,7 @@ The completed project's default read-only publication checks:
 
 ```bash
 python scripts/build_report_tables.py --check
+python scripts/build_transfer_report.py --check
 python scripts/check_repository.py
 ```
 

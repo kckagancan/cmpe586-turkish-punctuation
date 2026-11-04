@@ -1,0 +1,73 @@
+\clearpage
+\section{Complete supplemental evidence}\label{app:transfer}
+The corpus-anchored extension preserves the original report edition and all
+original metrics. Values below are generated from the separate public transfer
+aggregates, not from rerunning a model. SD always refers to three corruption
+seeds and fixed trained models.
+
+\begin{table}[h]
+\centering\footnotesize\setlength{\tabcolsep}{3pt}
+\caption{Complete supplemental overlap-sensitivity matrix, macro-F1 (\%).
+The same predictions are filtered to 14,445 rows /181,116 targets.}
+\TransferSensitivity
+\end{table}
+
+\begin{table}[h]
+\centering\footnotesize\setlength{\tabcolsep}{3pt}
+\caption{All primary own-clean-anchor drops (pp). Positive means deterioration.
+Absolute noisy-score advantages and smaller own-anchor drops are distinct.}
+\TransferDrops
+\end{table}
+
+\begin{table}[h]
+\centering\footnotesize
+\caption{All models' partial-minus-word-mask-matched-full macro-F1 (pp).
+Word dose is matched; character dose is not.}
+\TransferControl
+\end{table}
+
+{\raggedright
+Primary supports are invariant: O: 152,628; PERIOD: 15,465; COMMA: 12,164;
+QUESTION: 1,228. Sensitivity supports are O: 152,428; PERIOD: 15,325; COMMA: 12,152;
+QUESTION: 1,211. Table~\ref{tab:transfer-classes} reports class F1. All 104 sets of
+class precision/recall/F1/support and four-class confusion matrices, including
+O, are retained in \path{docs/transfer-evaluation-condition-summary.json}; the
+flat per-class CSV and aggregate CSV preserve every seed and specified contrast.
+\par}
+
+\clearpage
+\begin{table}[h]
+\centering\footnotesize\setlength{\tabcolsep}{3pt}
+\caption{Complete supplemental primary class F1 (\%). Clean has one value;
+noisy conditions use mean $\pm$ sample SD. Rare QUESTION support is explicit
+above, and unfavorable PERIOD contrasts are retained.}
+\label{tab:transfer-classes}
+\TransferClasses
+\end{table}
+
+{\raggedright
+\textbf{Reproduction.} \path{scripts/analyze_transfer.py} validates frozen
+inputs, runtime/readiness/source bindings, all 52 condition commits and original
+targets, then recomputes both-cohort metrics and all paired contrasts from saved
+predictions on CPU. \path{scripts/report_transfer_results.py} publishes only
+aggregate evidence. The \texttt{--check} option of
+\path{scripts/build_transfer_report.py}
+verifies the separate paper tables and source binding without raw data or models;
+its \texttt{--figures} option redraws the supplemental plot. Original report-table inputs,
+tables, figures and run snapshots remain unchanged. No unit suite was run for
+this completion audit.
+\par}
+
+\textbf{Supplement identities.}
+\begin{quote}\footnotesize\raggedright
+Protocol freeze: \path{b16cd070f37073b76503267668e27761922708eaa866ac3a80aab3fb790905d1}\\
+Inputs: \path{235c0c01cf8b5a34b24e36f1bbdcfe8603c34e401171dd47ec9856c87a30b7a3}\\
+Run: \path{8cf43b9d6a166baf005fb0320a52177f859c4b6215d06baaa0f93be57156d200}\\
+Analysis: \path{7847a6b85dcf7d4f1296cff6495974bcbf4103c635b628fce2d8820a45ef06f6}
+\end{quote}
+The verified recorded inference-loop sum is approximately 29.7 minutes; this is
+an operational timing including I/O, not a throughput benchmark. Preparation,
+readiness, downloading and analysis are separate. The results archive contains
+saved predictions/provenance and independent analysis; no weights are duplicated
+and no Drive cleanup is performed. The public original-study PDF is retained
+separately; private course copies and the exact prior source snapshot stay local.

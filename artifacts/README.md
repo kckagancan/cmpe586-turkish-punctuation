@@ -1,5 +1,25 @@
 # Local run outputs
 
+## November4 supplemental completion and report editions
+
+The52-condition transfer run and independently recomputed104 cohort score sets
+are at `evaluations/transfer-noise-v1/`, with immutable CPU analysis in
+`analysis-v1/`. Completion/download/archive/PDF-check receipts and the full
+inventory are at
+`evaluation-preparation/transfer-noise-v1/completion-2026-11-04/`.
+Its `transfer-noise-v1-results-and-report-v2.zip` contains both study stages'
+report/results evidence; private course metadata is included, so keep it local.
+Weights remain in the existing training archives, without duplication.
+
+The original report edition has an exact source/public-evidence snapshot in
+`publication/original-study-v1/`. Original10-page public/student PDFs are
+separate from the new15-page final report copies. See
+[report versions](../docs/report-versions.md) and
+[supplement completion](../docs/transfer-evaluation-completion.md).
+No existing result or model archive is deleted or replaced by this extension.
+
+## Earlier artifact map
+
 Checkpoint, tahmin, ara çıktı ve deney günlükleri burada tutulacak ve Git'e
 eklenmeyecek. Raporda kullanılan seçilmiş küçük tablolar ve grafikler daha sonra
 `docs/` altında sürümlenebilir.

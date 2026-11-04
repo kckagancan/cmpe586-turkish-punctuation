@@ -17,6 +17,10 @@ have not been supplied. The source can be adapted when those are known.
 - Complete main held-out matrix, figures, per-class and contextual diagnostics.
 - Unfavorable ablation results, statistical limits and responsible-use discussion.
 - Complete sensitivity matrix, realized coverage and reproducibility appendix.
+- Separately identified corpus-anchored follow-up: all52 additional forwards,
+  both cohorts, paired contrasts, class support/F1 and calibration limitations.
+- [Original study edition](../docs/report-versions.md) retained as an exact PDF
+  copy with its prior source/metric snapshot; no original result is replaced.
 
 ## Rebuild tables without data or models
 
@@ -32,6 +36,22 @@ This uses only public aggregate CSV/JSON files. It writes `tables.tex` and
 completed run/analysis identities. The ablation table uses matched seed586
 values; it does not subtract an ablation score from a three-seed mean.
 No metric is obtained by rerunning training or inference.
+
+The supplemental tables have separate inputs and bindings, leaving
+`tables.tex` and `results-binding.json` unchanged:
+
+```bash
+python scripts/build_transfer_report.py
+python scripts/build_transfer_report.py --check
+python scripts/build_transfer_report.py --figures
+```
+
+This generates `transfer-tables.tex`, `transfer-results-binding.json` and,
+with the optional plotting flag, `figures/transfer.pdf`/`.png`. The additional
+text is in `transfer-section.tex` and `transfer-appendix.tex`. Only the plotting
+option needs Matplotlib; the read-only binding check uses the standard library.
+The current PDF is the extended edition; the original public PDF remains
+`output/pdf/original-study-v1-public.pdf` in the repository root.
 
 ## Compile the public PDF
 

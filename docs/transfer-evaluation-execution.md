@@ -1,5 +1,13 @@
 # Supplemental transfer execution
 
+**Completion update,2026-11-04:** all52 conditions /104 cohort score sets
+completed and were independently rescored locally from original targets.
+[Verified results](transfer-evaluation-results.md) and
+[completion/archive](transfer-evaluation-completion.md) supersede the historical
+running handoff below. The current final report includes this separately
+identified follow-up; the [original report edition](report-versions.md) is retained.
+No inference was repeated and no Drive cleanup was performed.
+
 Prepared **2026-11-04**, continuing the immutable
 [protocol](transfer-evaluation-protocol.md) and
 [13-view input preparation](transfer-evaluation-preparation.md).

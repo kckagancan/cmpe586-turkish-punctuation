@@ -81,6 +81,9 @@ validation-only; changing a split setting does not create a valid held-out run.
 | Held-out freeze / inputs | `configs/held-out-test.json`; [frozen protocol](held-out-test-protocol.md) | `scripts/freeze_heldout_protocol.py`, `scripts/prepare_heldout_inputs.py` |
 | Held-out readiness / execution | `configs/held-out-execution.json`; [launch](held-out-test-launch.md) | `scripts/ready_heldout_evaluation.py`, `scripts/evaluate_heldout.py`, notebook 07 |
 | Saved-prediction analysis / archive | [completion](held-out-test-completion.md) | `scripts/analyze_heldout.py`, `scripts/archive_heldout_results.py`, `scripts/report_heldout_results.py` |
+| Supplemental transfer freeze / inputs | `configs/transfer-evaluation.json`, anonymous `transfer-noise-profile.json`; [protocol](transfer-evaluation-protocol.md) | compiler/freeze/input preparation scripts; existing clean encoding reused |
+| Supplemental transfer readiness / scoring | `configs/transfer-execution.json`; [execution](transfer-evaluation-execution.md) | `scripts/ready_transfer_evaluation.py`, `scripts/evaluate_transfer.py`, notebook08 |
+| Supplemental saved-prediction audit / reporting | [completed results and archive](transfer-evaluation-completion.md) | `scripts/analyze_transfer.py`, `scripts/report_transfer_results.py`, `scripts/build_transfer_report.py`, `scripts/finalize_transfer_results.py` |
 
 All fine-tuned arms use training seed586, shared saved initialization and three
 epochs / 10,968 updates. Selection is clean-validation-only. All selected models
@@ -129,6 +132,7 @@ The same checks are available locally:
 
 ```bash
 python scripts/check_repository.py
+python scripts/build_transfer_report.py --check
 python -m ruff check --select E9,F scripts src tests
 ```
 

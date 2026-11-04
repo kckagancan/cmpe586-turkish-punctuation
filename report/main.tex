@@ -6,6 +6,7 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{xurl}
 \input{tables}
+\input{transfer-tables}
 \title{Robustness of Turkish Punctuation Restoration\\under Informal Writing Noise}
 \author{Kagan Can\\CMPE 586 Course Project\\
 \href{https://github.com/kckagancan/cmpe586-turkish-punctuation}{\texttt{github.com/kckagancan/cmpe586-turkish-punctuation}}
@@ -29,9 +30,13 @@ macro-F1 from 76.7502\% to 80.5289\%, a paired gain of $3.7787\pm0.2191$
 percentage points across three corruption seeds. Removing case loss reduces
 matched case-loss and combined-medium F1 by 0.9585 and 0.8799 points,
 respectively. An exact-input-overlap sensitivity analysis preserves the main
-pattern. These descriptive findings support this controlled augmentation recipe;
-one training seed, synthetic noise, and unresolved dataset provenance limit
-broader conclusions.
+pattern. A subsequent instructor-feedback extension freezes corpus-anchored
+elongation, internal omission and partial folding outside the explicit training
+recipe. Its 52 additional evaluations yield Augmented minus Clean gains of
+0.2491, 0.2290 and 0.1882 points, respectively. These are controlled distortions
+of the already scored test texts, not independent natural-text evaluation.
+One training seed, transported corpus anchors and unresolved dataset provenance
+limit broader conclusions.
 \end{abstract}
 
 \section{Introduction}
@@ -60,6 +65,13 @@ combination of punctuation restoration and noise augmentation. The project
 repository provides source, frozen recipes, aggregate results, and the report;
 raw data and weights are retained separately.
 
+After completing that original study, instructor feedback motivated a separate
+question: does the fixed augmentation recipe transfer to mechanisms outside its
+explicit operators when doses and morphology are anchored in informal Turkish?
+We report this follow-up separately in Section~\ref{sec:transfer}. The original
+report edition and all original metrics are preserved; the new results do not
+replace them or change any model.
+
 \section{Related work and design choices}
 Kurt and \c{C}ay\i r~\cite{kurt2023} release Turkish punctuation data and Transformer
 checkpoints. We use their pinned CSV release and published BERT as a reference,
@@ -76,8 +88,11 @@ Belinkov and Bisk~\cite{belinkov2018} and Karpukhin et al.~\cite{karpukhin2019}
 motivate examining character noise and augmentation, but their translation
 findings do not establish expected Turkish punctuation gains. N\'{a}plava et
 al.~\cite{naplava2021} motivate separating orthographic aspects; unlike their
-natural-error modeling, our doses are synthetic and are not calibrated to
-Turkish user-error frequencies.
+natural-error modeling, our original 2/5/10\% doses are synthetic stress levels,
+not calibrated population frequencies. The supplemental study uses the Turkish
+train split of MultiLexNorm~\cite{multilexnorm2021} for conditional corpus anchors
+and anonymous error-shape profiles. This transports finite-corpus evidence to
+our test domain; it does not establish representative Turkish usage rates.
 
 CheckList~\cite{ribeiro2020} motivates condition-specific behavioral analysis.
 We retain the project's perturbation pipeline rather than use its toolkit.
@@ -345,8 +360,10 @@ These are single-corruption-seed, single-training-seed descriptive differences.}
 The component is useful against the matching perturbation under this recipe.
 Because removal also lowers total training noise, the experiment cannot show
 that casing is intrinsically more useful than another component at equal dose.
-Only five ablation conditions were planned; no ablation severity sweep or
-additional training-seed confirmation was performed.
+Only five ablation conditions were planned in the original held-out study; no
+ablation severity sweep or additional training-seed confirmation was performed.
+The later transfer study evaluates the same removal checkpoint on its separately
+specified three-seed matrix, without extending the original noise grid.
 
 \subsection{Sensitivity and full-loss endpoints}
 Excluding the 155 exact train/validation input matches changes Clean/Augmented
@@ -362,13 +379,21 @@ substantially in coverage and information removed, and cannot be interpreted
 as a matched-dose family comparison. Even after augmentation, full casing loss
 still reduces performance relative to the clean anchor.
 
+\input{transfer-section}
+
 \section{Limitations, responsible use, and conclusion}
 There is one training seed and one architecture. Three corruption seeds measure
 variation in perturbed inputs, not optimization uncertainty. The three-epoch
 budget does not establish convergence or the best achievable clean/robust
-trade-off. Synthetic, word-preserving noise omits real deletions, insertions,
-phonetic substitutions, broader keyboard errors, and code-switching. Eligibility
-and synthetic doses are not estimates of natural Turkish usage. The case-loss
+trade-off. Word-preserving noise, including the new character insertions and
+deletions, still omits word-boundary changes, whole-word insertion/deletion,
+phonetic substitutions, broader keyboard errors, and code-switching. The original
+synthetic doses and transported finite-corpus anchors are not estimates of
+population Turkish usage. The corpus is small and selected; conditional
+morphology adaptation and uniform word sampling do not reproduce its full joint
+process. The same project test texts have been reused for the follow-up, so its
+controlled transfer results require unseen natural data for independent
+confirmation. The case-loss
 ablation changes both component presence and total noise exposure.
 
 The released CSVs have unresolved licensing and exact split provenance. Exact
@@ -389,7 +414,10 @@ weights are excluded.
 Within these limits, matched noise augmentation improves Turkish punctuation
 robustness across the defined perturbation matrix with a small positive clean
 F1 difference. The strongest observed benefit is under combined-heavy noise;
-case-loss removal weakens matched casing/combined robustness. Class and
+case-loss removal weakens matched casing/combined robustness. A separate
+corpus-anchored follow-up finds small positive mean Augmented--Clean differences
+for three mechanisms outside the explicit recipe, with uneven class effects
+and no uniform case-loss advantage in own-anchor degradation. Class and
 contextual diagnostics show where aggregate gains arise and where substantial
 errors remain. The result is a reproducible, bounded empirical study rather
 than a claim of universal robustness.
@@ -403,7 +431,7 @@ The NeurIPS 2026 preprint style is used for this course report; this document
 does not claim NeurIPS submission, acceptance, or peer review.
 
 \clearpage
-\begin{thebibliography}{10}
+\begin{thebibliography}{11}
 \bibitem{kurt2023} Uygar Kurt and Aykut \c{C}ay\i r. 2023.
 Transformer Based Punctuation Restoration for Turkish.
 \emph{8th International Conference on Computer Science and Engineering (UBMK)},
@@ -440,6 +468,12 @@ Training Data Makes Language Models Better. \emph{ACL}, 8424--8445.
 Hannaneh Hajishirzi, and Noah Smith. 2020. Fine-Tuning Pretrained Language
 Models: Weight Initializations, Data Orders, and Early Stopping.
 arXiv:2002.06305. \url{https://arxiv.org/abs/2002.06305}.
+\bibitem{multilexnorm2021} Rob van der Goot, Alan Ramponi, Arkaitz Zubiaga,
+Barbara Plank, Benjamin Muller, I\~naki San Vicente Roncal, Nikola Ljube\v{s}i\'{c},
+\"Ozlem \c{C}etino\u{g}lu, Rahmad Mahendra, Talha \c{C}olako\u{g}lu,
+Timothy Baldwin, Tommaso Caselli, and Wladimir Sidorenko. 2021.
+MultiLexNorm: A Shared Task on Multilingual Lexical Normalization.
+\emph{W-NUT}, 493--509. \url{https://aclanthology.org/2021.wnut-1.55/}.
 \end{thebibliography}
 
 \clearpage
@@ -538,4 +572,5 @@ for all 122 conditions on the recorded T4 runtime; validation, preparation,
 calibration, analysis and archive work are separate. No energy estimate was
 measured. The report was assembled from existing evidence without new training
 or model inference.
+\input{transfer-appendix}
 \end{document}
