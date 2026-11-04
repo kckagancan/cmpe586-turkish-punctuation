@@ -1,0 +1,49 @@
+{
+  "version": "informal-corpus-audit-v1",
+  "specified_on": "2026-11-04",
+  "purpose": "post_feedback_data_only_suitability_and_operator_coverage",
+  "source": {
+    "repository": "https://bitbucket.org/robvanderg/multilexnorm",
+    "revision": "e58e946375299a04355fa2d7fa9e1c769234e68a",
+    "path": "data/raw/multilexnorm-turkish/e58e946375299a04355fa2d7fa9e1c769234e68a/train.norm",
+    "bytes": 99174,
+    "sha256": "17793b8db8f41ae387cfcdf4b7a1c061f2ccdc677418b3c2cec912c4e570695d",
+    "official_split": "train",
+    "expected_sentences": 570,
+    "expected_source_slots": 6443,
+    "license_status": "not_established_in_inspected_per_language_resources",
+    "paper": "https://aclanthology.org/2021.wnut-1.55.pdf"
+  },
+  "frozen_noise_config": "configs/noise.json",
+  "frozen_noise_config_sha256": "2d7d767df17d2eb91b5aac6b250ba43a5a5f9f37a2af0283436254cf96e21a9d",
+  "schema": {
+    "format": "multilexnorm_two_column_token_per_line",
+    "encoding": "utf-8",
+    "fields": [
+      "original",
+      "normalized"
+    ],
+    "blank_line": "sentence_boundary",
+    "empty_normalized_token": "merge_continuation_mark_anchor_and_continuation",
+    "multiword_normalized_token": "split_exclude_from_word_preserving_pairs",
+    "token_fields_preserved_without_strip": true
+  },
+  "coverage": {
+    "direction": "normalized_corrected_to_observed_original",
+    "views": [
+      "exact",
+      "turkish_lowercase_both_sides_for_lexical_diagnostic_only"
+    ],
+    "exclude_boundary_changing_pairs": true,
+    "single_word_reachability": "all_eligible_nonempty_operator_subsets_in_frozen_order_all_legal_swap_positions",
+    "new_mechanism_shape_minimum_corrected_length": 4
+  },
+  "outputs": "artifacts/corpus-audit/multilexnorm-turkish-v1",
+  "invariants": {
+    "model_calls": false,
+    "punctuation_gold_inferred": false,
+    "historical_recipes_changed": false,
+    "raw_text_in_public_summary": false,
+    "corpus_population_prevalence_claim": false
+  }
+}

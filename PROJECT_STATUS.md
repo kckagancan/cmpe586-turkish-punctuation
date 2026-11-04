@@ -1,7 +1,8 @@
 # Current project state
 
-Updated **2026-10-23**. The experiments, final report, and retrospective proposal
-are complete.
+Updated **2026-11-04**. The original experiments, final report, and retrospective
+proposal are complete. Instructor-feedback extension: corpus selection and
+data-only audit are complete; no new model experiment has started.
 Read this first, then the relevant linked record. This file authorizes no new run.
 
 ## Project and delivered report
@@ -102,6 +103,35 @@ combined +0.8799 pp. [All results](docs/held-out-test-results.md),
   work is included in the publication history.
 
 ## Next action and remaining limits
+
+Instructor feedback reviewed November4: predefined corruptions/severity and
+per-class support/F1 were already covered. User authorized the next data-only
+step and requested comparison with alternative corpora. The
+[candidate review](docs/informal-corpus-selection.md) chose **MultiLexNorm
+monolingual Turkish, official train only** over the initial #Turki$hTweets
+suggestion. The latter's raw column refines the initial paper-only casing
+assessment; initial notes/drafts are retained locally.
+
+[Verified corpus audit](docs/informal-corpus-audit-results.md),
+[protocol](docs/informal-corpus-audit-protocol.md),
+[aggregate](docs/informal-corpus-audit-summary.json): 570 sentences / 6,443
+source slots; 354 boundary-changing slots kept separate. Of 2,031 changed
+one-word pairs, 1,109 (54.6036%) are reachable by old operators/subsets as a
+**word-level upper bound**, not model performance or sampled training coverage.
+Case-neutral uncovered shapes include elongation55, internal omission49 and
+partial folding42 (nonexclusive, alphabetic corrected length>=4).
+Source test file remains unread; no raw text is published. Corpus selection
+and denominator/annotation limits prevent universal natural-frequency claims.
+The original 2/5/10% levels remain synthetic stress doses.
+
+Audit identity `31b1594e88c80d0607436a008a7b1a6e9bd74c67452eb73dcf0424a69a56aa7a`.
+Receipts, independent conservation/hash checks, private trace and immutable
+snapshots: `artifacts/corpus-audit/multilexnorm-turkish-v1/audit-31b1594e88c80d06/`.
+109 pre-existing scientific/config/report files remain byte-identical. No
+training, inference, tokenizer, test suite or PDF rebuild ran; no job is running.
+Next: specify a separate fixed-model supplemental evaluation using supported
+unseen error mechanisms. New corruptions on old test text are supplemental,
+not new independent held-out data; preserve all original results/recipes.
 
 The planned experiments, analyses, report, GitHub publication, backups, scoped
 cleanup and repository automation are complete. No experiment or cleanup job is

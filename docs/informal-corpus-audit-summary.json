@@ -1,0 +1,459 @@
+{
+  "sentences": 570,
+  "source_slots": 6443,
+  "source_slots_with_letters": 5803,
+  "one_word_slots": 6089,
+  "one_word_corrected_slots_with_letters": 5453,
+  "one_word_alphabetic_pairs_in_frozen_alphabet": 4557,
+  "structural_exclusion_slots": 354,
+  "structural_exclusion_types": {
+    "merge_anchor": 52,
+    "merge_continuation": 109,
+    "split": 191,
+    "split_and_merge_anchor": 2
+  },
+  "unique_original_forms": 4348,
+  "unique_normalized_fields": 4012,
+  "duplicate_sentence_excess": 0,
+  "original_casing": {
+    "alphabetic_slots": 5028,
+    "casing": {
+      "lowercase": 4137,
+      "mixed_or_uncased": 37,
+      "titlecase": 613,
+      "uppercase": 241
+    },
+    "punctuation_glyph_counts_not_gold": {
+      "!": 34,
+      "\"": 14,
+      "#": 186,
+      "&": 3,
+      "'": 41,
+      "(": 8,
+      ")": 18,
+      "*": 9,
+      ",": 69,
+      "-": 20,
+      ".": 338,
+      "/": 7,
+      ":": 23,
+      ";": 8,
+      "?": 43,
+      "@": 499,
+      "_": 116,
+      "—": 1,
+      "‘": 1,
+      "’": 12,
+      "“": 3,
+      "”": 4,
+      "…": 1
+    }
+  },
+  "normalized_casing": {
+    "alphabetic_slots": 4642,
+    "casing": {
+      "lowercase": 3737,
+      "mixed_or_uncased": 16,
+      "titlecase": 811,
+      "uppercase": 78
+    },
+    "punctuation_glyph_counts_not_gold": {
+      "!": 34,
+      "\"": 12,
+      "#": 186,
+      "&": 3,
+      "'": 149,
+      "(": 8,
+      ")": 18,
+      "*": 9,
+      ",": 68,
+      "-": 20,
+      ".": 338,
+      "/": 7,
+      ":": 23,
+      ";": 8,
+      "?": 43,
+      "@": 499,
+      "_": 109,
+      "—": 1,
+      "’": 2,
+      "“": 3,
+      "”": 4,
+      "…": 1
+    }
+  },
+  "case_candidates": {
+    "corrected_case_loss_eligible_one_word_slots": 1323,
+    "observed_exact_lowercase_of_corrected": 263,
+    "fraction_of_corrected_case_eligible_slots": 0.19879062736205594,
+    "all_case_only_changed_one_word_slots": 427,
+    "other_case_only_changes": 164,
+    "population_prevalence_estimated": false
+  },
+  "views": {
+    "exact": {
+      "occurrence_weighted": {
+        "slots_or_pairs": 6443,
+        "partition": {
+          "boundary_excluded_changed": 354,
+          "combination_only_reachable": 34,
+          "single_operator_reachable": 1075,
+          "unchanged": 4058,
+          "unreachable": 922
+        },
+        "changed": 2385,
+        "eligible_one_word_changes": 2031,
+        "reachable_one_word_changes": 1109,
+        "reachable_fraction_of_eligible_changes": 0.5460364352535697,
+        "boundary_exclusions": {
+          "merge_anchor": 52,
+          "merge_continuation": 109,
+          "split": 191,
+          "split_and_merge_anchor": 2
+        },
+        "single_operator_memberships_nonexclusive": {
+          "case_loss": 263,
+          "diacritic_loss": 809,
+          "typo_swap": 3
+        },
+        "combination_memberships_nonexclusive": {
+          "case_loss+diacritic_loss": 40,
+          "typo_swap+diacritic_loss": 4
+        },
+        "case_only_changed_one_word_pairs": 427,
+        "shape_memberships_nonexclusive": {
+          "character_run_elongation": 44,
+          "one_character_insertion": 25,
+          "one_character_substitution": 798,
+          "one_internal_character_omission": 42,
+          "partial_turkish_folding": 33
+        },
+        "shape_memberships_among_unreachable_nonexclusive": {
+          "character_run_elongation": 44,
+          "one_character_insertion": 25,
+          "one_character_substitution": 142,
+          "one_internal_character_omission": 42,
+          "partial_turkish_folding": 33
+        },
+        "unreachable_with_any_listed_shape": 238,
+        "levenshtein_distance_histogram": {
+          "1": 1141,
+          "10": 5,
+          "11": 5,
+          "12": 4,
+          "13": 1,
+          "16": 1,
+          "17": 1,
+          "2": 429,
+          "25": 1,
+          "3": 193,
+          "4": 100,
+          "5": 62,
+          "6": 25,
+          "7": 24,
+          "8": 24,
+          "9": 15
+        },
+        "observed_minus_corrected_length_histogram": {
+          "-1": 227,
+          "-2": 70,
+          "-3": 19,
+          "-4": 10,
+          "-5": 3,
+          "0": 1563,
+          "1": 61,
+          "11": 2,
+          "12": 2,
+          "16": 1,
+          "2": 41,
+          "25": 1,
+          "3": 14,
+          "4": 10,
+          "5": 2,
+          "6": 4,
+          "8": 1
+        }
+      },
+      "unique_pair_weighted": {
+        "slots_or_pairs": 4486,
+        "partition": {
+          "boundary_excluded_changed": 269,
+          "combination_only_reachable": 29,
+          "single_operator_reachable": 864,
+          "unchanged": 2500,
+          "unreachable": 824
+        },
+        "changed": 1986,
+        "eligible_one_word_changes": 1717,
+        "reachable_one_word_changes": 893,
+        "reachable_fraction_of_eligible_changes": 0.5200931857891672,
+        "boundary_exclusions": {
+          "merge_anchor": 52,
+          "merge_continuation": 68,
+          "split": 147,
+          "split_and_merge_anchor": 2
+        },
+        "single_operator_memberships_nonexclusive": {
+          "case_loss": 214,
+          "diacritic_loss": 647,
+          "typo_swap": 3
+        },
+        "combination_memberships_nonexclusive": {
+          "case_loss+diacritic_loss": 34,
+          "typo_swap+diacritic_loss": 4
+        },
+        "case_only_changed_one_word_pairs": 370,
+        "shape_memberships_nonexclusive": {
+          "character_run_elongation": 42,
+          "one_character_insertion": 25,
+          "one_character_substitution": 669,
+          "one_internal_character_omission": 38,
+          "partial_turkish_folding": 32
+        },
+        "shape_memberships_among_unreachable_nonexclusive": {
+          "character_run_elongation": 42,
+          "one_character_insertion": 25,
+          "one_character_substitution": 134,
+          "one_internal_character_omission": 38,
+          "partial_turkish_folding": 32
+        },
+        "unreachable_with_any_listed_shape": 224,
+        "levenshtein_distance_histogram": {
+          "1": 895,
+          "10": 5,
+          "11": 4,
+          "12": 4,
+          "13": 1,
+          "16": 1,
+          "17": 1,
+          "2": 379,
+          "25": 1,
+          "3": 181,
+          "4": 97,
+          "5": 61,
+          "6": 25,
+          "7": 24,
+          "8": 24,
+          "9": 14
+        },
+        "observed_minus_corrected_length_histogram": {
+          "-1": 164,
+          "-2": 64,
+          "-3": 19,
+          "-4": 9,
+          "-5": 3,
+          "0": 1323,
+          "1": 61,
+          "11": 1,
+          "12": 2,
+          "16": 1,
+          "2": 40,
+          "25": 1,
+          "3": 14,
+          "4": 8,
+          "5": 2,
+          "6": 4,
+          "8": 1
+        }
+      }
+    },
+    "case_neutral": {
+      "occurrence_weighted": {
+        "slots_or_pairs": 6443,
+        "partition": {
+          "boundary_excluded_changed": 354,
+          "single_operator_reachable": 872,
+          "unchanged": 4485,
+          "unreachable": 732
+        },
+        "changed": 1958,
+        "eligible_one_word_changes": 1604,
+        "reachable_one_word_changes": 872,
+        "reachable_fraction_of_eligible_changes": 0.543640897755611,
+        "boundary_exclusions": {
+          "merge_anchor": 52,
+          "merge_continuation": 109,
+          "split": 191,
+          "split_and_merge_anchor": 2
+        },
+        "single_operator_memberships_nonexclusive": {
+          "case_loss": 0,
+          "diacritic_loss": 869,
+          "typo_swap": 3
+        },
+        "combination_memberships_nonexclusive": {
+          "typo_swap+diacritic_loss": 4
+        },
+        "case_only_changed_one_word_pairs": 0,
+        "shape_memberships_nonexclusive": {
+          "character_run_elongation": 55,
+          "one_character_insertion": 28,
+          "one_character_substitution": 636,
+          "one_internal_character_omission": 49,
+          "partial_turkish_folding": 42
+        },
+        "shape_memberships_among_unreachable_nonexclusive": {
+          "character_run_elongation": 55,
+          "one_character_insertion": 28,
+          "one_character_substitution": 123,
+          "one_internal_character_omission": 49,
+          "partial_turkish_folding": 42
+        },
+        "unreachable_with_any_listed_shape": 237,
+        "levenshtein_distance_histogram": {
+          "1": 991,
+          "11": 2,
+          "12": 2,
+          "16": 1,
+          "2": 357,
+          "25": 1,
+          "3": 141,
+          "4": 75,
+          "5": 24,
+          "6": 7,
+          "7": 1,
+          "8": 2
+        },
+        "observed_minus_corrected_length_histogram": {
+          "-1": 227,
+          "-2": 70,
+          "-3": 19,
+          "-4": 10,
+          "-5": 3,
+          "0": 1136,
+          "1": 61,
+          "11": 2,
+          "12": 2,
+          "16": 1,
+          "2": 41,
+          "25": 1,
+          "3": 14,
+          "4": 10,
+          "5": 2,
+          "6": 4,
+          "8": 1
+        }
+      },
+      "unique_pair_weighted": {
+        "slots_or_pairs": 4223,
+        "partition": {
+          "boundary_excluded_changed": 250,
+          "single_operator_reachable": 667,
+          "unchanged": 2676,
+          "unreachable": 630
+        },
+        "changed": 1547,
+        "eligible_one_word_changes": 1297,
+        "reachable_one_word_changes": 667,
+        "reachable_fraction_of_eligible_changes": 0.5142636854279106,
+        "boundary_exclusions": {
+          "merge_anchor": 52,
+          "merge_continuation": 57,
+          "split": 139,
+          "split_and_merge_anchor": 2
+        },
+        "single_operator_memberships_nonexclusive": {
+          "case_loss": 0,
+          "diacritic_loss": 664,
+          "typo_swap": 3
+        },
+        "combination_memberships_nonexclusive": {
+          "typo_swap+diacritic_loss": 4
+        },
+        "case_only_changed_one_word_pairs": 0,
+        "shape_memberships_nonexclusive": {
+          "character_run_elongation": 53,
+          "one_character_insertion": 28,
+          "one_character_substitution": 502,
+          "one_internal_character_omission": 41,
+          "partial_turkish_folding": 40
+        },
+        "shape_memberships_among_unreachable_nonexclusive": {
+          "character_run_elongation": 53,
+          "one_character_insertion": 28,
+          "one_character_substitution": 118,
+          "one_internal_character_omission": 41,
+          "partial_turkish_folding": 40
+        },
+        "unreachable_with_any_listed_shape": 222,
+        "levenshtein_distance_histogram": {
+          "1": 730,
+          "11": 1,
+          "12": 2,
+          "16": 1,
+          "2": 321,
+          "25": 1,
+          "3": 135,
+          "4": 72,
+          "5": 24,
+          "6": 7,
+          "7": 1,
+          "8": 2
+        },
+        "observed_minus_corrected_length_histogram": {
+          "-1": 157,
+          "-2": 63,
+          "-3": 19,
+          "-4": 9,
+          "-5": 3,
+          "0": 913,
+          "1": 60,
+          "11": 1,
+          "12": 2,
+          "16": 1,
+          "2": 39,
+          "25": 1,
+          "3": 14,
+          "4": 8,
+          "5": 2,
+          "6": 4,
+          "8": 1
+        }
+      }
+    }
+  },
+  "interpretation": {
+    "coverage_is_word_reachability_upper_bound": true,
+    "profile_is_conditional_on_this_corpus_and_eligibility": true,
+    "punctuation_gold_available_for_restoration": false,
+    "model_performance_measured": false,
+    "raw_text_included": false
+  },
+  "audit_identity": "31b1594e88c80d0607436a008a7b1a6e9bd74c67452eb73dcf0424a69a56aa7a",
+  "version": "informal-corpus-audit-v1",
+  "source": {
+    "repository": "https://bitbucket.org/robvanderg/multilexnorm",
+    "revision": "e58e946375299a04355fa2d7fa9e1c769234e68a",
+    "path": "data/raw/multilexnorm-turkish/e58e946375299a04355fa2d7fa9e1c769234e68a/train.norm",
+    "bytes": 99174,
+    "sha256": "17793b8db8f41ae387cfcdf4b7a1c061f2ccdc677418b3c2cec912c4e570695d",
+    "official_split": "train",
+    "expected_sentences": 570,
+    "expected_source_slots": 6443,
+    "license_status": "not_established_in_inspected_per_language_resources",
+    "paper": "https://aclanthology.org/2021.wnut-1.55.pdf"
+  },
+  "source_bindings": {
+    "scripts/audit_informal_corpus.py": "9ff9a8ce59b6b5ff442c321dcc6671478edb680772c8f65a05063fead44b69f7",
+    "src/turkish_punctuation/corpus_audit.py": "75204bb2de43b2d24b07bd6535ccdfb5ffe9d37da78a230c0bc5f9b1044cb398",
+    "src/turkish_punctuation/noise.py": "a8497a70634a8e33820e7d5d33818951682017f6369031114151d51873bcb198",
+    "src/turkish_punctuation/__init__.py": "336a3b84d679fa15bc9b066494810ec6d48557b12347e8997f702d0429a5bce0",
+    "docs/informal-corpus-audit-protocol.md": "51d402861ac232c1fc3e84e7234d2b734dd408af76c8b898e1c35a77f647e43b",
+    "docs/informal-corpus-selection.md": "4cb346ff4efe224b894a0063a33a401225c0eebc785a01391ece01dfa6dc9216",
+    "configs/informal-corpus-audit.json": "998e207bec94646aa1c6f02e1c56edb5f5ae22a291727d99840151462caadfe1",
+    "configs/noise.json": "2d7d767df17d2eb91b5aac6b250ba43a5a5f9f37a2af0283436254cf96e21a9d"
+  },
+  "runtime": {
+    "python": "3.11.17",
+    "unicode": "14.0.0"
+  },
+  "schema_audit": {
+    "empty_physical_lines": 570,
+    "nfc_violations": 0,
+    "malformed_records": 0,
+    "orphan_merge_continuations": 0
+  },
+  "model_calls": false,
+  "test_split_read": false,
+  "training_or_inference_run": false
+}
