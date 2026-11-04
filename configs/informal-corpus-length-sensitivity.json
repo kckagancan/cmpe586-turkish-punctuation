@@ -1,0 +1,19 @@
+{
+  "version": "informal-corpus-length-sensitivity-v1",
+  "specified_on": "2026-11-04",
+  "phase": "exploratory_followup_after_min4_depth_profile_before_model_scoring",
+  "purpose": "measure_short_word_exclusion_without_rewriting_completed_min4_analysis",
+  "source_audit_config": "configs/informal-corpus-audit.json",
+  "source_audit_config_sha256": "998e207bec94646aa1c6f02e1c56edb5f5ae22a291727d99840151462caadfe1",
+  "parent_depth_identity": "cde287765953c12dc78f4f56d0eca6ec81c017d21dd10626f3f9fffc7d161cca",
+  "parent_depth_directory": "artifacts/corpus-audit/multilexnorm-depth-v1/depth-cde287765953c12d",
+  "minimum_corrected_lengths": [1, 2, 3, 4],
+  "classification": "same_frozen_mechanism_shapes_case_neutral_change_minimum_length_only",
+  "denominator": "boundary_free_corrected_and_observed_alphabetic_pairs_in_frozen_alphabet",
+  "partial_folding_opportunity": "at_least_two_foldable_character_occurrences",
+  "omission": "exactly_one_strictly_internal_character_even_when_threshold_below_three",
+  "output_root": "artifacts/corpus-audit/multilexnorm-depth-v1",
+  "model_calls": false,
+  "source_test_read": false,
+  "change_parent_profile": false
+}

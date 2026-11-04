@@ -27,6 +27,7 @@ contains corpus evidence and evaluation planning, with no new model scores.
 | --- | --- |
 | [Informal corpus selection](informal-corpus-selection.md) | Compare authentic and synthetic candidates; select MultiLexNorm Turkish train for the data-only audit |
 | [Verified corpus audit](informal-corpus-audit-results.md) | Counts, operator coverage, unseen shapes, denominators and limitations |
+| [Three-shape density and severity](informal-corpus-depth-results.md) | Completed train-only depth profile: opportunity rates, per-tweet clustering, character amplitude, duplication sensitivity and resampling stability |
 | [Direct informal evaluation feasibility](informal-transfer-feasibility.md) | Distinguish natural transfer from controlled perturbations and specify the punctuation-reference gate |
 
 ## Public numeric evidence

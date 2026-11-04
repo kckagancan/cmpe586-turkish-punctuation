@@ -1,0 +1,1443 @@
+{
+  "scope": "data_only_train_split_depth_extension_no_model_scores",
+  "sentences": 570,
+  "source_slots": 6443,
+  "eligibility_partition": {
+    "corrected_length_below_minimum": 1583,
+    "eligible": 3598,
+    "nonalphabetic_pair": 908,
+    "structural": 354
+  },
+  "eligible_base_partition": {
+    "elongation": 55,
+    "internal_omission": 49,
+    "old_operator_reachable": 786,
+    "other_unreachable": 323,
+    "partial_folding": 42,
+    "unchanged_case_neutral": 2343
+  },
+  "multi_foldable_opportunity_partition": {
+    "full_folding": 270,
+    "other_change": 75,
+    "partial_folding": 42,
+    "unchanged_case_neutral": 230
+  },
+  "families": {
+    "elongation": {
+      "occurrences": 55,
+      "opportunities": 3598,
+      "opportunity_fraction": 0.015286270150083379,
+      "fraction_all_source_slots": 0.00853639608877852,
+      "fraction_one_to_one_slots": 0.009032681885367055,
+      "affected_sentences": 43,
+      "fraction_all_sentences": 0.07543859649122807,
+      "sentences_with_opportunities": 566,
+      "sentences_without_opportunities": 4,
+      "zero_hit_sentences_with_opportunities": 523,
+      "hits_per_sentence": {
+        "n": 570,
+        "mean": 0.09649122807017543,
+        "minimum": 0.0,
+        "maximum": 3.0,
+        "quantiles": {
+          "p10": 0.0,
+          "p25": 0.0,
+          "p50": 0.0,
+          "p75": 0.0,
+          "p90": 0.0,
+          "p95": 1.0,
+          "p99": 2.0
+        },
+        "histogram": {
+          "0": 527,
+          "1": 35,
+          "2": 4,
+          "3": 4
+        }
+      },
+      "sentence_rates_including_zeros": {
+        "n": 566,
+        "mean": 0.018243319303389977,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "quantiles": {
+          "p10": 0.0,
+          "p25": 0.0,
+          "p50": 0.0,
+          "p75": 0.0,
+          "p90": 0.0,
+          "p95": 0.16666666666666666,
+          "p99": 0.3333333333333333
+        },
+        "histogram": {
+          "0.0": 523,
+          "0.1111111111111111": 2,
+          "0.125": 4,
+          "0.14285714285714285": 5,
+          "0.16666666666666666": 6,
+          "0.2": 4,
+          "0.21428571428571427": 1,
+          "0.23076923076923078": 1,
+          "0.25": 6,
+          "0.2727272727272727": 1,
+          "0.2857142857142857": 2,
+          "0.3": 1,
+          "0.3333333333333333": 9,
+          "1.0": 1
+        }
+      },
+      "affected_sentence_rates": {
+        "n": 43,
+        "mean": 0.24013299362136573,
+        "minimum": 0.1111111111111111,
+        "maximum": 1.0,
+        "quantiles": {
+          "p10": 0.125,
+          "p25": 0.14285714285714285,
+          "p50": 0.21428571428571427,
+          "p75": 0.3,
+          "p90": 0.3333333333333333,
+          "p95": 0.3333333333333333,
+          "p99": 1.0
+        },
+        "histogram": {
+          "0.1111111111111111": 2,
+          "0.125": 4,
+          "0.14285714285714285": 5,
+          "0.16666666666666666": 6,
+          "0.2": 4,
+          "0.21428571428571427": 1,
+          "0.23076923076923078": 1,
+          "0.25": 6,
+          "0.2727272727272727": 1,
+          "0.2857142857142857": 2,
+          "0.3": 1,
+          "0.3333333333333333": 9,
+          "1.0": 1
+        }
+      },
+      "largest_sentence_share_of_hits": 0.05454545454545454,
+      "top_five_sentence_share_of_hits": 0.2545454545454545,
+      "largest_neutral_pair_share_of_hits": 0.05454545454545454,
+      "leave_one_sentence_out_pooled_rate_range": [
+        0.014492753623188406,
+        0.015358838313320302
+      ],
+      "corrected_length": {
+        "n": 55,
+        "mean": 6.254545454545455,
+        "minimum": 4.0,
+        "maximum": 13.0,
+        "quantiles": {
+          "p10": 4.0,
+          "p25": 5.0,
+          "p50": 6.0,
+          "p75": 8.0,
+          "p90": 8.0,
+          "p95": 10.0,
+          "p99": 13.0
+        },
+        "histogram": {
+          "4": 9,
+          "5": 16,
+          "6": 11,
+          "7": 2,
+          "8": 12,
+          "9": 1,
+          "10": 3,
+          "13": 1
+        }
+      },
+      "case_neutral_edit_distance": {
+        "n": 55,
+        "mean": 3.0545454545454547,
+        "minimum": 1.0,
+        "maximum": 25.0,
+        "quantiles": {
+          "p10": 1.0,
+          "p25": 1.0,
+          "p50": 2.0,
+          "p75": 3.0,
+          "p90": 6.0,
+          "p95": 12.0,
+          "p99": 25.0
+        },
+        "histogram": {
+          "1": 21,
+          "2": 18,
+          "3": 6,
+          "4": 4,
+          "6": 2,
+          "12": 2,
+          "16": 1,
+          "25": 1
+        }
+      },
+      "exact_edit_distance": {
+        "n": 55,
+        "mean": 3.7454545454545456,
+        "minimum": 1.0,
+        "maximum": 25.0,
+        "quantiles": {
+          "p10": 1.0,
+          "p25": 1.0,
+          "p50": 2.0,
+          "p75": 3.0,
+          "p90": 10.0,
+          "p95": 16.0,
+          "p99": 25.0
+        },
+        "histogram": {
+          "1": 18,
+          "2": 13,
+          "3": 11,
+          "4": 4,
+          "6": 2,
+          "9": 1,
+          "10": 1,
+          "12": 2,
+          "16": 1,
+          "17": 1,
+          "25": 1
+        }
+      },
+      "unique_pair_sensitivity": {
+        "exact": {
+          "matches": 53,
+          "opportunities": 2920,
+          "fraction": 0.018150684931506848
+        },
+        "case_neutral": {
+          "matches": 53,
+          "opportunities": 2764,
+          "fraction": 0.01917510853835022
+        }
+      },
+      "length_strata": [
+        {
+          "minimum": 4,
+          "maximum": 5,
+          "opportunities": 1419,
+          "matches": 25,
+          "fraction": 0.017618040873854827
+        },
+        {
+          "minimum": 6,
+          "maximum": 8,
+          "opportunities": 1416,
+          "matches": 25,
+          "fraction": 0.01765536723163842
+        },
+        {
+          "minimum": 9,
+          "maximum": 12,
+          "opportunities": 678,
+          "matches": 4,
+          "fraction": 0.0058997050147492625
+        },
+        {
+          "minimum": 13,
+          "maximum": null,
+          "opportunities": 85,
+          "matches": 1,
+          "fraction": 0.011764705882352941
+        }
+      ],
+      "amplitude": {
+        "extra_characters": {
+          "n": 55,
+          "mean": 3.0545454545454547,
+          "minimum": 1.0,
+          "maximum": 25.0,
+          "quantiles": {
+            "p10": 1.0,
+            "p25": 1.0,
+            "p50": 2.0,
+            "p75": 3.0,
+            "p90": 6.0,
+            "p95": 12.0,
+            "p99": 25.0
+          },
+          "histogram": {
+            "1": 21,
+            "2": 18,
+            "3": 6,
+            "4": 4,
+            "6": 2,
+            "12": 2,
+            "16": 1,
+            "25": 1
+          }
+        },
+        "extra_over_corrected_length": {
+          "n": 55,
+          "mean": 0.5176384726384726,
+          "minimum": 0.1,
+          "maximum": 4.166666666666667,
+          "quantiles": {
+            "p10": 0.125,
+            "p25": 0.2,
+            "p50": 0.25,
+            "p75": 0.6,
+            "p90": 1.0,
+            "p95": 1.6,
+            "p99": 4.166666666666667
+          },
+          "histogram": {
+            "0.1": 1,
+            "0.125": 6,
+            "0.14285714285714285": 2,
+            "0.15384615384615385": 1,
+            "0.16666666666666666": 1,
+            "0.2": 10,
+            "0.2222222222222222": 1,
+            "0.25": 6,
+            "0.3333333333333333": 6,
+            "0.375": 1,
+            "0.4": 3,
+            "0.5": 3,
+            "0.6": 3,
+            "0.75": 1,
+            "1.0": 6,
+            "1.5": 1,
+            "1.6": 1,
+            "2.4": 1,
+            "4.166666666666667": 1
+          }
+        },
+        "changed_runs": {
+          "n": 55,
+          "mean": 1.1636363636363636,
+          "minimum": 1.0,
+          "maximum": 3.0,
+          "quantiles": {
+            "p10": 1.0,
+            "p25": 1.0,
+            "p50": 1.0,
+            "p75": 1.0,
+            "p90": 2.0,
+            "p95": 2.0,
+            "p99": 3.0
+          },
+          "histogram": {
+            "1": 48,
+            "2": 5,
+            "3": 2
+          }
+        },
+        "extra_per_changed_run": {
+          "n": 64,
+          "mean": 2.625,
+          "minimum": 1.0,
+          "maximum": 25.0,
+          "quantiles": {
+            "p10": 1.0,
+            "p25": 1.0,
+            "p50": 1.0,
+            "p75": 2.0,
+            "p90": 4.0,
+            "p95": 7.0,
+            "p99": 25.0
+          },
+          "histogram": {
+            "1": 32,
+            "2": 17,
+            "3": 5,
+            "4": 4,
+            "5": 1,
+            "6": 1,
+            "7": 1,
+            "12": 1,
+            "16": 1,
+            "25": 1
+          }
+        },
+        "ordered_extra_count_patterns": {
+          "1": 21,
+          "1+1": 3,
+          "1+1+1": 1,
+          "1+2": 1,
+          "12": 1,
+          "16": 1,
+          "2": 15,
+          "25": 1,
+          "3": 4,
+          "3+1+2": 1,
+          "4": 4,
+          "5+7": 1,
+          "6": 1
+        },
+        "single_run_occurrences": 48,
+        "extra_distribution_single_run_only": {
+          "n": 48,
+          "mean": 2.875,
+          "minimum": 1.0,
+          "maximum": 25.0,
+          "quantiles": {
+            "p10": 1.0,
+            "p25": 1.0,
+            "p50": 2.0,
+            "p75": 2.0,
+            "p90": 4.0,
+            "p95": 12.0,
+            "p99": 25.0
+          },
+          "histogram": {
+            "1": 21,
+            "2": 15,
+            "3": 4,
+            "4": 4,
+            "6": 1,
+            "12": 1,
+            "16": 1,
+            "25": 1
+          }
+        },
+        "run_locations": {
+          "final": 32,
+          "initial": 1,
+          "interior": 31
+        },
+        "repeated_letters_per_changed_run": {
+          "a": 14,
+          "e": 4,
+          "i": 7,
+          "k": 3,
+          "l": 1,
+          "m": 8,
+          "n": 6,
+          "o": 1,
+          "p": 2,
+          "r": 6,
+          "s": 3,
+          "u": 3,
+          "z": 2,
+          "ü": 2,
+          "ı": 1,
+          "ş": 1
+        },
+        "vowel_runs": 32,
+        "total_added_characters": 168,
+        "top_five_word_share_of_extra_characters": 0.4226190476190476,
+        "empirical_intensity_bins": {
+          "q25": 1.0,
+          "q75": 3.0,
+          "counts": {
+            "lower": 21,
+            "middle": 24,
+            "upper": 10
+          },
+          "human_severity_labels": false,
+          "three_nonempty_bins": true
+        }
+      },
+      "sentence_cluster_bootstrap_stability": {
+        "pooled_opportunity_rate": {
+          "interval": [
+            0.010565365404605367,
+            0.020540282513043108
+          ],
+          "defined_replicates": 5000,
+          "undefined_replicates": 0
+        },
+        "sentence_presence_rate": {
+          "interval": [
+            0.054385964912280704,
+            0.09824561403508772
+          ],
+          "defined_replicates": 5000,
+          "undefined_replicates": 0
+        }
+      }
+    },
+    "internal_omission": {
+      "occurrences": 49,
+      "opportunities": 3598,
+      "opportunity_fraction": 0.013618677042801557,
+      "fraction_all_source_slots": 0.00760515287909359,
+      "fraction_one_to_one_slots": 0.008047298406963376,
+      "affected_sentences": 40,
+      "fraction_all_sentences": 0.07017543859649122,
+      "sentences_with_opportunities": 566,
+      "sentences_without_opportunities": 4,
+      "zero_hit_sentences_with_opportunities": 526,
+      "hits_per_sentence": {
+        "n": 570,
+        "mean": 0.08596491228070176,
+        "minimum": 0.0,
+        "maximum": 5.0,
+        "quantiles": {
+          "p10": 0.0,
+          "p25": 0.0,
+          "p50": 0.0,
+          "p75": 0.0,
+          "p90": 0.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "histogram": {
+          "0": 530,
+          "1": 35,
+          "2": 3,
+          "3": 1,
+          "5": 1
+        }
+      },
+      "sentence_rates_including_zeros": {
+        "n": 566,
+        "mean": 0.014402929456972274,
+        "minimum": 0.0,
+        "maximum": 0.5,
+        "quantiles": {
+          "p10": 0.0,
+          "p25": 0.0,
+          "p50": 0.0,
+          "p75": 0.0,
+          "p90": 0.0,
+          "p95": 0.125,
+          "p99": 0.3333333333333333
+        },
+        "histogram": {
+          "0.0": 526,
+          "0.058823529411764705": 1,
+          "0.07142857142857142": 2,
+          "0.08333333333333333": 2,
+          "0.09090909090909091": 2,
+          "0.1": 1,
+          "0.1111111111111111": 2,
+          "0.125": 4,
+          "0.14285714285714285": 5,
+          "0.16666666666666666": 2,
+          "0.2": 4,
+          "0.23076923076923078": 1,
+          "0.25": 3,
+          "0.3333333333333333": 8,
+          "0.38461538461538464": 1,
+          "0.4": 1,
+          "0.5": 1
+        }
+      },
+      "affected_sentence_rates": {
+        "n": 40,
+        "mean": 0.20380145181615772,
+        "minimum": 0.058823529411764705,
+        "maximum": 0.5,
+        "quantiles": {
+          "p10": 0.08333333333333333,
+          "p25": 0.1111111111111111,
+          "p50": 0.16666666666666666,
+          "p75": 0.3333333333333333,
+          "p90": 0.3333333333333333,
+          "p95": 0.38461538461538464,
+          "p99": 0.5
+        },
+        "histogram": {
+          "0.058823529411764705": 1,
+          "0.07142857142857142": 2,
+          "0.08333333333333333": 2,
+          "0.09090909090909091": 2,
+          "0.1": 1,
+          "0.1111111111111111": 2,
+          "0.125": 4,
+          "0.14285714285714285": 5,
+          "0.16666666666666666": 2,
+          "0.2": 4,
+          "0.23076923076923078": 1,
+          "0.25": 3,
+          "0.3333333333333333": 8,
+          "0.38461538461538464": 1,
+          "0.4": 1,
+          "0.5": 1
+        }
+      },
+      "largest_sentence_share_of_hits": 0.10204081632653061,
+      "top_five_sentence_share_of_hits": 0.2857142857142857,
+      "largest_neutral_pair_share_of_hits": 0.061224489795918366,
+      "leave_one_sentence_out_pooled_rate_range": [
+        0.012273361227336122,
+        0.013683328679139906
+      ],
+      "corrected_length": {
+        "n": 49,
+        "mean": 7.591836734693878,
+        "minimum": 4.0,
+        "maximum": 13.0,
+        "quantiles": {
+          "p10": 5.0,
+          "p25": 6.0,
+          "p50": 7.0,
+          "p75": 9.0,
+          "p90": 11.0,
+          "p95": 13.0,
+          "p99": 13.0
+        },
+        "histogram": {
+          "4": 1,
+          "5": 11,
+          "6": 7,
+          "7": 9,
+          "8": 5,
+          "9": 4,
+          "10": 6,
+          "11": 3,
+          "13": 3
+        }
+      },
+      "case_neutral_edit_distance": {
+        "n": 49,
+        "mean": 1.0,
+        "minimum": 1.0,
+        "maximum": 1.0,
+        "quantiles": {
+          "p10": 1.0,
+          "p25": 1.0,
+          "p50": 1.0,
+          "p75": 1.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "histogram": {
+          "1": 49
+        }
+      },
+      "exact_edit_distance": {
+        "n": 49,
+        "mean": 1.2244897959183674,
+        "minimum": 1.0,
+        "maximum": 5.0,
+        "quantiles": {
+          "p10": 1.0,
+          "p25": 1.0,
+          "p50": 1.0,
+          "p75": 1.0,
+          "p90": 2.0,
+          "p95": 2.0,
+          "p99": 5.0
+        },
+        "histogram": {
+          "1": 42,
+          "2": 5,
+          "3": 1,
+          "5": 1
+        }
+      },
+      "unique_pair_sensitivity": {
+        "exact": {
+          "matches": 45,
+          "opportunities": 2920,
+          "fraction": 0.015410958904109588
+        },
+        "case_neutral": {
+          "matches": 41,
+          "opportunities": 2764,
+          "fraction": 0.014833574529667149
+        }
+      },
+      "length_strata": [
+        {
+          "minimum": 4,
+          "maximum": 5,
+          "opportunities": 1419,
+          "matches": 12,
+          "fraction": 0.008456659619450317
+        },
+        {
+          "minimum": 6,
+          "maximum": 8,
+          "opportunities": 1416,
+          "matches": 21,
+          "fraction": 0.014830508474576272
+        },
+        {
+          "minimum": 9,
+          "maximum": 12,
+          "opportunities": 678,
+          "matches": 13,
+          "fraction": 0.019174041297935103
+        },
+        {
+          "minimum": 13,
+          "maximum": null,
+          "opportunities": 85,
+          "matches": 3,
+          "fraction": 0.03529411764705882
+        }
+      ],
+      "amplitude": {
+        "deleted_characters_per_match": 1,
+        "inverse_corrected_length": {
+          "n": 49,
+          "mean": 0.1443943244963653,
+          "minimum": 0.07692307692307693,
+          "maximum": 0.25,
+          "quantiles": {
+            "p10": 0.09090909090909091,
+            "p25": 0.1111111111111111,
+            "p50": 0.14285714285714285,
+            "p75": 0.16666666666666666,
+            "p90": 0.2,
+            "p95": 0.2,
+            "p99": 0.25
+          },
+          "histogram": {
+            "0.07692307692307693": 3,
+            "0.09090909090909091": 3,
+            "0.1": 6,
+            "0.1111111111111111": 4,
+            "0.125": 5,
+            "0.14285714285714285": 9,
+            "0.16666666666666666": 7,
+            "0.2": 11,
+            "0.25": 1
+          }
+        },
+        "candidate_alignment_counts": {
+          "1": 46,
+          "2": 3
+        },
+        "ambiguous_alignment_occurrences": 3,
+        "unique_alignment_relative_positions": {
+          "n": 46,
+          "mean": 0.5828674948240166,
+          "minimum": 0.2222222222222222,
+          "maximum": 0.8888888888888888,
+          "quantiles": {
+            "p10": 0.2857142857142857,
+            "p25": 0.5,
+            "p50": 0.6,
+            "p75": 0.75,
+            "p90": 0.8,
+            "p95": 0.8333333333333334,
+            "p99": 0.8888888888888888
+          },
+          "histogram": {
+            "0.2222222222222222": 1,
+            "0.25": 3,
+            "0.2857142857142857": 2,
+            "0.3333333333333333": 2,
+            "0.375": 1,
+            "0.4": 1,
+            "0.5": 8,
+            "0.5555555555555556": 1,
+            "0.6": 5,
+            "0.625": 1,
+            "0.6666666666666666": 5,
+            "0.7": 3,
+            "0.75": 8,
+            "0.8": 1,
+            "0.8333333333333334": 2,
+            "0.8571428571428571": 1,
+            "0.8888888888888888": 1
+          }
+        },
+        "omitted_letters": {
+          "a": 11,
+          "e": 7,
+          "h": 1,
+          "i": 5,
+          "r": 13,
+          "u": 1,
+          "y": 4,
+          "ğ": 3,
+          "ı": 4
+        },
+        "vowel_omissions": 28,
+        "empirical_intensity_bins": {
+          "q25": 0.1111111111111111,
+          "q75": 0.16666666666666666,
+          "counts": {
+            "lower": 16,
+            "middle": 21,
+            "upper": 12
+          },
+          "human_severity_labels": false,
+          "three_nonempty_bins": true
+        }
+      },
+      "sentence_cluster_bootstrap_stability": {
+        "pooled_opportunity_rate": {
+          "interval": [
+            0.009128567592626593,
+            0.018513169576424952
+          ],
+          "defined_replicates": 5000,
+          "undefined_replicates": 0
+        },
+        "sentence_presence_rate": {
+          "interval": [
+            0.04912280701754386,
+            0.09127192982456077
+          ],
+          "defined_replicates": 5000,
+          "undefined_replicates": 0
+        }
+      }
+    },
+    "partial_folding": {
+      "occurrences": 42,
+      "opportunities": 617,
+      "opportunity_fraction": 0.06807131280388978,
+      "fraction_all_source_slots": 0.006518702467794506,
+      "fraction_one_to_one_slots": 0.0068976843488257516,
+      "affected_sentences": 34,
+      "fraction_all_sentences": 0.05964912280701754,
+      "sentences_with_opportunities": 356,
+      "sentences_without_opportunities": 214,
+      "zero_hit_sentences_with_opportunities": 322,
+      "hits_per_sentence": {
+        "n": 570,
+        "mean": 0.07368421052631578,
+        "minimum": 0.0,
+        "maximum": 4.0,
+        "quantiles": {
+          "p10": 0.0,
+          "p25": 0.0,
+          "p50": 0.0,
+          "p75": 0.0,
+          "p90": 0.0,
+          "p95": 1.0,
+          "p99": 2.0
+        },
+        "histogram": {
+          "0": 536,
+          "1": 28,
+          "2": 5,
+          "4": 1
+        }
+      },
+      "sentence_rates_including_zeros": {
+        "n": 356,
+        "mean": 0.06788389513108614,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "quantiles": {
+          "p10": 0.0,
+          "p25": 0.0,
+          "p50": 0.0,
+          "p75": 0.0,
+          "p90": 0.0,
+          "p95": 0.6666666666666666,
+          "p99": 1.0
+        },
+        "histogram": {
+          "0.0": 322,
+          "0.25": 2,
+          "0.3333333333333333": 7,
+          "0.5": 6,
+          "0.6666666666666666": 2,
+          "1.0": 17
+        }
+      },
+      "affected_sentence_rates": {
+        "n": 34,
+        "mean": 0.7107843137254901,
+        "minimum": 0.25,
+        "maximum": 1.0,
+        "quantiles": {
+          "p10": 0.3333333333333333,
+          "p25": 0.3333333333333333,
+          "p50": 0.6666666666666666,
+          "p75": 1.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "histogram": {
+          "0.25": 2,
+          "0.3333333333333333": 7,
+          "0.5": 6,
+          "0.6666666666666666": 2,
+          "1.0": 17
+        }
+      },
+      "largest_sentence_share_of_hits": 0.09523809523809523,
+      "top_five_sentence_share_of_hits": 0.2857142857142857,
+      "largest_neutral_pair_share_of_hits": 0.047619047619047616,
+      "leave_one_sentence_out_pooled_rate_range": [
+        0.062193126022913256,
+        0.06896551724137931
+      ],
+      "corrected_length": {
+        "n": 42,
+        "mean": 8.285714285714286,
+        "minimum": 4.0,
+        "maximum": 13.0,
+        "quantiles": {
+          "p10": 5.0,
+          "p25": 6.0,
+          "p50": 8.0,
+          "p75": 10.0,
+          "p90": 12.0,
+          "p95": 13.0,
+          "p99": 13.0
+        },
+        "histogram": {
+          "4": 2,
+          "5": 3,
+          "6": 6,
+          "7": 6,
+          "8": 8,
+          "9": 5,
+          "10": 3,
+          "11": 3,
+          "12": 3,
+          "13": 3
+        }
+      },
+      "case_neutral_edit_distance": {
+        "n": 42,
+        "mean": 1.119047619047619,
+        "minimum": 1.0,
+        "maximum": 4.0,
+        "quantiles": {
+          "p10": 1.0,
+          "p25": 1.0,
+          "p50": 1.0,
+          "p75": 1.0,
+          "p90": 1.0,
+          "p95": 2.0,
+          "p99": 4.0
+        },
+        "histogram": {
+          "1": 39,
+          "2": 2,
+          "4": 1
+        }
+      },
+      "exact_edit_distance": {
+        "n": 42,
+        "mean": 2.142857142857143,
+        "minimum": 1.0,
+        "maximum": 13.0,
+        "quantiles": {
+          "p10": 1.0,
+          "p25": 1.0,
+          "p50": 1.0,
+          "p75": 2.0,
+          "p90": 4.0,
+          "p95": 10.0,
+          "p99": 13.0
+        },
+        "histogram": {
+          "1": 30,
+          "2": 7,
+          "4": 1,
+          "8": 1,
+          "10": 1,
+          "11": 1,
+          "13": 1
+        }
+      },
+      "unique_pair_sensitivity": {
+        "exact": {
+          "matches": 41,
+          "opportunities": 575,
+          "fraction": 0.07130434782608695
+        },
+        "case_neutral": {
+          "matches": 40,
+          "opportunities": 560,
+          "fraction": 0.07142857142857142
+        }
+      },
+      "length_strata": [
+        {
+          "minimum": 4,
+          "maximum": 5,
+          "opportunities": 112,
+          "matches": 5,
+          "fraction": 0.044642857142857144
+        },
+        {
+          "minimum": 6,
+          "maximum": 8,
+          "opportunities": 237,
+          "matches": 20,
+          "fraction": 0.08438818565400844
+        },
+        {
+          "minimum": 9,
+          "maximum": 12,
+          "opportunities": 234,
+          "matches": 14,
+          "fraction": 0.05982905982905983
+        },
+        {
+          "minimum": 13,
+          "maximum": null,
+          "opportunities": 34,
+          "matches": 3,
+          "fraction": 0.08823529411764706
+        }
+      ],
+      "amplitude": {
+        "folded_occurrences": {
+          "n": 42,
+          "mean": 1.119047619047619,
+          "minimum": 1.0,
+          "maximum": 4.0,
+          "quantiles": {
+            "p10": 1.0,
+            "p25": 1.0,
+            "p50": 1.0,
+            "p75": 1.0,
+            "p90": 1.0,
+            "p95": 2.0,
+            "p99": 4.0
+          },
+          "histogram": {
+            "1": 39,
+            "2": 2,
+            "4": 1
+          }
+        },
+        "available_occurrences": {
+          "n": 42,
+          "mean": 2.380952380952381,
+          "minimum": 2.0,
+          "maximum": 5.0,
+          "quantiles": {
+            "p10": 2.0,
+            "p25": 2.0,
+            "p50": 2.0,
+            "p75": 3.0,
+            "p90": 3.0,
+            "p95": 3.0,
+            "p99": 5.0
+          },
+          "histogram": {
+            "2": 29,
+            "3": 11,
+            "4": 1,
+            "5": 1
+          }
+        },
+        "retained_occurrences": {
+          "n": 42,
+          "mean": 1.2619047619047619,
+          "minimum": 1.0,
+          "maximum": 3.0,
+          "quantiles": {
+            "p10": 1.0,
+            "p25": 1.0,
+            "p50": 1.0,
+            "p75": 1.0,
+            "p90": 2.0,
+            "p95": 2.0,
+            "p99": 3.0
+          },
+          "histogram": {
+            "1": 32,
+            "2": 9,
+            "3": 1
+          }
+        },
+        "folded_fraction": {
+          "n": 42,
+          "mean": 0.4734126984126984,
+          "minimum": 0.25,
+          "maximum": 0.8,
+          "quantiles": {
+            "p10": 0.3333333333333333,
+            "p25": 0.5,
+            "p50": 0.5,
+            "p75": 0.5,
+            "p90": 0.5,
+            "p95": 0.6666666666666666,
+            "p99": 0.8
+          },
+          "histogram": {
+            "0.25": 1,
+            "0.3333333333333333": 9,
+            "0.5": 29,
+            "0.6666666666666666": 2,
+            "0.8": 1
+          }
+        },
+        "folded_available_joint": {
+          "1/2": 29,
+          "1/3": 9,
+          "1/4": 1,
+          "2/3": 2,
+          "4/5": 1
+        },
+        "available_letters_within_matched_words": {
+          "ç": 15,
+          "ö": 7,
+          "ü": 4,
+          "ğ": 9,
+          "ı": 49,
+          "ş": 16
+        },
+        "changed_mappings": {
+          "ç->c": 9,
+          "ö->o": 2,
+          "ü->u": 3,
+          "ğ->g": 7,
+          "ı->i": 17,
+          "ş->s": 9
+        },
+        "changed_relative_positions": {
+          "n": 47,
+          "mean": 0.5316163151269534,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "quantiles": {
+            "p10": 0.09090909090909091,
+            "p25": 0.2857142857142857,
+            "p50": 0.5,
+            "p75": 0.8,
+            "p90": 1.0,
+            "p95": 1.0,
+            "p99": 1.0
+          },
+          "histogram": {
+            "0.0": 4,
+            "0.09090909090909091": 1,
+            "0.125": 1,
+            "0.16666666666666666": 1,
+            "0.25": 3,
+            "0.2857142857142857": 5,
+            "0.3333333333333333": 3,
+            "0.4": 2,
+            "0.4166666666666667": 2,
+            "0.5": 2,
+            "0.5555555555555556": 1,
+            "0.5833333333333334": 1,
+            "0.625": 2,
+            "0.6363636363636364": 1,
+            "0.6666666666666666": 3,
+            "0.7": 1,
+            "0.8": 3,
+            "0.8571428571428571": 1,
+            "0.9": 1,
+            "0.9090909090909091": 1,
+            "1.0": 8
+          }
+        },
+        "total_folded_characters": 47,
+        "total_available_characters_within_matched_words": 100,
+        "empirical_intensity_bins": {
+          "q25": 0.5,
+          "q75": 0.5,
+          "counts": {
+            "lower": 39,
+            "middle": 0,
+            "upper": 3
+          },
+          "human_severity_labels": false,
+          "three_nonempty_bins": false
+        }
+      },
+      "sentence_cluster_bootstrap_stability": {
+        "pooled_opportunity_rate": {
+          "interval": [
+            0.045383348171144644,
+            0.09316868309244157
+          ],
+          "defined_replicates": 5000,
+          "undefined_replicates": 0
+        },
+        "sentence_presence_rate": {
+          "interval": [
+            0.042105263157894736,
+            0.08070175438596491
+          ],
+          "defined_replicates": 5000,
+          "undefined_replicates": 0
+        }
+      }
+    }
+  },
+  "joint": {
+    "word_level_union": 146,
+    "word_level_overlap_excess": 0,
+    "affected_sentences_any_new_shape": 112,
+    "sentence_membership_combinations": {
+      "elongation": 38,
+      "elongation+internal_omission": 4,
+      "elongation+partial_folding": 1,
+      "internal_omission": 36,
+      "none": 458,
+      "partial_folding": 33
+    },
+    "new_shape_sentences_also_containing_old_exact_reachable_pattern": 63,
+    "new_shape_sentences_also_containing_old_neutral_reachable_pattern": 48,
+    "fraction_saved_unreachable_case_neutral_changes_with_three_shapes": 0.1994535519125683,
+    "saved_unreachable_case_neutral_changes": 732
+  },
+  "sentence_context": {
+    "source_slots_per_sentence": {
+      "n": 570,
+      "mean": 11.303508771929824,
+      "minimum": 4.0,
+      "maximum": 35.0,
+      "quantiles": {
+        "p10": 6.0,
+        "p25": 7.0,
+        "p50": 10.0,
+        "p75": 14.0,
+        "p90": 19.0,
+        "p95": 21.0,
+        "p99": 27.0
+      },
+      "histogram": {
+        "4": 11,
+        "5": 28,
+        "6": 53,
+        "7": 58,
+        "8": 64,
+        "9": 47,
+        "10": 44,
+        "11": 34,
+        "12": 42,
+        "13": 35,
+        "14": 18,
+        "15": 22,
+        "16": 21,
+        "17": 14,
+        "18": 16,
+        "19": 14,
+        "20": 14,
+        "21": 13,
+        "22": 1,
+        "23": 4,
+        "24": 6,
+        "26": 4,
+        "27": 3,
+        "28": 1,
+        "29": 2,
+        "35": 1
+      }
+    },
+    "exact_changed_fraction_all_source_slots": {
+      "n": 570,
+      "mean": 0.3706861808786506,
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "quantiles": {
+        "p10": 0.14285714285714285,
+        "p25": 0.25,
+        "p50": 0.35714285714285715,
+        "p75": 0.47619047619047616,
+        "p90": 0.6,
+        "p95": 0.7,
+        "p99": 0.95
+      },
+      "histogram": {
+        "0.0": 15,
+        "0.05": 1,
+        "0.0625": 2,
+        "0.06666666666666667": 2,
+        "0.07142857142857142": 3,
+        "0.07692307692307693": 1,
+        "0.08333333333333333": 1,
+        "0.09090909090909091": 2,
+        "0.1": 5,
+        "0.1111111111111111": 4,
+        "0.11764705882352941": 2,
+        "0.125": 9,
+        "0.13333333333333333": 4,
+        "0.14285714285714285": 7,
+        "0.15384615384615385": 2,
+        "0.16666666666666666": 21,
+        "0.1724137931034483": 1,
+        "0.17647058823529413": 2,
+        "0.18181818181818182": 4,
+        "0.18518518518518517": 1,
+        "0.19047619047619047": 1,
+        "0.2": 17,
+        "0.21428571428571427": 3,
+        "0.2222222222222222": 12,
+        "0.23076923076923078": 5,
+        "0.23529411764705882": 2,
+        "0.23809523809523808": 2,
+        "0.25": 35,
+        "0.25925925925925924": 1,
+        "0.2631578947368421": 3,
+        "0.26666666666666666": 1,
+        "0.2727272727272727": 4,
+        "0.2857142857142857": 25,
+        "0.3": 9,
+        "0.30434782608695654": 1,
+        "0.3076923076923077": 6,
+        "0.3125": 3,
+        "0.3157894736842105": 2,
+        "0.3181818181818182": 1,
+        "0.3333333333333333": 54,
+        "0.34285714285714286": 1,
+        "0.34615384615384615": 1,
+        "0.34782608695652173": 1,
+        "0.35": 2,
+        "0.35294117647058826": 3,
+        "0.35714285714285715": 1,
+        "0.36363636363636365": 5,
+        "0.3684210526315789": 2,
+        "0.375": 26,
+        "0.3793103448275862": 1,
+        "0.38095238095238093": 1,
+        "0.38461538461538464": 9,
+        "0.3888888888888889": 1,
+        "0.4": 25,
+        "0.4117647058823529": 3,
+        "0.4166666666666667": 8,
+        "0.4230769230769231": 1,
+        "0.42857142857142855": 21,
+        "0.43478260869565216": 1,
+        "0.4375": 5,
+        "0.4444444444444444": 15,
+        "0.45": 4,
+        "0.45454545454545453": 6,
+        "0.46153846153846156": 3,
+        "0.4666666666666667": 2,
+        "0.47058823529411764": 1,
+        "0.47368421052631576": 2,
+        "0.47619047619047616": 3,
+        "0.5": 42,
+        "0.5263157894736842": 1,
+        "0.5294117647058824": 1,
+        "0.5384615384615384": 4,
+        "0.5454545454545454": 7,
+        "0.55": 1,
+        "0.5555555555555556": 7,
+        "0.5625": 3,
+        "0.5714285714285714": 9,
+        "0.5789473684210527": 2,
+        "0.5833333333333334": 1,
+        "0.6": 6,
+        "0.6086956521739131": 1,
+        "0.6111111111111112": 1,
+        "0.6153846153846154": 4,
+        "0.6190476190476191": 1,
+        "0.625": 4,
+        "0.631578947368421": 1,
+        "0.6363636363636364": 2,
+        "0.6428571428571429": 2,
+        "0.6666666666666666": 8,
+        "0.6923076923076923": 1,
+        "0.7": 3,
+        "0.7083333333333334": 1,
+        "0.7142857142857143": 4,
+        "0.7272727272727273": 2,
+        "0.75": 2,
+        "0.7692307692307693": 1,
+        "0.8": 4,
+        "0.8333333333333334": 1,
+        "0.8571428571428571": 2,
+        "0.875": 1,
+        "0.8888888888888888": 2,
+        "0.9230769230769231": 1,
+        "0.9473684210526315": 1,
+        "0.95": 1,
+        "1.0": 5
+      }
+    },
+    "base_opportunities_per_sentence": {
+      "n": 570,
+      "mean": 6.312280701754386,
+      "minimum": 0.0,
+      "maximum": 17.0,
+      "quantiles": {
+        "p10": 3.0,
+        "p25": 4.0,
+        "p50": 6.0,
+        "p75": 8.0,
+        "p90": 11.0,
+        "p95": 13.0,
+        "p99": 15.0
+      },
+      "histogram": {
+        "0": 4,
+        "1": 9,
+        "2": 22,
+        "3": 74,
+        "4": 88,
+        "5": 74,
+        "6": 77,
+        "7": 47,
+        "8": 46,
+        "9": 30,
+        "10": 29,
+        "11": 21,
+        "12": 18,
+        "13": 15,
+        "14": 6,
+        "15": 6,
+        "16": 2,
+        "17": 2
+      }
+    }
+  },
+  "bootstrap_specification": {
+    "resampling_unit": "whole_sentence",
+    "replicates": 5000,
+    "seed": 586,
+    "generator": "PCG64",
+    "batch_size": 100,
+    "interval_quantiles": [
+      0.025,
+      0.975
+    ],
+    "interval_quantile_method": "linear",
+    "interpretation": "conditional_sentence_resampling_stability_not_population_confidence"
+  },
+  "quantile_method": "inverted_cdf",
+  "raw_text_in_public_output": false,
+  "model_calls": false,
+  "source_test_read": false,
+  "generated_corruptions": false,
+  "evaluation_recipe_frozen": false,
+  "identity": "cde287765953c12dc78f4f56d0eca6ec81c017d21dd10626f3f9fffc7d161cca",
+  "version": "informal-corpus-depth-v1",
+  "runtime": {
+    "python": "3.11.17",
+    "unicode": "14.0.0",
+    "numpy": "2.4.6"
+  },
+  "source": {
+    "repository": "https://bitbucket.org/robvanderg/multilexnorm",
+    "revision": "e58e946375299a04355fa2d7fa9e1c769234e68a",
+    "path": "data/raw/multilexnorm-turkish/e58e946375299a04355fa2d7fa9e1c769234e68a/train.norm",
+    "bytes": 99174,
+    "sha256": "17793b8db8f41ae387cfcdf4b7a1c061f2ccdc677418b3c2cec912c4e570695d",
+    "official_split": "train",
+    "expected_sentences": 570,
+    "expected_source_slots": 6443,
+    "license_status": "not_established_in_inspected_per_language_resources",
+    "paper": "https://aclanthology.org/2021.wnut-1.55.pdf"
+  },
+  "original_audit_identity": "31b1594e88c80d0607436a008a7b1a6e9bd74c67452eb73dcf0424a69a56aa7a",
+  "specification": {
+    "bindings": {
+      "scripts/audit_informal_corpus.py": "9ff9a8ce59b6b5ff442c321dcc6671478edb680772c8f65a05063fead44b69f7",
+      "src/turkish_punctuation/corpus_audit.py": "75204bb2de43b2d24b07bd6535ccdfb5ffe9d37da78a230c0bc5f9b1044cb398",
+      "src/turkish_punctuation/noise.py": "a8497a70634a8e33820e7d5d33818951682017f6369031114151d51873bcb198",
+      "src/turkish_punctuation/__init__.py": "336a3b84d679fa15bc9b066494810ec6d48557b12347e8997f702d0429a5bce0",
+      "docs/informal-corpus-audit-protocol.md": "51d402861ac232c1fc3e84e7234d2b734dd408af76c8b898e1c35a77f647e43b",
+      "docs/informal-corpus-selection.md": "4cb346ff4efe224b894a0063a33a401225c0eebc785a01391ece01dfa6dc9216",
+      "configs/informal-corpus-audit.json": "998e207bec94646aa1c6f02e1c56edb5f5ae22a291727d99840151462caadfe1",
+      "configs/noise.json": "2d7d767df17d2eb91b5aac6b250ba43a5a5f9f37a2af0283436254cf96e21a9d",
+      "scripts/analyze_corpus_depth.py": "f5ecb6d8ec3e51b630608fd60f86e2fe29d68fd17b48607aba91270a427075f2",
+      "src/turkish_punctuation/corpus_depth.py": "a83a13c8a10917e7e4c0d7c5fffe609422c2ecd1ae40caa0e980a6c59df1fe63",
+      "docs/informal-corpus-depth-protocol.md": "70218253c58e529807d147e7dc5fe6a3f0e4a9372d0756cb65d3f333b13ec0e8",
+      "configs/informal-corpus-depth.json": "3f7e0ed047eb3f5a63042d80a2bd49238b177281003c6ca042587974d0a06631",
+      "artifacts/corpus-audit/multilexnorm-turkish-v1/audit-31b1594e88c80d06/summary.json": "1ded1b594cecdc80ce443fae18799ef50302c341210c0694de32e2a0090d82fe",
+      "artifacts/corpus-audit/multilexnorm-turkish-v1/audit-31b1594e88c80d06/slot-trace.jsonl": "e2a1708f2a0466d9783cf0d5dac51a65d49796e00907971d9e23b551dd4a4b0b",
+      "artifacts/corpus-audit/multilexnorm-turkish-v1/audit-31b1594e88c80d06/commit.json": "25f9470916beeeceae56c077c5d5c0d19fb7a36ccb73e5d6cd9d0d9ae9c712ea"
+    },
+    "source_sha256": "17793b8db8f41ae387cfcdf4b7a1c061f2ccdc677418b3c2cec912c4e570695d",
+    "runtime": {
+      "python": "3.11.17",
+      "unicode": "14.0.0",
+      "numpy": "2.4.6"
+    }
+  },
+  "parser_audit": {
+    "empty_physical_lines": 570,
+    "nfc_violations": 0,
+    "malformed_records": 0,
+    "orphan_merge_continuations": 0
+  },
+  "previous_audit_reexecuted": false
+}

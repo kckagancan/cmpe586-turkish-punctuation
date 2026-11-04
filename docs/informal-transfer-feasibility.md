@@ -31,6 +31,36 @@ retroactively calibrate the original 2/5/10% synthetic doses. The completed
 corpus audit supplies separate evidence about operator coverage and conditional
 error shapes. Both contributions should retain their actual chronology.
 
+## Controlled transfer alternative and test reuse
+
+The user also proposed applying the three corpus-supported shapes (elongation,
+internal omission, partial Turkish folding) to our existing labeled test text.
+This is a valid **supplemental controlled transfer evaluation** of fixed models.
+It uses existing punctuation targets and requires no new natural-text labels or
+retraining. These mechanisms differ from the explicit training-v1 augmentation
+operators; no claim is made about their absence from encoder pretraining or the
+published model's unknown training history.
+
+Re-evaluation alone does not train the model on test data or invalidate the
+original results. The new conditions contain changed inputs, but share original
+texts and targets with the earlier study, so they are not an independently
+sampled test corpus. Merely conducting the extension after earlier test scoring
+does not establish adaptive bias. The risk is choosing mechanisms, severities,
+checkpoints or reported outcomes to favor results seen on that test set.
+[Dwork et al. (2015)](https://arxiv.org/abs/1506.02629) analyze adaptive holdout
+reuse; we do not implement their reusable-holdout mechanism or claim its formal
+guarantees.
+
+For this project, the recommended immediate extension is therefore to specify
+the three operators and their corpus-conditioned dose rationale **before new
+scores**, preserve the old cohorts/models/targets and every original result,
+then evaluate all specified conditions and report favorable and unfavorable
+outcomes. The old 2/5/10% recipe stays frozen. Publish the chronology as a
+post-feedback supplemental study; do not retrospectively call it preregistered
+or claim natural-text performance. A separate human-validated natural set is
+an optional additional contribution. This recommendation is not an execution
+authorization or a completed protocol freeze.
+
 ## Verified label obstacle
 
 | Resource inspected | What its reference supports | Consequence for punctuation F1 |
@@ -56,10 +86,25 @@ model's output, or an unreviewed LLM draft are not independent human gold.
 An automatic-reference study would need an explicit silver-label claim and
 could not be presented as definitive human-reference accuracy.
 
+Creating our own annotation set is methodologically possible. Labels drafted
+by the assistant are **LLM-generated/LLM-assisted**, even if produced one item at
+a time; they are not human manual annotation. An unvalidated automatic-reference
+evaluation must retain a silver-label interpretation. Human review can improve
+the references; independent annotation on a declared subset and adjudication
+would provide stronger reliability evidence. A review of a subset alone does
+not make every unreviewed label human gold. Punctuation can admit multiple
+reasonable readings, so annotation guidelines must handle ambiguity rather
+than promise a unique answer from Turkish rules alone. Keep annotators blind
+to the models' predictions and record instructions, assistant/model identity,
+drafts, human edits and the final reference hash before scoring.
+[Pangakis and Wolken (2024)](https://arxiv.org/abs/2409.09467) provide primary
+evidence for task-dependent LLM annotation quality and human validation; that
+study is not a validation of our Turkish punctuation labels.
+
 ## Concrete next step before scoring
 
-Prioritize a **data/annotation feasibility check** for direct natural evaluation
-before committing to a synthetic-only extension:
+For the optional direct natural evaluation, complete the following
+**data/annotation feasibility check** before scoring:
 
 1. Verify a candidate's annotation instructions and actual reference format,
    source identity, access/terms, and original-word alignment. A corpus being
@@ -111,3 +156,11 @@ from this step. A possible synthetic transfer matrix remains a design option,
 not a frozen or executed experiment. Corpus-grounded synthetic evaluation stays
 available if reliable natural references cannot be established; that fallback
 must be described separately from real-noise evaluation.
+
+The subsequent user-authorized [depth analysis](informal-corpus-depth-results.md)
+is now complete. It adds opportunity denominators, per-message density,
+character-amplitude/placement distributions, duplicate sensitivity and conditional
+sentence-bootstrap stability. It supports the three-mechanism supplemental
+direction plus a small matched seen-folding control, rather than arbitrary
+identical mild/medium/heavy rules. Original scores and recipes remain intact;
+the new evaluation recipe still needs its own implementation and freeze.

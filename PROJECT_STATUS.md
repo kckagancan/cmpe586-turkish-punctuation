@@ -2,8 +2,9 @@
 
 Updated **2026-11-04**. The original experiments, final report, and retrospective
 proposal are complete. Instructor-feedback extension: corpus selection and
-data-only audit are complete; direct informal evaluation's punctuation-reference
-requirements are recorded. No new model experiment has started.
+data-only audit and three-mechanism density/severity analysis are complete;
+direct informal evaluation's punctuation-reference requirements are recorded.
+No new model experiment has started.
 Read this first, then the relevant linked record. This file authorizes no new run.
 
 ## Project and delivered report
@@ -131,21 +132,46 @@ snapshots: `artifacts/corpus-audit/multilexnorm-turkish-v1/audit-31b1594e88c80d0
 Original scientific/config/report inputs remain byte-identical; this handoff
 extends the documentation index. No training, inference, tokenizer, test suite
 or PDF rebuild ran; no job is running.
-User then proposed directly testing the fixed models on authentic informal text.
-[Feasibility and next gate](docs/informal-transfer-feasibility.md) records why
-this is useful, why normalization references are not complete punctuation gold,
-and the required source/annotation/alignment checks. A bounded primary-source
-review did not establish a ready-to-score natural four-label benchmark; it does
-not prove none exists. No additional test content or large corpus was read.
-Next: verify a suitable natural corpus's actual punctuation references and terms;
-if absent, specify a separately reserved human-annotated natural set before any
-scoring. Annotation must preserve original noisy words and hide model outputs.
-Corpus-grounded synthetic transfer remains an alternative, not a frozen or
-executed matrix. New corruptions on old test text would be supplemental, not
-new independent held-out data. Preserve all original results/recipes.
-Local design counters and pre-edit preservation hashes:
-`artifacts/evaluation-preparation/transfer-noise-v1/protocol-design-2026-11-04/`.
-These data-only counters are not a new completed corpus audit or model result.
+
+User requested a deeper statistical basis before defining the new test.
+[Completed depth profile](docs/informal-corpus-depth-results.md),
+[specification](docs/informal-corpus-depth-protocol.md),
+[initial min4 aggregate](docs/informal-corpus-depth-summary.json) preserve the
+3,598-pair comparison scope and 55/49/42 counts. A separate
+[length sensitivity](docs/informal-corpus-length-sensitivity.json) found 34
+additional elongations in corrected length2–3. The recommended
+[family-specific calibration profile](docs/informal-corpus-calibration-profile.json)
+uses minima2/3/2: elongation89/4,512 (1.9725%), omission50/4,174 (1.1979%),
+partial folding43/621 multi-foldable opportunities (6.9243%). Affected tweets
+63/40/35; union182 words /131 tweets. Denominators differ and rates cannot be
+added. Elongation extra-char median2, P75=3, max25; omission always one character;
+partial-fold fraction P25=median=P75=0.5. All-family per-tweet P25/median/P75 are
+zero. Do not force three natural severity levels or apply eligible-pool rates
+to all word slots. Broader analyses are explicitly exploratory follow-ups,
+versioned separately; original min4 outputs remain intact.
+5,000 whole-sentence resampling stability intervals, unique-pair sensitivity,
+placement, length strata and co-occurrence are recorded; these are conditional
+corpus descriptions, not population estimates or F1 results.
+Depth identity `cde287765953c12dc78f4f56d0eca6ec81c017d21dd10626f3f9fffc7d161cca`.
+Length sensitivity `1bd0abe5b1d6542d4a5b138ae5c1d8c3f8b2fc35cf3b835e832a1f9d7229703c`;
+calibration `f8b903a57451c895712c7a7e71bb7061a02dbeeff123cf3efe4b58605f15039f`.
+Immutable outputs: `artifacts/corpus-audit/multilexnorm-depth-v1/depth-cde287765953c12d/`;
+the separate `length-1bd0abe5b1d6542d/` and `calibration-f8b903a57451c895/` sibling runs;
+independent source/feature/quantile/hash checks, preservation receipts and full
+inventory: `artifacts/corpus-audit/multilexnorm-depth-v1/preparation-2026-11-04/`.
+Old audit reachability was not rerun; source test remains unread; no model,
+tokenizer, generated corruption, unit suite or PDF rebuild ran. No job is running.
+
+Next: implement and freeze a separate fixed-model supplemental transfer recipe
+using these findings, with clean anchor + three new mechanisms and a small
+matched seen full-folding control. Reuse completed historical results; no full
+old-grid rerun or training is needed. Amplitude, dose, clustering/adaptation and
+any secondary mixed condition must be explicit before new scores. Original
+texts/targets remain shared with the earlier test, so this is supplemental
+transfer, not an independent natural test corpus. The
+[natural-data feasibility record](docs/informal-transfer-feasibility.md) retains
+the optional human-validated set and LLM-annotation disclosure requirements;
+no new natural punctuation gold or evaluation matrix has been created.
 
 The planned experiments, analyses, report, GitHub publication, backups, scoped
 cleanup and repository automation are complete. No experiment or cleanup job is

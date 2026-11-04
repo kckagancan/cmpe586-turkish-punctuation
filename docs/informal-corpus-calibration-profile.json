@@ -1,0 +1,1249 @@
+{
+  "identity": "f8b903a57451c895712c7a7e71bb7061a02dbeeff123cf3efe4b58605f15039f",
+  "version": "informal-corpus-calibration-profile-v1",
+  "specification": {
+    "version": "informal-corpus-calibration-profile-v1",
+    "family_policy": {
+      "elongation": {
+        "minimum_corrected_length": 2
+      },
+      "internal_omission": {
+        "minimum_corrected_length": 3
+      },
+      "partial_folding": {
+        "minimum_corrected_length": 2,
+        "minimum_foldable_occurrences": 2
+      }
+    },
+    "bindings": {
+      "scripts/profile_corpus_calibration.py": "bf6e9c07a62acee187aa9331f9e439ac83311c2f4839daf0304a2a8f600efca6",
+      "scripts/analyze_corpus_depth.py": "f5ecb6d8ec3e51b630608fd60f86e2fe29d68fd17b48607aba91270a427075f2",
+      "src/turkish_punctuation/corpus_depth.py": "a83a13c8a10917e7e4c0d7c5fffe609422c2ecd1ae40caa0e980a6c59df1fe63",
+      "src/turkish_punctuation/corpus_audit.py": "75204bb2de43b2d24b07bd6535ccdfb5ffe9d37da78a230c0bc5f9b1044cb398",
+      "src/turkish_punctuation/noise.py": "a8497a70634a8e33820e7d5d33818951682017f6369031114151d51873bcb198",
+      "src/turkish_punctuation/__init__.py": "336a3b84d679fa15bc9b066494810ec6d48557b12347e8997f702d0429a5bce0",
+      "configs/informal-corpus-depth.json": "3f7e0ed047eb3f5a63042d80a2bd49238b177281003c6ca042587974d0a06631",
+      "configs/informal-corpus-audit.json": "998e207bec94646aa1c6f02e1c56edb5f5ae22a291727d99840151462caadfe1",
+      "configs/noise.json": "2d7d767df17d2eb91b5aac6b250ba43a5a5f9f37a2af0283436254cf96e21a9d",
+      "artifacts/corpus-audit/multilexnorm-depth-v1/depth-cde287765953c12d/summary.json": "bfbc4e43726dd60d1c7635de7f4f6e64f121d9feded1fe267827fcf2be43aab8",
+      "artifacts/corpus-audit/multilexnorm-depth-v1/length-1bd0abe5b1d6542d/summary.json": "93322e358cf512faa80d02c51d6ce76168d585b54865205ceeeb7bd9a1201f35"
+    },
+    "source_sha256": "17793b8db8f41ae387cfcdf4b7a1c061f2ccdc677418b3c2cec912c4e570695d",
+    "runtime": {
+      "python": "3.11.17",
+      "unicode": "14.0.0",
+      "numpy": "2.4.6"
+    }
+  },
+  "source": {
+    "repository": "https://bitbucket.org/robvanderg/multilexnorm",
+    "revision": "e58e946375299a04355fa2d7fa9e1c769234e68a",
+    "path": "data/raw/multilexnorm-turkish/e58e946375299a04355fa2d7fa9e1c769234e68a/train.norm",
+    "bytes": 99174,
+    "sha256": "17793b8db8f41ae387cfcdf4b7a1c061f2ccdc677418b3c2cec912c4e570695d",
+    "official_split": "train",
+    "expected_sentences": 570,
+    "expected_source_slots": 6443,
+    "license_status": "not_established_in_inspected_per_language_resources",
+    "paper": "https://aclanthology.org/2021.wnut-1.55.pdf"
+  },
+  "parent_depth_identity": "cde287765953c12dc78f4f56d0eca6ec81c017d21dd10626f3f9fffc7d161cca",
+  "parent_length_identity": "1bd0abe5b1d6542d4a5b138ae5c1d8c3f8b2fc35cf3b835e832a1f9d7229703c",
+  "families": {
+    "elongation": {
+      "occurrences": 89,
+      "opportunities": 4512,
+      "opportunity_fraction": 0.01972517730496454,
+      "fraction_all_source_slots": 0.013813440943659785,
+      "fraction_one_to_one_slots": 0.014616521596321236,
+      "affected_sentences": 63,
+      "fraction_all_sentences": 0.11052631578947368,
+      "sentences_with_opportunities": 566,
+      "sentences_without_opportunities": 4,
+      "zero_hit_sentences_with_opportunities": 503,
+      "hits_per_sentence": {
+        "n": 570,
+        "mean": 0.156140350877193,
+        "minimum": 0.0,
+        "maximum": 6.0,
+        "quantiles": {
+          "p10": 0.0,
+          "p25": 0.0,
+          "p50": 0.0,
+          "p75": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 2.0
+        },
+        "histogram": {
+          "0": 507,
+          "1": 50,
+          "2": 8,
+          "3": 2,
+          "5": 1,
+          "6": 2
+        }
+      },
+      "sentence_rates_including_zeros": {
+        "n": 566,
+        "mean": 0.021720404041824796,
+        "minimum": 0.0,
+        "maximum": 0.5,
+        "quantiles": {
+          "p10": 0.0,
+          "p25": 0.0,
+          "p50": 0.0,
+          "p75": 0.0,
+          "p90": 0.1,
+          "p95": 0.16666666666666666,
+          "p99": 0.3333333333333333
+        },
+        "histogram": {
+          "0.0": 503,
+          "0.07142857142857142": 1,
+          "0.08333333333333333": 1,
+          "0.09090909090909091": 3,
+          "0.1": 2,
+          "0.1111111111111111": 7,
+          "0.125": 6,
+          "0.14285714285714285": 6,
+          "0.16666666666666666": 9,
+          "0.2": 9,
+          "0.25": 6,
+          "0.2727272727272727": 1,
+          "0.2857142857142857": 1,
+          "0.3125": 1,
+          "0.3157894736842105": 1,
+          "0.3333333333333333": 5,
+          "0.35294117647058826": 1,
+          "0.375": 1,
+          "0.4": 1,
+          "0.5": 1
+        }
+      },
+      "affected_sentence_rates": {
+        "n": 63,
+        "mean": 0.19513886805829903,
+        "minimum": 0.07142857142857142,
+        "maximum": 0.5,
+        "quantiles": {
+          "p10": 0.1,
+          "p25": 0.125,
+          "p50": 0.16666666666666666,
+          "p75": 0.25,
+          "p90": 0.3333333333333333,
+          "p95": 0.35294117647058826,
+          "p99": 0.5
+        },
+        "histogram": {
+          "0.07142857142857142": 1,
+          "0.08333333333333333": 1,
+          "0.09090909090909091": 3,
+          "0.1": 2,
+          "0.1111111111111111": 7,
+          "0.125": 6,
+          "0.14285714285714285": 6,
+          "0.16666666666666666": 9,
+          "0.2": 9,
+          "0.25": 6,
+          "0.2727272727272727": 1,
+          "0.2857142857142857": 1,
+          "0.3125": 1,
+          "0.3157894736842105": 1,
+          "0.3333333333333333": 5,
+          "0.35294117647058826": 1,
+          "0.375": 1,
+          "0.4": 1,
+          "0.5": 1
+        }
+      },
+      "largest_sentence_share_of_hits": 0.06741573033707865,
+      "top_five_sentence_share_of_hits": 0.25842696629213485,
+      "largest_neutral_pair_share_of_hits": 0.033707865168539325,
+      "leave_one_sentence_out_pooled_rate_range": [
+        0.01846496106785317,
+        0.019808591141776095
+      ],
+      "corrected_length": {
+        "n": 89,
+        "mean": 4.820224719101123,
+        "minimum": 2.0,
+        "maximum": 13.0,
+        "quantiles": {
+          "p10": 2.0,
+          "p25": 3.0,
+          "p50": 5.0,
+          "p75": 6.0,
+          "p90": 8.0,
+          "p95": 9.0,
+          "p99": 13.0
+        },
+        "histogram": {
+          "2": 17,
+          "3": 17,
+          "4": 9,
+          "5": 16,
+          "6": 11,
+          "7": 2,
+          "8": 12,
+          "9": 1,
+          "10": 3,
+          "13": 1
+        }
+      },
+      "case_neutral_edit_distance": {
+        "n": 89,
+        "mean": 2.932584269662921,
+        "minimum": 1.0,
+        "maximum": 25.0,
+        "quantiles": {
+          "p10": 1.0,
+          "p25": 1.0,
+          "p50": 2.0,
+          "p75": 3.0,
+          "p90": 6.0,
+          "p95": 11.0,
+          "p99": 25.0
+        },
+        "histogram": {
+          "1": 29,
+          "2": 35,
+          "3": 9,
+          "4": 7,
+          "6": 2,
+          "8": 1,
+          "11": 2,
+          "12": 2,
+          "16": 1,
+          "25": 1
+        }
+      },
+      "exact_edit_distance": {
+        "n": 89,
+        "mean": 3.438202247191011,
+        "minimum": 1.0,
+        "maximum": 25.0,
+        "quantiles": {
+          "p10": 1.0,
+          "p25": 1.0,
+          "p50": 2.0,
+          "p75": 3.0,
+          "p90": 9.0,
+          "p95": 12.0,
+          "p99": 25.0
+        },
+        "histogram": {
+          "1": 25,
+          "2": 27,
+          "3": 17,
+          "4": 7,
+          "5": 1,
+          "6": 2,
+          "8": 1,
+          "9": 1,
+          "10": 1,
+          "11": 2,
+          "12": 2,
+          "16": 1,
+          "17": 1,
+          "25": 1
+        }
+      },
+      "unique_pair_sensitivity": {
+        "exact": {
+          "matches": 85,
+          "opportunities": 3261,
+          "fraction": 0.026065624041705
+        },
+        "case_neutral": {
+          "matches": 84,
+          "opportunities": 3032,
+          "fraction": 0.027704485488126648
+        }
+      },
+      "length_strata": [
+        {
+          "minimum": 4,
+          "maximum": 5,
+          "opportunities": 1419,
+          "matches": 25,
+          "fraction": 0.017618040873854827
+        },
+        {
+          "minimum": 6,
+          "maximum": 8,
+          "opportunities": 1416,
+          "matches": 25,
+          "fraction": 0.01765536723163842
+        },
+        {
+          "minimum": 9,
+          "maximum": 12,
+          "opportunities": 678,
+          "matches": 4,
+          "fraction": 0.0058997050147492625
+        },
+        {
+          "minimum": 13,
+          "maximum": null,
+          "opportunities": 85,
+          "matches": 1,
+          "fraction": 0.011764705882352941
+        }
+      ],
+      "amplitude": {
+        "extra_characters": {
+          "n": 89,
+          "mean": 2.932584269662921,
+          "minimum": 1.0,
+          "maximum": 25.0,
+          "quantiles": {
+            "p10": 1.0,
+            "p25": 1.0,
+            "p50": 2.0,
+            "p75": 3.0,
+            "p90": 6.0,
+            "p95": 11.0,
+            "p99": 25.0
+          },
+          "histogram": {
+            "1": 29,
+            "2": 35,
+            "3": 9,
+            "4": 7,
+            "6": 2,
+            "8": 1,
+            "11": 2,
+            "12": 2,
+            "16": 1,
+            "25": 1
+          }
+        },
+        "extra_over_corrected_length": {
+          "n": 89,
+          "mean": 0.7637091684844494,
+          "minimum": 0.1,
+          "maximum": 5.5,
+          "quantiles": {
+            "p10": 0.14285714285714285,
+            "p25": 0.25,
+            "p50": 0.5,
+            "p75": 1.0,
+            "p90": 1.5,
+            "p95": 2.4,
+            "p99": 5.5
+          },
+          "histogram": {
+            "0.1": 1,
+            "0.125": 6,
+            "0.14285714285714285": 2,
+            "0.15384615384615385": 1,
+            "0.16666666666666666": 1,
+            "0.2": 10,
+            "0.2222222222222222": 1,
+            "0.25": 6,
+            "0.3333333333333333": 10,
+            "0.375": 1,
+            "0.4": 3,
+            "0.5": 7,
+            "0.6": 3,
+            "0.6666666666666666": 8,
+            "0.75": 1,
+            "1.0": 17,
+            "1.3333333333333333": 2,
+            "1.5": 2,
+            "1.6": 1,
+            "2.0": 1,
+            "2.4": 1,
+            "2.6666666666666665": 1,
+            "4.166666666666667": 1,
+            "5.5": 2
+          }
+        },
+        "changed_runs": {
+          "n": 89,
+          "mean": 1.1685393258426966,
+          "minimum": 1.0,
+          "maximum": 3.0,
+          "quantiles": {
+            "p10": 1.0,
+            "p25": 1.0,
+            "p50": 1.0,
+            "p75": 1.0,
+            "p90": 2.0,
+            "p95": 2.0,
+            "p99": 3.0
+          },
+          "histogram": {
+            "1": 77,
+            "2": 9,
+            "3": 3
+          }
+        },
+        "extra_per_changed_run": {
+          "n": 104,
+          "mean": 2.5096153846153846,
+          "minimum": 1.0,
+          "maximum": 25.0,
+          "quantiles": {
+            "p10": 1.0,
+            "p25": 1.0,
+            "p50": 2.0,
+            "p75": 2.0,
+            "p90": 4.0,
+            "p95": 7.0,
+            "p99": 16.0
+          },
+          "histogram": {
+            "1": 43,
+            "2": 39,
+            "3": 9,
+            "4": 5,
+            "5": 1,
+            "6": 1,
+            "7": 1,
+            "11": 2,
+            "12": 1,
+            "16": 1,
+            "25": 1
+          }
+        },
+        "ordered_extra_count_patterns": {
+          "1": 29,
+          "1+1": 4,
+          "1+1+1": 1,
+          "1+2": 1,
+          "11": 2,
+          "12": 1,
+          "16": 1,
+          "2": 31,
+          "2+1": 1,
+          "2+2": 2,
+          "2+3+3": 1,
+          "25": 1,
+          "3": 6,
+          "3+1+2": 1,
+          "4": 5,
+          "5+7": 1,
+          "6": 1
+        },
+        "single_run_occurrences": 77,
+        "extra_distribution_single_run_only": {
+          "n": 77,
+          "mean": 2.727272727272727,
+          "minimum": 1.0,
+          "maximum": 25.0,
+          "quantiles": {
+            "p10": 1.0,
+            "p25": 1.0,
+            "p50": 2.0,
+            "p75": 2.0,
+            "p90": 4.0,
+            "p95": 11.0,
+            "p99": 25.0
+          },
+          "histogram": {
+            "1": 29,
+            "2": 31,
+            "3": 6,
+            "4": 5,
+            "6": 1,
+            "11": 2,
+            "12": 1,
+            "16": 1,
+            "25": 1
+          }
+        },
+        "run_locations": {
+          "final": 62,
+          "initial": 4,
+          "interior": 38
+        },
+        "repeated_letters_per_changed_run": {
+          "a": 18,
+          "e": 4,
+          "f": 4,
+          "g": 1,
+          "h": 4,
+          "i": 11,
+          "k": 5,
+          "l": 2,
+          "m": 9,
+          "n": 7,
+          "o": 6,
+          "p": 4,
+          "r": 6,
+          "s": 4,
+          "t": 2,
+          "u": 5,
+          "y": 3,
+          "z": 2,
+          "ç": 1,
+          "ü": 3,
+          "ı": 1,
+          "ş": 2
+        },
+        "vowel_runs": 48,
+        "total_added_characters": 261,
+        "top_five_word_share_of_extra_characters": 0.29118773946360155,
+        "empirical_intensity_bins": {
+          "q25": 1.0,
+          "q75": 3.0,
+          "counts": {
+            "lower": 29,
+            "middle": 44,
+            "upper": 16
+          },
+          "human_severity_labels": false,
+          "three_nonempty_bins": true
+        }
+      },
+      "sentence_cluster_bootstrap_stability": {
+        "pooled_opportunity_rate": {
+          "interval": [
+            0.014151865268763249,
+            0.02602225964883276
+          ],
+          "defined_replicates": 5000,
+          "undefined_replicates": 0
+        },
+        "sentence_presence_rate": {
+          "interval": [
+            0.08596491228070176,
+            0.1368421052631579
+          ],
+          "defined_replicates": 5000,
+          "undefined_replicates": 0
+        }
+      }
+    },
+    "internal_omission": {
+      "occurrences": 50,
+      "opportunities": 4174,
+      "opportunity_fraction": 0.011978917105893628,
+      "fraction_all_source_slots": 0.007760360080707745,
+      "fraction_one_to_one_slots": 0.008211528986697324,
+      "affected_sentences": 40,
+      "fraction_all_sentences": 0.07017543859649122,
+      "sentences_with_opportunities": 566,
+      "sentences_without_opportunities": 4,
+      "zero_hit_sentences_with_opportunities": 526,
+      "hits_per_sentence": {
+        "n": 570,
+        "mean": 0.08771929824561403,
+        "minimum": 0.0,
+        "maximum": 5.0,
+        "quantiles": {
+          "p10": 0.0,
+          "p25": 0.0,
+          "p50": 0.0,
+          "p75": 0.0,
+          "p90": 0.0,
+          "p95": 1.0,
+          "p99": 2.0
+        },
+        "histogram": {
+          "0": 530,
+          "1": 34,
+          "2": 4,
+          "3": 1,
+          "5": 1
+        }
+      },
+      "sentence_rates_including_zeros": {
+        "n": 566,
+        "mean": 0.012691009422458184,
+        "minimum": 0.0,
+        "maximum": 0.5,
+        "quantiles": {
+          "p10": 0.0,
+          "p25": 0.0,
+          "p50": 0.0,
+          "p75": 0.0,
+          "p90": 0.0,
+          "p95": 0.1,
+          "p99": 0.3333333333333333
+        },
+        "histogram": {
+          "0.0": 526,
+          "0.05555555555555555": 2,
+          "0.06666666666666667": 2,
+          "0.07692307692307693": 1,
+          "0.08333333333333333": 1,
+          "0.09090909090909091": 4,
+          "0.1": 2,
+          "0.1111111111111111": 4,
+          "0.125": 4,
+          "0.14285714285714285": 2,
+          "0.16666666666666666": 1,
+          "0.2": 6,
+          "0.25": 4,
+          "0.3333333333333333": 4,
+          "0.38461538461538464": 1,
+          "0.4": 1,
+          "0.5": 1
+        }
+      },
+      "affected_sentence_rates": {
+        "n": 40,
+        "mean": 0.17957778332778332,
+        "minimum": 0.05555555555555555,
+        "maximum": 0.5,
+        "quantiles": {
+          "p10": 0.06666666666666667,
+          "p25": 0.09090909090909091,
+          "p50": 0.125,
+          "p75": 0.25,
+          "p90": 0.3333333333333333,
+          "p95": 0.38461538461538464,
+          "p99": 0.5
+        },
+        "histogram": {
+          "0.05555555555555555": 2,
+          "0.06666666666666667": 2,
+          "0.07692307692307693": 1,
+          "0.08333333333333333": 1,
+          "0.09090909090909091": 4,
+          "0.1": 2,
+          "0.1111111111111111": 4,
+          "0.125": 4,
+          "0.14285714285714285": 2,
+          "0.16666666666666666": 1,
+          "0.2": 6,
+          "0.25": 4,
+          "0.3333333333333333": 4,
+          "0.38461538461538464": 1,
+          "0.4": 1,
+          "0.5": 1
+        }
+      },
+      "largest_sentence_share_of_hits": 0.1,
+      "top_five_sentence_share_of_hits": 0.28,
+      "largest_neutral_pair_share_of_hits": 0.06,
+      "leave_one_sentence_out_pooled_rate_range": [
+        0.010814708002883922,
+        0.01203079884504331
+      ],
+      "corrected_length": {
+        "n": 50,
+        "mean": 7.5,
+        "minimum": 3.0,
+        "maximum": 13.0,
+        "quantiles": {
+          "p10": 5.0,
+          "p25": 5.0,
+          "p50": 7.0,
+          "p75": 9.0,
+          "p90": 11.0,
+          "p95": 13.0,
+          "p99": 13.0
+        },
+        "histogram": {
+          "3": 1,
+          "4": 1,
+          "5": 11,
+          "6": 7,
+          "7": 9,
+          "8": 5,
+          "9": 4,
+          "10": 6,
+          "11": 3,
+          "13": 3
+        }
+      },
+      "case_neutral_edit_distance": {
+        "n": 50,
+        "mean": 1.0,
+        "minimum": 1.0,
+        "maximum": 1.0,
+        "quantiles": {
+          "p10": 1.0,
+          "p25": 1.0,
+          "p50": 1.0,
+          "p75": 1.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "histogram": {
+          "1": 50
+        }
+      },
+      "exact_edit_distance": {
+        "n": 50,
+        "mean": 1.22,
+        "minimum": 1.0,
+        "maximum": 5.0,
+        "quantiles": {
+          "p10": 1.0,
+          "p25": 1.0,
+          "p50": 1.0,
+          "p75": 1.0,
+          "p90": 2.0,
+          "p95": 2.0,
+          "p99": 5.0
+        },
+        "histogram": {
+          "1": 43,
+          "2": 5,
+          "3": 1,
+          "5": 1
+        }
+      },
+      "unique_pair_sensitivity": {
+        "exact": {
+          "matches": 46,
+          "opportunities": 3160,
+          "fraction": 0.014556962025316455
+        },
+        "case_neutral": {
+          "matches": 42,
+          "opportunities": 2954,
+          "fraction": 0.014218009478672985
+        }
+      },
+      "length_strata": [
+        {
+          "minimum": 4,
+          "maximum": 5,
+          "opportunities": 1419,
+          "matches": 12,
+          "fraction": 0.008456659619450317
+        },
+        {
+          "minimum": 6,
+          "maximum": 8,
+          "opportunities": 1416,
+          "matches": 21,
+          "fraction": 0.014830508474576272
+        },
+        {
+          "minimum": 9,
+          "maximum": 12,
+          "opportunities": 678,
+          "matches": 13,
+          "fraction": 0.019174041297935103
+        },
+        {
+          "minimum": 13,
+          "maximum": null,
+          "opportunities": 85,
+          "matches": 3,
+          "fraction": 0.03529411764705882
+        }
+      ],
+      "amplitude": {
+        "deleted_characters_per_match": 1,
+        "inverse_corrected_length": {
+          "n": 50,
+          "mean": 0.14817310467310466,
+          "minimum": 0.07692307692307693,
+          "maximum": 0.3333333333333333,
+          "quantiles": {
+            "p10": 0.09090909090909091,
+            "p25": 0.1111111111111111,
+            "p50": 0.14285714285714285,
+            "p75": 0.2,
+            "p90": 0.2,
+            "p95": 0.2,
+            "p99": 0.3333333333333333
+          },
+          "histogram": {
+            "0.07692307692307693": 3,
+            "0.09090909090909091": 3,
+            "0.1": 6,
+            "0.1111111111111111": 4,
+            "0.125": 5,
+            "0.14285714285714285": 9,
+            "0.16666666666666666": 7,
+            "0.2": 11,
+            "0.25": 1,
+            "0.3333333333333333": 1
+          }
+        },
+        "candidate_alignment_counts": {
+          "1": 47,
+          "2": 3
+        },
+        "ambiguous_alignment_occurrences": 3,
+        "unique_alignment_relative_positions": {
+          "n": 47,
+          "mean": 0.5811043566362715,
+          "minimum": 0.2222222222222222,
+          "maximum": 0.8888888888888888,
+          "quantiles": {
+            "p10": 0.2857142857142857,
+            "p25": 0.5,
+            "p50": 0.6,
+            "p75": 0.75,
+            "p90": 0.8,
+            "p95": 0.8333333333333334,
+            "p99": 0.8888888888888888
+          },
+          "histogram": {
+            "0.2222222222222222": 1,
+            "0.25": 3,
+            "0.2857142857142857": 2,
+            "0.3333333333333333": 2,
+            "0.375": 1,
+            "0.4": 1,
+            "0.5": 9,
+            "0.5555555555555556": 1,
+            "0.6": 5,
+            "0.625": 1,
+            "0.6666666666666666": 5,
+            "0.7": 3,
+            "0.75": 8,
+            "0.8": 1,
+            "0.8333333333333334": 2,
+            "0.8571428571428571": 1,
+            "0.8888888888888888": 1
+          }
+        },
+        "omitted_letters": {
+          "a": 11,
+          "e": 8,
+          "h": 1,
+          "i": 5,
+          "r": 13,
+          "u": 1,
+          "y": 4,
+          "ğ": 3,
+          "ı": 4
+        },
+        "vowel_omissions": 29,
+        "empirical_intensity_bins": {
+          "q25": 0.1111111111111111,
+          "q75": 0.2,
+          "counts": {
+            "lower": 16,
+            "middle": 32,
+            "upper": 2
+          },
+          "human_severity_labels": false,
+          "three_nonempty_bins": true
+        }
+      },
+      "sentence_cluster_bootstrap_stability": {
+        "pooled_opportunity_rate": {
+          "interval": [
+            0.008017338145706647,
+            0.016318694504439644
+          ],
+          "defined_replicates": 5000,
+          "undefined_replicates": 0
+        },
+        "sentence_presence_rate": {
+          "interval": [
+            0.04912280701754386,
+            0.09127192982456077
+          ],
+          "defined_replicates": 5000,
+          "undefined_replicates": 0
+        }
+      }
+    },
+    "partial_folding": {
+      "occurrences": 43,
+      "opportunities": 621,
+      "opportunity_fraction": 0.06924315619967794,
+      "fraction_all_source_slots": 0.006673909669408661,
+      "fraction_one_to_one_slots": 0.007061914928559698,
+      "affected_sentences": 35,
+      "fraction_all_sentences": 0.06140350877192982,
+      "sentences_with_opportunities": 357,
+      "sentences_without_opportunities": 213,
+      "zero_hit_sentences_with_opportunities": 322,
+      "hits_per_sentence": {
+        "n": 570,
+        "mean": 0.07543859649122807,
+        "minimum": 0.0,
+        "maximum": 4.0,
+        "quantiles": {
+          "p10": 0.0,
+          "p25": 0.0,
+          "p50": 0.0,
+          "p75": 0.0,
+          "p90": 0.0,
+          "p95": 1.0,
+          "p99": 2.0
+        },
+        "histogram": {
+          "0": 535,
+          "1": 29,
+          "2": 5,
+          "4": 1
+        }
+      },
+      "sentence_rates_including_zeros": {
+        "n": 357,
+        "mean": 0.06886087768440709,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "quantiles": {
+          "p10": 0.0,
+          "p25": 0.0,
+          "p50": 0.0,
+          "p75": 0.0,
+          "p90": 0.0,
+          "p95": 0.6666666666666666,
+          "p99": 1.0
+        },
+        "histogram": {
+          "0.0": 322,
+          "0.25": 3,
+          "0.3333333333333333": 6,
+          "0.5": 7,
+          "0.6666666666666666": 2,
+          "1.0": 17
+        }
+      },
+      "affected_sentence_rates": {
+        "n": 35,
+        "mean": 0.7023809523809524,
+        "minimum": 0.25,
+        "maximum": 1.0,
+        "quantiles": {
+          "p10": 0.3333333333333333,
+          "p25": 0.3333333333333333,
+          "p50": 0.6666666666666666,
+          "p75": 1.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "histogram": {
+          "0.25": 3,
+          "0.3333333333333333": 6,
+          "0.5": 7,
+          "0.6666666666666666": 2,
+          "1.0": 17
+        }
+      },
+      "largest_sentence_share_of_hits": 0.09302325581395349,
+      "top_five_sentence_share_of_hits": 0.27906976744186046,
+      "largest_neutral_pair_share_of_hits": 0.046511627906976744,
+      "leave_one_sentence_out_pooled_rate_range": [
+        0.06341463414634146,
+        0.0701468189233279
+      ],
+      "corrected_length": {
+        "n": 43,
+        "mean": 8.162790697674419,
+        "minimum": 3.0,
+        "maximum": 13.0,
+        "quantiles": {
+          "p10": 5.0,
+          "p25": 6.0,
+          "p50": 8.0,
+          "p75": 10.0,
+          "p90": 12.0,
+          "p95": 13.0,
+          "p99": 13.0
+        },
+        "histogram": {
+          "3": 1,
+          "4": 2,
+          "5": 3,
+          "6": 6,
+          "7": 6,
+          "8": 8,
+          "9": 5,
+          "10": 3,
+          "11": 3,
+          "12": 3,
+          "13": 3
+        }
+      },
+      "case_neutral_edit_distance": {
+        "n": 43,
+        "mean": 1.1162790697674418,
+        "minimum": 1.0,
+        "maximum": 4.0,
+        "quantiles": {
+          "p10": 1.0,
+          "p25": 1.0,
+          "p50": 1.0,
+          "p75": 1.0,
+          "p90": 1.0,
+          "p95": 2.0,
+          "p99": 4.0
+        },
+        "histogram": {
+          "1": 40,
+          "2": 2,
+          "4": 1
+        }
+      },
+      "exact_edit_distance": {
+        "n": 43,
+        "mean": 2.116279069767442,
+        "minimum": 1.0,
+        "maximum": 13.0,
+        "quantiles": {
+          "p10": 1.0,
+          "p25": 1.0,
+          "p50": 1.0,
+          "p75": 2.0,
+          "p90": 4.0,
+          "p95": 10.0,
+          "p99": 13.0
+        },
+        "histogram": {
+          "1": 31,
+          "2": 7,
+          "4": 1,
+          "8": 1,
+          "10": 1,
+          "11": 1,
+          "13": 1
+        }
+      },
+      "unique_pair_sensitivity": {
+        "exact": {
+          "matches": 42,
+          "opportunities": 578,
+          "fraction": 0.0726643598615917
+        },
+        "case_neutral": {
+          "matches": 41,
+          "opportunities": 563,
+          "fraction": 0.07282415630550622
+        }
+      },
+      "length_strata": [
+        {
+          "minimum": 4,
+          "maximum": 5,
+          "opportunities": 112,
+          "matches": 5,
+          "fraction": 0.044642857142857144
+        },
+        {
+          "minimum": 6,
+          "maximum": 8,
+          "opportunities": 237,
+          "matches": 20,
+          "fraction": 0.08438818565400844
+        },
+        {
+          "minimum": 9,
+          "maximum": 12,
+          "opportunities": 234,
+          "matches": 14,
+          "fraction": 0.05982905982905983
+        },
+        {
+          "minimum": 13,
+          "maximum": null,
+          "opportunities": 34,
+          "matches": 3,
+          "fraction": 0.08823529411764706
+        }
+      ],
+      "amplitude": {
+        "folded_occurrences": {
+          "n": 43,
+          "mean": 1.1162790697674418,
+          "minimum": 1.0,
+          "maximum": 4.0,
+          "quantiles": {
+            "p10": 1.0,
+            "p25": 1.0,
+            "p50": 1.0,
+            "p75": 1.0,
+            "p90": 1.0,
+            "p95": 2.0,
+            "p99": 4.0
+          },
+          "histogram": {
+            "1": 40,
+            "2": 2,
+            "4": 1
+          }
+        },
+        "available_occurrences": {
+          "n": 43,
+          "mean": 2.372093023255814,
+          "minimum": 2.0,
+          "maximum": 5.0,
+          "quantiles": {
+            "p10": 2.0,
+            "p25": 2.0,
+            "p50": 2.0,
+            "p75": 3.0,
+            "p90": 3.0,
+            "p95": 3.0,
+            "p99": 5.0
+          },
+          "histogram": {
+            "2": 30,
+            "3": 11,
+            "4": 1,
+            "5": 1
+          }
+        },
+        "retained_occurrences": {
+          "n": 43,
+          "mean": 1.255813953488372,
+          "minimum": 1.0,
+          "maximum": 3.0,
+          "quantiles": {
+            "p10": 1.0,
+            "p25": 1.0,
+            "p50": 1.0,
+            "p75": 1.0,
+            "p90": 2.0,
+            "p95": 2.0,
+            "p99": 3.0
+          },
+          "histogram": {
+            "1": 33,
+            "2": 9,
+            "3": 1
+          }
+        },
+        "folded_fraction": {
+          "n": 43,
+          "mean": 0.4740310077519379,
+          "minimum": 0.25,
+          "maximum": 0.8,
+          "quantiles": {
+            "p10": 0.3333333333333333,
+            "p25": 0.5,
+            "p50": 0.5,
+            "p75": 0.5,
+            "p90": 0.5,
+            "p95": 0.6666666666666666,
+            "p99": 0.8
+          },
+          "histogram": {
+            "0.25": 1,
+            "0.3333333333333333": 9,
+            "0.5": 30,
+            "0.6666666666666666": 2,
+            "0.8": 1
+          }
+        },
+        "folded_available_joint": {
+          "1/2": 30,
+          "1/3": 9,
+          "1/4": 1,
+          "2/3": 2,
+          "4/5": 1
+        },
+        "available_letters_within_matched_words": {
+          "ç": 15,
+          "ö": 7,
+          "ü": 4,
+          "ğ": 9,
+          "ı": 50,
+          "ş": 17
+        },
+        "changed_mappings": {
+          "ç->c": 9,
+          "ö->o": 2,
+          "ü->u": 3,
+          "ğ->g": 7,
+          "ı->i": 18,
+          "ş->s": 9
+        },
+        "changed_relative_positions": {
+          "n": 48,
+          "mean": 0.5309576418951419,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "quantiles": {
+            "p10": 0.09090909090909091,
+            "p25": 0.2857142857142857,
+            "p50": 0.5,
+            "p75": 0.8,
+            "p90": 1.0,
+            "p95": 1.0,
+            "p99": 1.0
+          },
+          "histogram": {
+            "0.0": 4,
+            "0.09090909090909091": 1,
+            "0.125": 1,
+            "0.16666666666666666": 1,
+            "0.25": 3,
+            "0.2857142857142857": 5,
+            "0.3333333333333333": 3,
+            "0.4": 2,
+            "0.4166666666666667": 2,
+            "0.5": 3,
+            "0.5555555555555556": 1,
+            "0.5833333333333334": 1,
+            "0.625": 2,
+            "0.6363636363636364": 1,
+            "0.6666666666666666": 3,
+            "0.7": 1,
+            "0.8": 3,
+            "0.8571428571428571": 1,
+            "0.9": 1,
+            "0.9090909090909091": 1,
+            "1.0": 8
+          }
+        },
+        "total_folded_characters": 48,
+        "total_available_characters_within_matched_words": 102,
+        "empirical_intensity_bins": {
+          "q25": 0.5,
+          "q75": 0.5,
+          "counts": {
+            "lower": 40,
+            "middle": 0,
+            "upper": 3
+          },
+          "human_severity_labels": false,
+          "three_nonempty_bins": false
+        }
+      },
+      "sentence_cluster_bootstrap_stability": {
+        "pooled_opportunity_rate": {
+          "interval": [
+            0.0467741935483871,
+            0.09389937681192499
+          ],
+          "defined_replicates": 5000,
+          "undefined_replicates": 0
+        },
+        "sentence_presence_rate": {
+          "interval": [
+            0.042105263157894736,
+            0.0824561403508772
+          ],
+          "defined_replicates": 5000,
+          "undefined_replicates": 0
+        }
+      }
+    }
+  },
+  "sentence_membership_combinations": {
+    "elongation": 56,
+    "elongation+internal_omission": 5,
+    "elongation+partial_folding": 2,
+    "internal_omission": 35,
+    "none": 439,
+    "partial_folding": 33
+  },
+  "bootstrap_specification": {
+    "resampling_unit": "whole_sentence",
+    "replicates": 5000,
+    "seed": 586,
+    "generator": "PCG64",
+    "batch_size": 100,
+    "interval_quantiles": [
+      0.025,
+      0.975
+    ],
+    "interval_quantile_method": "linear",
+    "interpretation": "conditional_sentence_resampling_stability_not_population_confidence"
+  },
+  "phase": "exploratory_family_specific_scope_after_length_sensitivity_before_model_scores",
+  "source_test_read": false,
+  "model_calls": false,
+  "corruptions_generated": false,
+  "evaluation_recipe_frozen": false
+}

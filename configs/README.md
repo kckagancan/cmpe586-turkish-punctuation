@@ -140,3 +140,18 @@ The configs and frozen numerical sources remain unchanged after scoring.
 Completed analysis, local verification and result archive locations are recorded
 in [held-out completion](../docs/held-out-test-completion.md);
 [all condition results](../docs/held-out-test-results.md) keep validation/test distinct.
+
+## Informal-corpus evidence after instructor feedback
+
+`informal-corpus-audit.json` binds the train-only MultiLexNorm coverage audit.
+`informal-corpus-depth.json` specifies the additional completed three-shape
+density/amplitude analysis, reusing the saved classification trace without
+rerunning old reachability. It pins 5,000 whole-sentence resamples and quantile
+conventions; it enables no model, source-test read or corruption generation.
+[Depth findings](../docs/informal-corpus-depth-results.md) provide conditional
+calibration evidence. Neither config is a frozen new evaluation recipe.
+`informal-corpus-length-sensitivity.json` adds a separately versioned min1/2/3/4
+scope check after that profile. `scripts/profile_corpus_calibration.py` records
+family-specific minima2/3/2 as a new, hashed analysis policy, reusing the common
+profile functions. Its [aggregate](../docs/informal-corpus-calibration-profile.json)
+includes the short-word cases without overwriting the initial min4 analysis.

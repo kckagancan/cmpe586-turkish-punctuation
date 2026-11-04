@@ -1,0 +1,46 @@
+{
+  "version": "informal-corpus-depth-v1",
+  "specified_on": "2026-11-04",
+  "protocol": "docs/informal-corpus-depth-protocol.md",
+  "source_audit_config": "configs/informal-corpus-audit.json",
+  "audit_directory": "artifacts/corpus-audit/multilexnorm-turkish-v1/audit-31b1594e88c80d06",
+  "audit_identity": "31b1594e88c80d0607436a008a7b1a6e9bd74c67452eb73dcf0424a69a56aa7a",
+  "audit_summary_sha256": "1ded1b594cecdc80ce443fae18799ef50302c341210c0694de32e2a0090d82fe",
+  "audit_trace_sha256": "e2a1708f2a0466d9783cf0d5dac51a65d49796e00907971d9e23b551dd4a4b0b",
+  "audit_commit_sha256": "25f9470916beeeceae56c077c5d5c0d19fb7a36ccb73e5d6cd9d0d9ae9c712ea",
+  "minimum_corrected_length": 4,
+  "families": {
+    "elongation": "character_run_elongation",
+    "internal_omission": "one_internal_character_omission",
+    "partial_folding": "partial_turkish_folding"
+  },
+  "expected_shape_occurrences": {
+    "elongation": 55,
+    "internal_omission": 49,
+    "partial_folding": 42
+  },
+  "descriptive_quantiles": [0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99],
+  "quantile_method": "inverted_cdf",
+  "bootstrap": {
+    "resampling_unit": "whole_sentence",
+    "replicates": 5000,
+    "seed": 586,
+    "generator": "PCG64",
+    "batch_size": 100,
+    "interval_quantiles": [0.025, 0.975],
+    "interval_quantile_method": "linear",
+    "interpretation": "conditional_sentence_resampling_stability_not_population_confidence"
+  },
+  "character_intensity_bins": {
+    "threshold_quantiles": [0.25, 0.75],
+    "lower": "x_le_q25",
+    "middle": "q25_lt_x_le_q75",
+    "upper": "x_gt_q75",
+    "ties_or_empty_bins": "retain_report_do_not_force_three_distinct_levels"
+  },
+  "output_root": "artifacts/corpus-audit/multilexnorm-depth-v1",
+  "model_calls": false,
+  "source_test_read": false,
+  "generate_corruptions": false,
+  "freeze_evaluation_recipe": false
+}

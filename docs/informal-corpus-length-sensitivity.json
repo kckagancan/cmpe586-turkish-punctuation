@@ -1,0 +1,269 @@
+{
+  "version": "informal-corpus-length-sensitivity-v1",
+  "identity": "1bd0abe5b1d6542d4a5b138ae5c1d8c3f8b2fc35cf3b835e832a1f9d7229703c",
+  "source": {
+    "repository": "https://bitbucket.org/robvanderg/multilexnorm",
+    "revision": "e58e946375299a04355fa2d7fa9e1c769234e68a",
+    "path": "data/raw/multilexnorm-turkish/e58e946375299a04355fa2d7fa9e1c769234e68a/train.norm",
+    "bytes": 99174,
+    "sha256": "17793b8db8f41ae387cfcdf4b7a1c061f2ccdc677418b3c2cec912c4e570695d",
+    "official_split": "train",
+    "expected_sentences": 570,
+    "expected_source_slots": 6443,
+    "license_status": "not_established_in_inspected_per_language_resources",
+    "paper": "https://aclanthology.org/2021.wnut-1.55.pdf"
+  },
+  "parent_depth_identity": "cde287765953c12dc78f4f56d0eca6ec81c017d21dd10626f3f9fffc7d161cca",
+  "bindings": {
+    "configs/informal-corpus-length-sensitivity.json": "ec4f2c7a8c2a5149a5c3be3e3e4dc9c50af86407a1634a2796f574c6cf57a8a0",
+    "scripts/analyze_corpus_length_sensitivity.py": "ad0bd370553e45929fb9d8286885cb3f3a94448d532d825c1dbefd12219fe199",
+    "src/turkish_punctuation/corpus_audit.py": "75204bb2de43b2d24b07bd6535ccdfb5ffe9d37da78a230c0bc5f9b1044cb398",
+    "src/turkish_punctuation/corpus_depth.py": "a83a13c8a10917e7e4c0d7c5fffe609422c2ecd1ae40caa0e980a6c59df1fe63",
+    "src/turkish_punctuation/noise.py": "a8497a70634a8e33820e7d5d33818951682017f6369031114151d51873bcb198",
+    "src/turkish_punctuation/__init__.py": "336a3b84d679fa15bc9b066494810ec6d48557b12347e8997f702d0429a5bce0",
+    "configs/noise.json": "2d7d767df17d2eb91b5aac6b250ba43a5a5f9f37a2af0283436254cf96e21a9d",
+    "configs/informal-corpus-audit.json": "998e207bec94646aa1c6f02e1c56edb5f5ae22a291727d99840151462caadfe1",
+    "artifacts/corpus-audit/multilexnorm-depth-v1/depth-cde287765953c12d/summary.json": "bfbc4e43726dd60d1c7635de7f4f6e64f121d9feded1fe267827fcf2be43aab8"
+  },
+  "views": {
+    "1": {
+      "common_opportunities": 4557,
+      "families": {
+        "elongation": {
+          "matches": 89,
+          "opportunities": 4557,
+          "fraction": 0.019530392802282203,
+          "affected_sentences": 63,
+          "corrected_length_histogram": {
+            "2": 17,
+            "3": 17,
+            "4": 9,
+            "5": 16,
+            "6": 11,
+            "7": 2,
+            "8": 12,
+            "9": 1,
+            "10": 3,
+            "13": 1
+          }
+        },
+        "internal_omission": {
+          "matches": 50,
+          "opportunities": 4557,
+          "fraction": 0.010972130787798991,
+          "affected_sentences": 40,
+          "corrected_length_histogram": {
+            "3": 1,
+            "4": 1,
+            "5": 11,
+            "6": 7,
+            "7": 9,
+            "8": 5,
+            "9": 4,
+            "10": 6,
+            "11": 3,
+            "13": 3
+          }
+        },
+        "partial_folding": {
+          "matches": 43,
+          "opportunities": 621,
+          "fraction": 0.06924315619967794,
+          "affected_sentences": 35,
+          "corrected_length_histogram": {
+            "3": 1,
+            "4": 2,
+            "5": 3,
+            "6": 6,
+            "7": 6,
+            "8": 8,
+            "9": 5,
+            "10": 3,
+            "11": 3,
+            "12": 3,
+            "13": 3
+          }
+        }
+      }
+    },
+    "2": {
+      "common_opportunities": 4512,
+      "families": {
+        "elongation": {
+          "matches": 89,
+          "opportunities": 4512,
+          "fraction": 0.01972517730496454,
+          "affected_sentences": 63,
+          "corrected_length_histogram": {
+            "2": 17,
+            "3": 17,
+            "4": 9,
+            "5": 16,
+            "6": 11,
+            "7": 2,
+            "8": 12,
+            "9": 1,
+            "10": 3,
+            "13": 1
+          }
+        },
+        "internal_omission": {
+          "matches": 50,
+          "opportunities": 4512,
+          "fraction": 0.011081560283687944,
+          "affected_sentences": 40,
+          "corrected_length_histogram": {
+            "3": 1,
+            "4": 1,
+            "5": 11,
+            "6": 7,
+            "7": 9,
+            "8": 5,
+            "9": 4,
+            "10": 6,
+            "11": 3,
+            "13": 3
+          }
+        },
+        "partial_folding": {
+          "matches": 43,
+          "opportunities": 621,
+          "fraction": 0.06924315619967794,
+          "affected_sentences": 35,
+          "corrected_length_histogram": {
+            "3": 1,
+            "4": 2,
+            "5": 3,
+            "6": 6,
+            "7": 6,
+            "8": 8,
+            "9": 5,
+            "10": 3,
+            "11": 3,
+            "12": 3,
+            "13": 3
+          }
+        }
+      }
+    },
+    "3": {
+      "common_opportunities": 4174,
+      "families": {
+        "elongation": {
+          "matches": 72,
+          "opportunities": 4174,
+          "fraction": 0.017249640632486823,
+          "affected_sentences": 52,
+          "corrected_length_histogram": {
+            "3": 17,
+            "4": 9,
+            "5": 16,
+            "6": 11,
+            "7": 2,
+            "8": 12,
+            "9": 1,
+            "10": 3,
+            "13": 1
+          }
+        },
+        "internal_omission": {
+          "matches": 50,
+          "opportunities": 4174,
+          "fraction": 0.011978917105893628,
+          "affected_sentences": 40,
+          "corrected_length_histogram": {
+            "3": 1,
+            "4": 1,
+            "5": 11,
+            "6": 7,
+            "7": 9,
+            "8": 5,
+            "9": 4,
+            "10": 6,
+            "11": 3,
+            "13": 3
+          }
+        },
+        "partial_folding": {
+          "matches": 43,
+          "opportunities": 621,
+          "fraction": 0.06924315619967794,
+          "affected_sentences": 35,
+          "corrected_length_histogram": {
+            "3": 1,
+            "4": 2,
+            "5": 3,
+            "6": 6,
+            "7": 6,
+            "8": 8,
+            "9": 5,
+            "10": 3,
+            "11": 3,
+            "12": 3,
+            "13": 3
+          }
+        }
+      }
+    },
+    "4": {
+      "common_opportunities": 3598,
+      "families": {
+        "elongation": {
+          "matches": 55,
+          "opportunities": 3598,
+          "fraction": 0.015286270150083379,
+          "affected_sentences": 43,
+          "corrected_length_histogram": {
+            "4": 9,
+            "5": 16,
+            "6": 11,
+            "7": 2,
+            "8": 12,
+            "9": 1,
+            "10": 3,
+            "13": 1
+          }
+        },
+        "internal_omission": {
+          "matches": 49,
+          "opportunities": 3598,
+          "fraction": 0.013618677042801557,
+          "affected_sentences": 40,
+          "corrected_length_histogram": {
+            "4": 1,
+            "5": 11,
+            "6": 7,
+            "7": 9,
+            "8": 5,
+            "9": 4,
+            "10": 6,
+            "11": 3,
+            "13": 3
+          }
+        },
+        "partial_folding": {
+          "matches": 42,
+          "opportunities": 617,
+          "fraction": 0.06807131280388978,
+          "affected_sentences": 34,
+          "corrected_length_histogram": {
+            "4": 2,
+            "5": 3,
+            "6": 6,
+            "7": 6,
+            "8": 8,
+            "9": 5,
+            "10": 3,
+            "11": 3,
+            "12": 3,
+            "13": 3
+          }
+        }
+      }
+    }
+  },
+  "phase": "exploratory_followup_after_min4_depth_profile_before_model_scoring",
+  "models_or_test_split_used": false,
+  "parent_results_changed": false,
+  "raw_text_published": false
+}
