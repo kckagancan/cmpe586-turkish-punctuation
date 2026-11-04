@@ -74,11 +74,45 @@ existing project storage root. Readiness:
 
 The actual VM reports Python3.12.13, Torch2.11.0+cu128, CUDA12.8, cuDNN91900 and
 Tesla T4, matching the original base-runtime receipt. Drive is mounted after
-the user's explicit authorization of this notebook's Drive access. The pinned
-restore completed; validation-only readiness is running. No completed readiness
-or launched evaluation is claimed yet. After readiness,
-start the explicit runner, inspect its first committed clean/noisy conditions,
-and hand control back without waiting for all52 conditions. On completion,
+the user's explicit authorization of this notebook's Drive access. Pinned
+restore and actual readiness **completed**: all13 input views passed fresh
+tokenization/target reconciliation; four actual checkpoints passed file/tensor
+checks, and all24 validation-only GPU probes passed (five254-row views plus
+one16-row padded-shape probe per model, maximum154). No optimizer update or
+test metric was computed during readiness.
+
+Readiness identity:
+`4c2ffe08e55cf5df2acbfe6f16cbc6feaede680e982f05b0af6b1723e19084f9`.
+The original readiness JSON and complete marker were downloaded locally;
+independent checks match identity, runtime/packages, model tensors, all24 probe
+records and the exact source-member/hash map against local source. Remote source
+snapshots were not downloaded again. Receipt/readback evidence is in the private
+launch directory. Readiness JSON SHA:
+`0a0aaecbfd4640c4e11930f8bfc2807af81c62395189b05bf34ac7a383d7f886`.
+
+The user-authorized52-condition evaluator is now running in notebook cell9.
+Startup rechecked the inputs and all four checkpoints before its first score.
+Run identity:
+`8cf43b9d6a166baf005fb0320a52177f859c4b6215d06baaa0f93be57156d200`.
+The first three published-arm conditions (clean, elongation/seed586,
+omission/seed586) were downloaded and independently verified locally: exact
+four-file membership/SHA, original IDs/clean-length order/targets, both-cohort
+metrics, realized exposure and own-anchor drops. The fresh published clean
+anchor exactly matches its completed original held-out counterpart. This audit
+used saved predictions only, with no repeated inference. At least9/52 conditions
+were committed at the final UI observation; that is a handoff snapshot, not a
+full-matrix completion claim. The running Colab tab is left visible for the user,
+who will report completion. No automatic monitor or further run is started.
+
+Initial checks, original readback files, screenshot and full inventory are under
+the private launch directory. All old scientific/config/result/report inputs
+remain unchanged. Local source/Ruff/repository checks passed; no unit suite was
+added or run. Execution code commit `6a85d0b` and its
+[GitHub check](https://github.com/kckagancan/cmpe586-turkish-punctuation/actions/runs/41834841803)
+passed. Public/local notebook counts remain null, outputs empty, switches off;
+the live authorized notebook retains execution outputs/switches separately.
+
+On the user's completion message,
 recompute saved-prediction metrics and all specified contrasts, archive/verify
 outputs, then incorporate the verified supplement into the **final report**.
 Proposal work is outside this task.

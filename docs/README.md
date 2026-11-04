@@ -21,8 +21,9 @@ raw text, models, predictions and operational receipts remain in ignored storage
 ## Instructor-feedback extension (November 4)
 
 The original results and paper remain intact. The additional work currently
-contains corpus evidence and audited supplemental transfer inputs, with no new
-model scores. The original paper has not been rebuilt for this extension.
+contains corpus evidence, audited supplemental transfer inputs and a running
+fixed-model GPU evaluation. Verified aggregate results are pending. The original
+paper has not been rebuilt for this extension.
 
 | Read | Purpose |
 | --- | --- |

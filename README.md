@@ -19,8 +19,9 @@ ablation differences, are retained.
 Instructor-feedback extension: [MultiLexNorm Turkish train analysis](docs/informal-corpus-depth-results.md)
 now anchors a [supplemental transfer protocol](docs/transfer-evaluation-protocol.md)
 for elongation, internal omission and partial folding. [Input preparation](docs/transfer-evaluation-preparation.md)
-is complete; this extension has **no model scores yet** and does not replace
-the original experiment or paper.
+is complete; the [supplemental GPU evaluation](docs/transfer-evaluation-execution.md)
+is running, with verified aggregate results pending. It does not replace the
+original experiment or paper.
 
 ## Main finding
 

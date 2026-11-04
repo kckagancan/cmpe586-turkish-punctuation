@@ -4,8 +4,12 @@ Updated **2026-11-04**. The original study, final report and GitHub publication
 are complete. The instructor-feedback extension has a **frozen supplemental
 transfer protocol and 13 prepared, saved-input-reconciled views**, plus separate
 execution wiring and a new uploaded notebook. The actual T4/2026.07 base runtime
-and pinned restore are verified; validation-only GPU readiness is running.
-No successful readiness or started test evaluation is claimed yet.
+and pinned restore are verified; validation-only GPU readiness completed and
+the supplemental evaluator is running in the new notebook.
+Initial three **published-arm** conditions passed independent local saved-file/
+raw-target recomputation for both cohorts; at least9/52 conditions were committed
+at the last UI observation. User will report completion; do not wait/monitor
+through the run or start another writer on this Colab/Drive output.
 No training or cleanup job is running.
 Read this first, then the relevant linked record. This file authorizes no run.
 
@@ -59,10 +63,25 @@ uploaded with the pinned restorer; no weights/predictions included. Existing
 Drive models and validation archive are reused. Source checks and local
 repository publication checks passed before upload; no unit suite ran.
 Receipts/current handoff: `artifacts/evaluation-preparation/transfer-noise-v1/launch-2026-11-04/`.
-Verify actual model-file/tensor identities and validation-only calibration on
-the pinned T4/FP32/SDPA-math/batch16 runtime before starting the52-forward evaluation.
-Scoring remains disabled by default. Local tokenizer/data readiness is not GPU
-readiness. Report every outcome, per-class P/R/F1/support and paired contrasts;
+Actual T4/FP32/SDPA-math/batch16 readiness passed:13 fresh input/target audits,
+four checkpoints and24 validation-only GPU probes. Downloaded readiness/complete
+bytes independently match identity/runtime/packages/models/probe/source-hash map.
+Readiness identity `4c2ffe08e55cf5df2acbfe6f16cbc6feaede680e982f05b0af6b1723e19084f9`.
+The explicit52-condition evaluator is running. Run identity
+`8cf43b9d6a166baf005fb0320a52177f859c4b6215d06baaa0f93be57156d200`.
+Initial published clean-anchor, elongation/seed586 and omission/seed586 were
+downloaded: every saved file hash, original IDs/order/targets, both-cohort
+metrics and own-anchor drops match independent local recomputation. Fresh
+published clean anchor exactly matches the original held-out anchor. No extra
+inference ran for that audit. Initial3 verified; observed at least9 committed;
+these are handoff snapshots, not a claim that all52 are done.
+Colab cell9 stays executing and the tab is left visible. Streaming logs:
+`preparation/transfer-noise-v1/launch-2026-11-04/evaluation.log` on Drive;
+outputs/progress: `artifacts/evaluations/transfer-noise-v1/` under project Drive.
+Source scoring switches stay off in Git. **Next after the user's completion
+message:** audit all saved predictions/104 score sets and specified contrasts,
+archive/verify results, then update the final report. No cleanup or proposal
+work is requested. Report every outcome, per-class P/R/F1/support and paired contrasts;
 three-seed SD measures corruption variation only, not training uncertainty.
 No new scores have been added to the original report/PDF.
 
