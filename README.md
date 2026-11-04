@@ -16,6 +16,12 @@ and noise-augmented BERTurk fine-tuning, then removes case loss from augmentatio
 to examine its contribution. All completed results, including unfavorable
 ablation differences, are retained.
 
+Instructor-feedback extension: [MultiLexNorm Turkish train analysis](docs/informal-corpus-depth-results.md)
+now anchors a [supplemental transfer protocol](docs/transfer-evaluation-protocol.md)
+for elongation, internal omission and partial folding. [Input preparation](docs/transfer-evaluation-preparation.md)
+is complete; this extension has **no model scores yet** and does not replace
+the original experiment or paper.
+
 ## Main finding
 
 Noise augmentation improves robustness in this fixed experiment while giving a

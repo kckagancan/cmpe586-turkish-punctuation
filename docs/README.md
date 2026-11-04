@@ -21,13 +21,16 @@ raw text, models, predictions and operational receipts remain in ignored storage
 ## Instructor-feedback extension (November 4)
 
 The original results and paper remain intact. The additional work currently
-contains corpus evidence and evaluation planning, with no new model scores.
+contains corpus evidence and audited supplemental transfer inputs, with no new
+model scores. The original paper has not been rebuilt for this extension.
 
 | Read | Purpose |
 | --- | --- |
 | [Informal corpus selection](informal-corpus-selection.md) | Compare authentic and synthetic candidates; select MultiLexNorm Turkish train for the data-only audit |
 | [Verified corpus audit](informal-corpus-audit-results.md) | Counts, operator coverage, unseen shapes, denominators and limitations |
 | [Three-shape density and severity](informal-corpus-depth-results.md) | Completed train-only depth profile: opportunity rates, per-tweet clustering, character amplitude, duplication sensitivity and resampling stability |
+| [Supplemental transfer protocol](transfer-evaluation-protocol.md) | Corpus anchors, three unseen explicit mechanisms, matched full-fold control, fixed four-model/three-seed matrix |
+| [Completed transfer input preparation](transfer-evaluation-preparation.md) | Frozen recipe, 13 audited input views, saved-target/morphology/tokenizer reconciliation; no model scores or GPU readiness |
 | [Direct informal evaluation feasibility](informal-transfer-feasibility.md) | Distinguish natural transfer from controlled perturbations and specify the punctuation-reference gate |
 
 ## Public numeric evidence

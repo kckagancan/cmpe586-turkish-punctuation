@@ -1,195 +1,155 @@
 # Current project state
 
-Updated **2026-11-04**. The original experiments, final report, and retrospective
-proposal are complete. Instructor-feedback extension: corpus selection and
-data-only audit and three-mechanism density/severity analysis are complete;
-direct informal evaluation's punctuation-reference requirements are recorded.
-No new model experiment has started.
-Read this first, then the relevant linked record. This file authorizes no new run.
+Updated **2026-11-04**. The original study, final report and GitHub publication
+are complete. The instructor-feedback extension now has a **frozen supplemental
+transfer protocol and 13 prepared, saved-input-reconciled views**. No new model
+scores exist; no training, inference or cleanup job is running.
+Read this first, then the relevant linked record. This file authorizes no run.
 
-## Project and delivered report
+## Current milestone and next action
+
+[Transfer protocol](docs/transfer-evaluation-protocol.md),
+[completed input preparation](docs/transfer-evaluation-preparation.md),
+[aggregate audit](docs/transfer-evaluation-input-audit.json),
+[coverage CSV](docs/transfer-evaluation-input-coverage.csv).
+
+- Four existing selected models: published, clean, augmented, without-case-loss.
+  No new training/checkpoint selection. Clean anchor + elongation, one internal
+  omission, partial folding and word-mask-matched full folding at seeds586/587/588:
+  **13 views /52 later forwards /104 primary+sensitivity score sets**.
+- One corpus anchor per family, not an unsupported mild/medium/heavy grid.
+  Rates apply to eligible opportunities:89/4512 elongation,50/4174 omission,
+  **43/617 operational partial folding**. The original case-neutral43/621
+  analysis remains intact: four surface-casing-incompatible opportunities and
+  zero hits are excluded for this implementation. This is distinct from the
+  initial min4 pool that also had617 members.
+- Anonymous joint morphology templates retain measured elongation tails,
+  ambiguous omission-position marginalization and partial-fold subset patterns.
+  Conditioning/adaptation/extrapolation and uniform word sampling are explicit;
+  this does not simulate the full natural tweet process.
+- Data-only validation-prefix probe:512 source rows,510 eligible,13 views,
+  maximum93 tokens. Exact protocol/config/profile/code/model-metadata/cohort
+  freeze preceded new test-view generation. No model metrics chose this recipe.
+- Primary14,600 rows /181,485 targets; sensitivity14,445 /181,116 filters the same
+  generated inputs/edits, without reranking. Per seed:3,355 elongations,
+  1,826 omissions,1,803 partial folds; full-fold control edits the same1,803 words
+  but more characters. Maximum154 tokens, no truncation or condition-specific
+  drops. All original targets and first-subword alignment preserved.
+- Completed files were reconciled with raw targets, edit semantics, independent
+  SHA mask ranking and deterministic donor parameters. Fresh re-tokenization
+  matched every saved encoding column and audit. No unit suite was added/run.
+  Old equal-length noise audit remains unchanged; insertion/deletion has its
+  own auditor. The old clean encoding is reused by explicit read-only hashes;
+  old39 noisy views and existing weights were not regenerated/copied/downloaded.
+- Freeze `b16cd070f37073b76503267668e27761922708eaa866ac3a80aab3fb790905d1`.
+  Inputs `235c0c01cf8b5a34b24e36f1bbdcfe8603c34e401171dd47ec9856c87a30b7a3`.
+  Local inputs: `data/processed/transfer-noise-v1/`; snapshots/probe/freeze:
+  `artifacts/evaluation-preparation/transfer-noise-v1/`.
+  Checks, preservation/publication receipts and complete changed-file inventory:
+  `artifacts/evaluation-preparation/transfer-noise-v1/preparation-2026-11-04/`.
+
+**Next:** implement separate scoring orchestration/runtime gate, verify retained
+model-file/tensor identities and perform validation-only calibration on the
+pinned T4/FP32/SDPA-math/batch16 runtime before starting the52-forward evaluation.
+Scoring remains disabled by default. Local tokenizer/data readiness is not GPU
+readiness. Report every outcome, per-class P/R/F1/support and paired contrasts;
+three-seed SD measures corruption variation only, not training uncertainty.
+No new scores have been added to the original report/PDF.
+
+New corruptions reuse already scored test texts: this is **supplemental
+controlled transfer**, not independent natural-text evaluation or blind
+preregistration. MultiLexNorm source test remains unread. Optional natural-data
+annotation and LLM/silver-vs-human requirements remain in the
+[feasibility record](docs/informal-transfer-feasibility.md); no natural punctuation
+gold has been created.
+
+## Corpus evidence already complete: do not rerun
+
+[Candidate review](docs/informal-corpus-selection.md) selected official
+**MultiLexNorm monolingual Turkish train only** over #Turki$hTweets and other
+candidates. [Audit](docs/informal-corpus-audit-results.md):570 sentences /6,443
+slots,354 boundary-changing slots separate. Old-operator reachability1,109/2,031
+(54.6036%) is a word-level upper bound, not sampled training coverage or F1.
+Audit `31b1594e88c80d0607436a008a7b1a6e9bd74c67452eb73dcf0424a69a56aa7a`.
+
+[Depth findings](docs/informal-corpus-depth-results.md) preserve min4 shape counts
+55/49/42 on3,598 eligible pairs. Separate length sensitivity and broader minima
+2/3/2 calibration include short words:89/4,512,50/4,174,43/621; affected tweets
+63/40/35, union182 words /131 tweets. Elongation extra-char median2/P75=3/max25;
+omission always1; partial fraction P25=median=P75=0.5. Per-tweet quartiles all
+zero; do not force three natural severity levels or add unlike denominators.
+5,000 sentence-resampling intervals describe conditional corpus stability,
+not population prevalence or model performance. Old2/5/10% levels remain
+synthetic stress doses.
+Depth `cde287765953c12dc78f4f56d0eca6ec81c017d21dd10626f3f9fffc7d161cca`;
+length `1bd0abe5b1d6542d4a5b138ae5c1d8c3f8b2fc35cf3b835e832a1f9d7229703c`;
+calibration `f8b903a57451c895712c7a7e71bb7061a02dbeeff123cf3efe4b58605f15039f`.
+Immutable runs and earlier preservation evidence are under
+`artifacts/corpus-audit/multilexnorm-turkish-v1/` and
+`artifacts/corpus-audit/multilexnorm-depth-v1/`. These completed analyses were
+reused, not rerun to prepare the new views.
+
+## Original study and delivered report
 
 **Robustness of Turkish Punctuation Restoration under Informal Writing Noise**
-(CMPE 586), **Kagan Can**. Compare published punctuation BERT, matched clean and
-noise-augmented BERTurk fine-tuning, and a case-loss removal arm.
+(CMPE586), **Kagan Can**. [Public final PDF](output/pdf/turkish-punctuation-report.pdf):
+10 pages, official NeurIPS2026 preprint style; no conference-acceptance claim.
+[Editable source/build](report/README.md), [documentation guide](docs/README.md),
+[reproduction](docs/reproduction.md). User-authorized [MIT](LICENSE) applies to
+original code/docs, with separate [third-party terms](THIRD_PARTY_NOTICES.md).
 
-- [Public report PDF](output/pdf/turkish-punctuation-report.pdf): **10 pages**;
-  7 main-text pages, references, and 2 pages of appendices; official unchanged
-  NeurIPS 2026 **preprint** style. No conference submission/acceptance claim.
-- [Editable source and build instructions](report/README.md), complete main and
-  sensitivity tables, per-class/contextual diagnostics, training history,
-  primary-source references, limits and AI-assistance disclosure.
-- Proposal is now a **local-only course document**, at the user's request.
-  Both five-page PDFs remain at `output/pdf/turkish-punctuation-proposal.pdf`
-  and `output/pdf/proposal-course-submission.pdf`; editable project/build guide
-  remains at `report/proposal/`. All are Git-ignored and removed from the current
-  public tree; the earlier publication commit remains in Git history.
-  The dated retrospective-design disclosure remains intact. Final report PDF,
-  editable public source, numerical bindings and frozen experiments are preserved.
-- Author/student number supplied by the user. The number appears only in the
-  Git-ignored local course PDFs and private author files. Public PDFs/sources
-  exclude it. Final course-specific format is not yet supplied.
-- [README](README.md) presents results; [documentation guide](docs/README.md)
-  separates current methods/results from dated records. [Reproduction](docs/reproduction.md)
-  distinguishes public report rebuilding from exact scientific reruns.
-- Original code/docs have user-authorized [MIT licensing](LICENSE); external
-  corpus/model/template terms remain separate in [third-party notices](THIRD_PARTY_NOTICES.md).
-  [CITATION.cff](CITATION.cff) provides author/title metadata.
+- Shared initialization, training seed586,3epochs/10,968updates, identical rows
+  and optimizer budget. Clean-validation selection chooses epoch3 for all arms;
+  noisy validation selects no checkpoint. No convergence/optimal-budget claim.
+- Four labels O/PERIOD/COMMA/QUESTION_MARK, first-subword supervision and-100
+  continuation/padding. Original case-loss/full-fold/interior-swap operators
+  preserve targets; removal does not redistribute omitted dose.
+- Main validation117 conditions; ablation5 new +15 reused references.
+  [Grid](docs/robustness-grid-results.md), [ablation](docs/case-loss-ablation-results.md).
+- Original held-out122/122 forwards,244 cohort scores completed October23;
+  independent raw-target recomputation matches Colab. No extra inference.
+  Primary14,600/181,485 after61 empty-word-row quarantines; sensitivity excludes
+  155 exact input overlaps. [All results](docs/held-out-test-results.md).
+- Clean F1: clean-trained84.3437%, augmented84.4824%; combined-heavy76.7502%
+  vs80.5289%, paired gain3.7787±0.2191pp over corruption seeds. Medium/seed586
+  retaining case loss adds0.9585pp on case-loss and0.8799pp on combined;
+  small folding/swap differences favor removal. One training seed remains.
 
-## Completed experiments and fixed method
+## Retention, publication and course handoff
 
-- All three fine-tunings used shared initialization, training seed586, identical
-  rows/order, 3 epochs / **10,968 updates**, batch8 × accumulation4, LR2e-5,
-  FP32/eager. All selected epoch3 by highest **clean-validation** punctuation
-  macro-F1, earliest exact tie. No noisy-validation checkpoint selection or
-  hyperparameter search. Three epochs are a matched budget, not proven optimal.
-- Four labels O/PERIOD/COMMA/QUESTION_MARK; first-subword supervision and ignored
-  `-100` continuation/padding. Noise preserves original word targets/IDs and
-  retokenizes. Case loss, Turkish folding, interior swaps; component budgets
-  2/5/10%. Combined has larger union coverage. Removal does not redistribute dose.
-- Main GPU validation grid: **117 conditions**. Removal validation: **5 new +
-  15 reused references**. [Grid](docs/robustness-grid-results.md),
-  [ablation](docs/case-loss-ablation-results.md).
-- Held-out: **122/122 forward conditions / 244 cohort scores**, completed
-  October23 13:43:43 Istanbul; frozen protocol r2 before project test scoring.
-  Independent local raw-target recomputation matches Colab; no extra inference.
-- Primary: **14,600 rows / 181,485 words** after 61-row empty-word quarantine.
-  Sensitivity: **14,445 / 181,116**, removing 155 exact train/validation input
-  matches from the same predictions; no resampling or independent-test claim.
+Original run `60e31867535de346accb64be45df04984434f6ff328b31c8819115cb689538a0`;
+analysis `e39f8803a6e6614363a6db97c1edce870757a2e909dec9dba5e93d0d9edc7f91`.
+Raw results: `artifacts/evaluations/held-out-test-v1/`; final ZIP570 files+manifest,
+16,011,054bytes, SHA `2463a23ed22dc9543341393bedfb902f693448330da860374c708748d4830925`.
+[Completion/archive](docs/held-out-test-completion.md), [backup map](artifacts/README.md).
+Full epoch models/shared initialization remain local; selected Drive exports
+are retained. Scoped Drive cleanup completed1,148 backed copies/925,753,181bytes,
+all protected IDs retained; no further cleanup pending. [Receipt](docs/drive-cleanup.md).
 
-| Primary held-out macro-F1 (%) | Clean | Augmented | Paired gain (pp) |
-| --- | ---: | ---: | ---: |
-| Clean | 84.3437 | 84.4824 | +0.1387 |
-| Combined-heavy | 76.7502 | 80.5289 | +3.7787 ± 0.2191 |
+Proposal is user-requested **local only**, with source/build guide at
+`report/proposal/`; earlier publication remains in history. **Current-file
+discrepancy found November4:** the two historical PDF paths
+`output/pdf/turkish-punctuation-proposal.pdf` and
+`output/pdf/proposal-course-submission.pdf` are absent. A current
+`output/pdf/CMPE586_Proposal.pdf` exists but matches neither historical PDF hash;
+its content/version was not audited in this input-preparation task. Preserve it.
+The student final report is now `output/pdf/course-submission-report.pdf`,
+byte-identical to the formerly recorded `output/pdf/course-submission.pdf`.
+The public final report also matches the historical receipt. No PDF was rebuilt
+or renamed here. Student metadata stays in ignored files. Submission/template
+confirmation and whether the retrospective proposal satisfies the course
+remain user actions; no document was submitted by this preparation.
 
-Mean/SD measures three corruption seeds only. Medium/seed586 Augmented minus
-Without case loss: clean +0.0905, case +0.9585, folding −0.0205, swaps −0.1078,
-combined +0.8799 pp. [All results](docs/held-out-test-results.md),
-[protocol/literature](docs/held-out-test-protocol.md),
-[completion/archive](docs/held-out-test-completion.md).
+Read-only repository checks validate source/JSON/cleared notebooks, links and
+report bindings, not experiments or the historical unit suite. The live GitHub
+[workflow](.github/workflows/repository-checks.yml) uses read-only permissions,
+pinned actions/Ruff and Python3.11; it requires no workflow permission change.
+Publication/proposal/CI historical receipts: `artifacts/publication/`.
+Seven historical style findings in frozen scripts remain; do not rewrite them
+for cosmetics. Commit only code/config/aggregate reports, never raw data,
+weights, predictions or private metadata.
 
-## Evidence, storage and publication checks
-
-- Run `60e31867535de346accb64be45df04984434f6ff328b31c8819115cb689538a0`;
-  analysis `e39f8803a6e6614363a6db97c1edce870757a2e909dec9dba5e93d0d9edc7f91`.
-- Raw outputs: `artifacts/evaluations/held-out-test-v1/`; verified final ZIP
-  (570 files + manifest, 16,011,054 bytes), local CPU analysis and receipts:
-  `artifacts/evaluation-preparation/held-out-test-v1/completion-2026-10-23/`.
-  ZIP SHA: `2463a23ed22dc9543341393bedfb902f693448330da860374c708748d4830925`.
-- All epoch models/shared initialization remain in existing local training
-  archives; selected Drive exports are retained. [Backup map](artifacts/README.md).
-- Scoped Drive cleanup completed: **1,148 backed copies / 925,753,181 bytes**;
-  all 291 protected IDs plus new readback receipt remain. The manifest mismatch
-  was resolved with its exact historical Colab counterpart and local supplement;
-  original files/hashes remain. No further cleanup is pending.
-  [Outcome](docs/drive-cleanup.md), receipts under
-  `artifacts/storage-audit/drive-2026-10-23-v1/cleanup-2026-10-23/`.
-- Publication checks parse sources/JSON/7 cleared notebooks, verify public links,
-  report bindings and absence of data/model/private metadata in Git. PDF pages
-  are rendered/reviewed; public/private ID separation is checked. No test suite,
-  training, inference, noise generation or model loading ran for publication.
-- Local read-only repository and fatal/undefined-name lint checks pass. Seven
-  pre-existing style findings in frozen historical grid/calibration scripts are
-  retained; new publication scripts pass full Ruff. CSV bytes are preserved by
-  `.gitattributes` so fresh checkouts retain the original audited SHA bindings.
-- User granted `workflow` scope and authorized activation. The
-  [Repository checks workflow](.github/workflows/repository-checks.yml) is live:
-  push/PR, read-only contents, pinned actions/Ruff, Python3.11; repository/binding
-  checks and fatal/undefined-name lint only. The
-  [first GitHub run](https://github.com/kckagancan/cmpe586-turkish-punctuation/actions/runs/39975998764)
-  **passed every step** on activation commit `8373859`. No scientific run or
-  historical unit suite was executed. README shows the live workflow badge.
-- Publication receipts, exact Git/remote/CI outcome and full changed-file inventory:
-  `artifacts/publication/final-report-2026-10-23/`. Frozen recipes, numerical
-  sources and original snapshots were preserved; prior uncommitted experiment
-  work is included in the publication history.
-
-## Next action and remaining limits
-
-Instructor feedback reviewed November4: predefined corruptions/severity and
-per-class support/F1 were already covered. User authorized the next data-only
-step and requested comparison with alternative corpora. The
-[candidate review](docs/informal-corpus-selection.md) chose **MultiLexNorm
-monolingual Turkish, official train only** over the initial #Turki$hTweets
-suggestion. The latter's raw column refines the initial paper-only casing
-assessment; initial notes/drafts are retained locally.
-
-[Verified corpus audit](docs/informal-corpus-audit-results.md),
-[protocol](docs/informal-corpus-audit-protocol.md),
-[aggregate](docs/informal-corpus-audit-summary.json): 570 sentences / 6,443
-source slots; 354 boundary-changing slots kept separate. Of 2,031 changed
-one-word pairs, 1,109 (54.6036%) are reachable by old operators/subsets as a
-**word-level upper bound**, not model performance or sampled training coverage.
-Case-neutral uncovered shapes include elongation55, internal omission49 and
-partial folding42 (nonexclusive, alphabetic corrected length>=4).
-Source test file remains unread; no raw text is published. Corpus selection
-and denominator/annotation limits prevent universal natural-frequency claims.
-The original 2/5/10% levels remain synthetic stress doses.
-
-Audit identity `31b1594e88c80d0607436a008a7b1a6e9bd74c67452eb73dcf0424a69a56aa7a`.
-Receipts, independent conservation/hash checks, private trace and immutable
-snapshots: `artifacts/corpus-audit/multilexnorm-turkish-v1/audit-31b1594e88c80d06/`.
-Original scientific/config/report inputs remain byte-identical; this handoff
-extends the documentation index. No training, inference, tokenizer, test suite
-or PDF rebuild ran; no job is running.
-
-User requested a deeper statistical basis before defining the new test.
-[Completed depth profile](docs/informal-corpus-depth-results.md),
-[specification](docs/informal-corpus-depth-protocol.md),
-[initial min4 aggregate](docs/informal-corpus-depth-summary.json) preserve the
-3,598-pair comparison scope and 55/49/42 counts. A separate
-[length sensitivity](docs/informal-corpus-length-sensitivity.json) found 34
-additional elongations in corrected length2–3. The recommended
-[family-specific calibration profile](docs/informal-corpus-calibration-profile.json)
-uses minima2/3/2: elongation89/4,512 (1.9725%), omission50/4,174 (1.1979%),
-partial folding43/621 multi-foldable opportunities (6.9243%). Affected tweets
-63/40/35; union182 words /131 tweets. Denominators differ and rates cannot be
-added. Elongation extra-char median2, P75=3, max25; omission always one character;
-partial-fold fraction P25=median=P75=0.5. All-family per-tweet P25/median/P75 are
-zero. Do not force three natural severity levels or apply eligible-pool rates
-to all word slots. Broader analyses are explicitly exploratory follow-ups,
-versioned separately; original min4 outputs remain intact.
-5,000 whole-sentence resampling stability intervals, unique-pair sensitivity,
-placement, length strata and co-occurrence are recorded; these are conditional
-corpus descriptions, not population estimates or F1 results.
-Depth identity `cde287765953c12dc78f4f56d0eca6ec81c017d21dd10626f3f9fffc7d161cca`.
-Length sensitivity `1bd0abe5b1d6542d4a5b138ae5c1d8c3f8b2fc35cf3b835e832a1f9d7229703c`;
-calibration `f8b903a57451c895712c7a7e71bb7061a02dbeeff123cf3efe4b58605f15039f`.
-Immutable outputs: `artifacts/corpus-audit/multilexnorm-depth-v1/depth-cde287765953c12d/`;
-the separate `length-1bd0abe5b1d6542d/` and `calibration-f8b903a57451c895/` sibling runs;
-independent source/feature/quantile/hash checks, preservation receipts and full
-inventory: `artifacts/corpus-audit/multilexnorm-depth-v1/preparation-2026-11-04/`.
-Old audit reachability was not rerun; source test remains unread; no model,
-tokenizer, generated corruption, unit suite or PDF rebuild ran. No job is running.
-
-Next: implement and freeze a separate fixed-model supplemental transfer recipe
-using these findings, with clean anchor + three new mechanisms and a small
-matched seen full-folding control. Reuse completed historical results; no full
-old-grid rerun or training is needed. Amplitude, dose, clustering/adaptation and
-any secondary mixed condition must be explicit before new scores. Original
-texts/targets remain shared with the earlier test, so this is supplemental
-transfer, not an independent natural test corpus. The
-[natural-data feasibility record](docs/informal-transfer-feasibility.md) retains
-the optional human-validated set and LLM-annotation disclosure requirements;
-no new natural punctuation gold or evaluation matrix has been created.
-
-The planned experiments, analyses, report, GitHub publication, backups, scoped
-cleanup and repository automation are complete. No experiment or cleanup job is
-running and no additional research step is required by the recorded plan.
-The remaining course action is submission, adapting the paper only if the
-instructor supplies a final template/page limit, and confirming whether the
-retrospective proposal meets the course's missing-proposal requirement.
-No document has been submitted by this preparation step. Proposal build,
-content/privacy checks, page renders and full changed-file inventory are under
-`artifacts/publication/proposal-2026-10-23/`. CI activation receipts and final
-job outcomes are under
-`artifacts/publication/github-actions-2026-10-23/`.
-Proposal local-retention hashes, publication-removal checks and changed-file
-inventory are under `artifacts/publication/proposal-local-only-2026-10-23/`.
-
-One training seed and synthetic noise only. Dataset licensing/exact split
-provenance and document independence remain unresolved; published-model prior
-test exposure is unknown. Validation informed development; this is not a blind
-preregistration. Future test-informed changes are exploratory and need genuinely
-unseen data for strong independent confirmation. Do not rerun completed work
-without a reason or alter frozen recipes to pass a check.
+Dataset licensing, exact split provenance/document independence and published
+model prior exposure remain unresolved. Validation informed original design;
+future test-informed changes are exploratory and require genuinely unseen data
+for independent confirmation. Preserve completed recipes/snapshots/results.

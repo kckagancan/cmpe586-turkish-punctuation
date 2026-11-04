@@ -1,0 +1,162 @@
+{
+  "version": "transfer-evaluation-v1",
+  "specified_on": "2026-11-04",
+  "protocol": "docs/transfer-evaluation-protocol.md",
+  "phase": "protocol_and_input_preparation_only",
+  "original_execution": {
+    "path": "configs/held-out-execution.json",
+    "sha256": "d6e6bd393065f8eff4f8acee181b3369cdb0278f742bab183c4d4fe6b9fd6040",
+    "protocol_sha256": "0612db6c1498438d1992964a7e0d8101577de7daf8270a172b5088b1b9cf86bc",
+    "freeze_identity": "ba6bf8decbd62a64f898a4eb47054776a97b3131fc8c6a20d8a50e22c6dc9653"
+  },
+  "profile": {
+    "path": "configs/transfer-noise-profile.json",
+    "sha256": "5b66ecce1d40870ffca4da0ec7f933244f24c7d57dcffe10a96b07708c783e63"
+  },
+  "noise": {
+    "version": "transfer-noise-v1",
+    "level": "corpus",
+    "seeds": [
+      586,
+      587,
+      588
+    ],
+    "families": [
+      "elongation",
+      "internal_omission",
+      "partial_folding"
+    ],
+    "control": "full_folding_matched",
+    "word_sampling": "exact_floor_eligible_times_rational_rate_lowest_sha256",
+    "clustering": "whole_split_uniform_word_selection_not_natural_message_simulation",
+    "amplitude": "joint_empirical_morphology_templates_with_declared_feasibility_adaptation"
+  },
+  "model_order": [
+    "published",
+    "clean",
+    "augmented",
+    "without_case_loss"
+  ],
+  "run_matrix": {
+    "conditions": [
+      "clean-anchor",
+      "elongation-corpus-seed586",
+      "internal_omission-corpus-seed586",
+      "partial_folding-corpus-seed586",
+      "full_folding_matched-corpus-seed586",
+      "elongation-corpus-seed587",
+      "internal_omission-corpus-seed587",
+      "partial_folding-corpus-seed587",
+      "full_folding_matched-corpus-seed587",
+      "elongation-corpus-seed588",
+      "internal_omission-corpus-seed588",
+      "partial_folding-corpus-seed588",
+      "full_folding_matched-corpus-seed588"
+    ],
+    "input_views": 13,
+    "model_condition_forwards": 52,
+    "cohort_score_sets": 104
+  },
+  "inference": {
+    "reference_runtime_receipt": "artifacts/evaluation-preparation/robustness-grid-gpu-v1/calibration.json",
+    "reference_runtime_receipt_sha256": "6b853bfb049b435b46c18b4963d84be2d99b9bba1c4e9a68f7b30ff7fbaa1510",
+    "device": "cuda",
+    "gpu": "Tesla T4",
+    "batch_size": 16,
+    "cpu_threads": 4,
+    "seed": 586,
+    "precision": "float32",
+    "attention_implementation": "sdpa",
+    "sdpa_backend": "math",
+    "tf32": false,
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8",
+    "max_input_length": 512,
+    "batch_order": "clean_length_ascending_then_source_row_id",
+    "shared_order_and_batch_membership_across_models_and_conditions": true,
+    "fresh_test_clean_anchor_per_model": true,
+    "calibration": "validation_inputs_only_no_optimizer_updates_no_test_scores",
+    "no_cpu_or_mixed_precision_substitution": true
+  },
+  "metrics": {
+    "primary": "punctuation_macro.f1",
+    "punctuation_labels": [
+      "PERIOD",
+      "COMMA",
+      "QUESTION_MARK"
+    ],
+    "all_labels": [
+      "O",
+      "PERIOD",
+      "COMMA",
+      "QUESTION_MARK"
+    ],
+    "label_to_id": {
+      "O": 0,
+      "PERIOD": 1,
+      "COMMA": 2,
+      "QUESTION_MARK": 3
+    },
+    "alignment": "first_subword",
+    "ignore_index": -100,
+    "zero_division": 0,
+    "retain_O_for_false_positive_and_false_negative_counts": true,
+    "report": [
+      "macro_precision_recall_f1",
+      "micro_precision_recall_f1",
+      "per_class_precision_recall_f1_support_confusion",
+      "own_clean_to_noisy_drop_pp",
+      "paired_augmented_minus_clean_pp",
+      "paired_augmented_minus_without_case_loss_pp",
+      "realized_changed_word_coverage_by_cohort",
+      "per_model_partial_minus_matched_full_folding_pp",
+      "actual_donor_usage_and_target_morphology_adaptation"
+    ],
+    "aggregate": "mean_and_sample_sd_ddof1_across_three_corruption_seeds_only",
+    "ablation": "same_three_corruption_seeds_as_other_models",
+    "p_values_or_equivalence_claims": false,
+    "global_pooled_robustness_score": false,
+    "noisy_aggregate_for_all_models": "mean_and_sample_sd_ddof1_over_corruption_seeds",
+    "clean_anchor": "single_value_no_seed_sd"
+  },
+  "tokenizer": {
+    "config": "configs/tokenizer.json",
+    "config_sha256": "f404cc2009cdb9ebfa7359d803ca9b8c47d79330b032a2978c6dccee0dad0a52",
+    "local_snapshot": ".cache/huggingface/models--uygarkurt--bert-restore-punctuation-turkish/snapshots/dd8b9481ed3b3c05110d7e041ecbeb6a1c23b8b0",
+    "files": {
+      "tokenizer.json": "65ef5a17a6dd815398d703d17a66a3ca5e1c87dd89baf69cba64f108f16a3cbd",
+      "tokenizer_config.json": "4de2fcd027d4cb21feff9772a6100050e10a306fdd70c3a33aef080971b84e5f",
+      "vocab.txt": "ca72d2012b1e46ed42f5df2dc9675f9da0b37a481601785cb4dff91f67fcca65",
+      "special_tokens_map.json": "b6d346be366a7d1d48332dbc9fdf3bf8960b5d879522b7799ddba59e76237ee3"
+    }
+  },
+  "clean_encoding_reference": {
+    "directory": "data/processed/noise-held-out-test-v1/clean/dataset",
+    "files": {
+      "data-00000-of-00001.arrow": "8034034c4042860b9569a9e35953a8d5bd71a748d8fc86cc7e533b2b2040ea8a",
+      "dataset_info.json": "e4c75d96068eb3e5f6353854ca2cdd12820e98e145eb679c99cc8df51e446062",
+      "state.json": "63c37b2f6590fa6fb46c2445c3c04521ecd2f116018022faac966eb552b0b738"
+    },
+    "source_manifest": "data/processed/noise-held-out-test-v1/manifest.json",
+    "source_manifest_sha256": "ec4496b4399c795da3eebeb4c4b44c94bbc942c69280f0a5aaa31f751ffb9404",
+    "copy_or_regenerate_old_noise_views": false
+  },
+  "technical_probe": {
+    "split": "validation",
+    "source_prefix_rows": 512,
+    "scores_or_optimizer_steps": false
+  },
+  "paths": {
+    "freeze_directory": "artifacts/evaluation-preparation/transfer-noise-v1/protocol-freeze-v1",
+    "prepared_directory": "data/processed/transfer-noise-v1",
+    "output_directory": "artifacts/evaluations/transfer-noise-v1",
+    "preparation_root": "artifacts/evaluation-preparation/transfer-noise-v1"
+  },
+  "execution": {
+    "training_enabled": false,
+    "scoring_enabled_by_default": false,
+    "new_model_scores_this_step": false,
+    "require_separate_gpu_readiness_and_runner": true,
+    "condition_specific_drops_truncation_or_budget_relaxation": false
+  }
+}

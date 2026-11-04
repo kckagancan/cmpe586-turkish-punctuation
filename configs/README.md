@@ -155,3 +155,34 @@ scope check after that profile. `scripts/profile_corpus_calibration.py` records
 family-specific minima2/3/2 as a new, hashed analysis policy, reusing the common
 profile functions. Its [aggregate](../docs/informal-corpus-calibration-profile.json)
 includes the short-word cases without overwriting the initial min4 analysis.
+
+## Corpus-anchored supplemental transfer
+
+`transfer-noise-profile.json` compiles anonymous joint morphology templates from
+the completed train-only calibration. Rates apply to each mechanism's eligible
+words, not all word slots. Surface-preserving partial folding excludes four
+source casing-incompatible opportunities: its operational43/617 is separate
+from the unchanged case-neutral43/621 corpus finding.
+
+`transfer-evaluation.json` fixes the original four selected models, three
+corruption seeds and13 views: clean anchor, elongation, one internal omission,
+partial folding and a word-mask-matched full-fold control. It references the
+original cohorts, tokenizer and clean encoding by hash; it enables no training
+or scoring. [Protocol](../docs/transfer-evaluation-protocol.md),
+[completed input audits](../docs/transfer-evaluation-preparation.md).
+
+With the existing ignored inputs/cache available, the preparation sequence is:
+
+```bash
+PYTHONPATH="$PWD/src" python scripts/prepare_transfer_inputs.py --probe-only
+PYTHONPATH="$PWD/src" python scripts/freeze_transfer_protocol.py
+PYTHONPATH="$PWD/src" python scripts/prepare_transfer_inputs.py
+PYTHONPATH="$PWD/src" python scripts/prepare_transfer_inputs.py --verify-only --retokenize
+```
+
+The recorded probe/freeze/input work is complete: these commands verify and
+reuse matching committed destinations rather than regenerate them. Preserve
+failed attempts and version material changes. Exact local source/package
+bindings differ from later GPU inference requirements. This preparer loads no
+model weights; separate runtime/model verification and scoring orchestration
+remain to be implemented before new F1 results.
