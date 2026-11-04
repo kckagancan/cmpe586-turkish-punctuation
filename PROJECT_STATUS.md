@@ -2,7 +2,8 @@
 
 Updated **2026-11-04**. The original experiments, final report, and retrospective
 proposal are complete. Instructor-feedback extension: corpus selection and
-data-only audit are complete; no new model experiment has started.
+data-only audit are complete; direct informal evaluation's punctuation-reference
+requirements are recorded. No new model experiment has started.
 Read this first, then the relevant linked record. This file authorizes no new run.
 
 ## Project and delivered report
@@ -127,11 +128,24 @@ The original 2/5/10% levels remain synthetic stress doses.
 Audit identity `31b1594e88c80d0607436a008a7b1a6e9bd74c67452eb73dcf0424a69a56aa7a`.
 Receipts, independent conservation/hash checks, private trace and immutable
 snapshots: `artifacts/corpus-audit/multilexnorm-turkish-v1/audit-31b1594e88c80d06/`.
-109 pre-existing scientific/config/report files remain byte-identical. No
-training, inference, tokenizer, test suite or PDF rebuild ran; no job is running.
-Next: specify a separate fixed-model supplemental evaluation using supported
-unseen error mechanisms. New corruptions on old test text are supplemental,
-not new independent held-out data; preserve all original results/recipes.
+Original scientific/config/report inputs remain byte-identical; this handoff
+extends the documentation index. No training, inference, tokenizer, test suite
+or PDF rebuild ran; no job is running.
+User then proposed directly testing the fixed models on authentic informal text.
+[Feasibility and next gate](docs/informal-transfer-feasibility.md) records why
+this is useful, why normalization references are not complete punctuation gold,
+and the required source/annotation/alignment checks. A bounded primary-source
+review did not establish a ready-to-score natural four-label benchmark; it does
+not prove none exists. No additional test content or large corpus was read.
+Next: verify a suitable natural corpus's actual punctuation references and terms;
+if absent, specify a separately reserved human-annotated natural set before any
+scoring. Annotation must preserve original noisy words and hide model outputs.
+Corpus-grounded synthetic transfer remains an alternative, not a frozen or
+executed matrix. New corruptions on old test text would be supplemental, not
+new independent held-out data. Preserve all original results/recipes.
+Local design counters and pre-edit preservation hashes:
+`artifacts/evaluation-preparation/transfer-noise-v1/protocol-design-2026-11-04/`.
+These data-only counters are not a new completed corpus audit or model result.
 
 The planned experiments, analyses, report, GitHub publication, backups, scoped
 cleanup and repository automation are complete. No experiment or cleanup job is

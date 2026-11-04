@@ -18,6 +18,17 @@ raw text, models, predictions and operational receipts remain in ignored storage
 | [Validation robustness grid](robustness-grid-results.md) | 117 matched main-model validation results |
 | [Validation ablation](case-loss-ablation-results.md) | Five new results plus 15 reused matched references |
 
+## Instructor-feedback extension (November 4)
+
+The original results and paper remain intact. The additional work currently
+contains corpus evidence and evaluation planning, with no new model scores.
+
+| Read | Purpose |
+| --- | --- |
+| [Informal corpus selection](informal-corpus-selection.md) | Compare authentic and synthetic candidates; select MultiLexNorm Turkish train for the data-only audit |
+| [Verified corpus audit](informal-corpus-audit-results.md) | Counts, operator coverage, unseen shapes, denominators and limitations |
+| [Direct informal evaluation feasibility](informal-transfer-feasibility.md) | Distinguish natural transfer from controlled perturbations and specify the punctuation-reference gate |
+
 ## Public numeric evidence
 
 - [All held-out aggregate metrics and paired contrasts](held-out-test-aggregates.csv).
