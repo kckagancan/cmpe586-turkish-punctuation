@@ -184,5 +184,13 @@ The recorded probe/freeze/input work is complete: these commands verify and
 reuse matching committed destinations rather than regenerate them. Preserve
 failed attempts and version material changes. Exact local source/package
 bindings differ from later GPU inference requirements. This preparer loads no
-model weights; separate runtime/model verification and scoring orchestration
-remain to be implemented before new F1 results.
+model weights; runtime/model verification and scoring orchestration are handled
+by the separate execution wiring below before new F1 results.
+
+`transfer-execution.json` now supplies that separate execution wiring: exact
+prepared-input/freeze bindings, four-model/13-condition order, checkpoint-byte
+bindings and a validation-only technical probe. The scoring CLI requires
+`--allow-test-scoring`; notebooks keep switches off in Git. See the
+[execution record](../docs/transfer-evaluation-execution.md) for actual runtime,
+readiness and launch state. This addition does not edit the frozen preparation
+configuration or enable training.

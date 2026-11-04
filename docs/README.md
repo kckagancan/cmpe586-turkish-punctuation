@@ -31,6 +31,7 @@ model scores. The original paper has not been rebuilt for this extension.
 | [Three-shape density and severity](informal-corpus-depth-results.md) | Completed train-only depth profile: opportunity rates, per-tweet clustering, character amplitude, duplication sensitivity and resampling stability |
 | [Supplemental transfer protocol](transfer-evaluation-protocol.md) | Corpus anchors, three unseen explicit mechanisms, matched full-fold control, fixed four-model/three-seed matrix |
 | [Completed transfer input preparation](transfer-evaluation-preparation.md) | Frozen recipe, 13 audited input views, saved-target/morphology/tokenizer reconciliation; no model scores or GPU readiness |
+| [Transfer execution](transfer-evaluation-execution.md) | Separate runtime/readiness gate, resumable52-forward runner, Colab notebook and actual launch state |
 | [Direct informal evaluation feasibility](informal-transfer-feasibility.md) | Distinguish natural transfer from controlled perturbations and specify the punctuation-reference gate |
 
 ## Public numeric evidence

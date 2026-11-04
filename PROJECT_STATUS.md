@@ -1,9 +1,12 @@
 # Current project state
 
 Updated **2026-11-04**. The original study, final report and GitHub publication
-are complete. The instructor-feedback extension now has a **frozen supplemental
-transfer protocol and 13 prepared, saved-input-reconciled views**. No new model
-scores exist; no training, inference or cleanup job is running.
+are complete. The instructor-feedback extension has a **frozen supplemental
+transfer protocol and 13 prepared, saved-input-reconciled views**, plus separate
+execution wiring and a new uploaded notebook. The actual T4/2026.07 base runtime
+and pinned restore are verified; validation-only GPU readiness is running.
+No successful readiness or started test evaluation is claimed yet.
+No training or cleanup job is running.
 Read this first, then the relevant linked record. This file authorizes no run.
 
 ## Current milestone and next action
@@ -48,9 +51,16 @@ Read this first, then the relevant linked record. This file authorizes no run.
   Checks, preservation/publication receipts and complete changed-file inventory:
   `artifacts/evaluation-preparation/transfer-noise-v1/preparation-2026-11-04/`.
 
-**Next:** implement separate scoring orchestration/runtime gate, verify retained
-model-file/tensor identities and perform validation-only calibration on the
-pinned T4/FP32/SDPA-math/batch16 runtime before starting the52-forward evaluation.
+**Current action:** [execution wiring](docs/transfer-evaluation-execution.md) and
+the [08 Colab notebook](https://colab.research.google.com/drive/1QWib5-KYb7FkSC49KB5NuD2iA5N4ktZm)
+are prepared. Source/input bundle205 files/22,133,412 bytes, SHA
+`d13f88d06fd97f5a74a891fefa0f33248bb7e9be4f7363063570d57f4905ed80`,
+uploaded with the pinned restorer; no weights/predictions included. Existing
+Drive models and validation archive are reused. Source checks and local
+repository publication checks passed before upload; no unit suite ran.
+Receipts/current handoff: `artifacts/evaluation-preparation/transfer-noise-v1/launch-2026-11-04/`.
+Verify actual model-file/tensor identities and validation-only calibration on
+the pinned T4/FP32/SDPA-math/batch16 runtime before starting the52-forward evaluation.
 Scoring remains disabled by default. Local tokenizer/data readiness is not GPU
 readiness. Report every outcome, per-class P/R/F1/support and paired contrasts;
 three-seed SD measures corruption variation only, not training uncertainty.
@@ -126,19 +136,13 @@ Full epoch models/shared initialization remain local; selected Drive exports
 are retained. Scoped Drive cleanup completed1,148 backed copies/925,753,181bytes,
 all protected IDs retained; no further cleanup pending. [Receipt](docs/drive-cleanup.md).
 
-Proposal is user-requested **local only**, with source/build guide at
-`report/proposal/`; earlier publication remains in history. **Current-file
-discrepancy found November4:** the two historical PDF paths
-`output/pdf/turkish-punctuation-proposal.pdf` and
-`output/pdf/proposal-course-submission.pdf` are absent. A current
-`output/pdf/CMPE586_Proposal.pdf` exists but matches neither historical PDF hash;
-its content/version was not audited in this input-preparation task. Preserve it.
-The student final report is now `output/pdf/course-submission-report.pdf`,
-byte-identical to the formerly recorded `output/pdf/course-submission.pdf`.
-The public final report also matches the historical receipt. No PDF was rebuilt
-or renamed here. Student metadata stays in ignored files. Submission/template
-confirmation and whether the retrospective proposal satisfies the course
-remain user actions; no document was submitted by this preparation.
+User priority November4: **final report**, no further proposal work. Proposal
+remains local-only/outside this task; historical retention/path-discrepancy
+evidence is preserved in the earlier preparation receipts. Student final PDF:
+`output/pdf/course-submission-report.pdf`, byte-identical to the historical
+`output/pdf/course-submission.pdf`. Public final PDF also matches the receipt.
+No PDF was rebuilt/renamed here. Student metadata stays in ignored files.
+Final course submission/template confirmation remains a user action.
 
 Read-only repository checks validate source/JSON/cleared notebooks, links and
 report bindings, not experiments or the historical unit suite. The live GitHub

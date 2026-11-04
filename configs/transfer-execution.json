@@ -1,0 +1,48 @@
+{
+  "version": "transfer-execution-v1",
+  "protocol_config": "configs/transfer-evaluation.json",
+  "protocol_config_sha256": "6088a84be9ab5ec235b27e077595c0ca2f8c078b0ec63b8b54eb498e5334f52d",
+  "freeze_identity": "b16cd070f37073b76503267668e27761922708eaa866ac3a80aab3fb790905d1",
+  "input_identity": "235c0c01cf8b5a34b24e36f1bbdcfe8603c34e401171dd47ec9856c87a30b7a3",
+  "input_manifest_sha256": "03ae161d1463418ce6da5e00d64627a887acee48bb15ac120473d32bbf7a882d",
+  "input_commit_sha256": "45a7c99fa6dc5aa2bf30962e43b90b8a196d076b93d17157ed998ed4fd021c31",
+  "model_order": [
+    "published",
+    "clean",
+    "augmented",
+    "without_case_loss"
+  ],
+  "conditions": [
+    "clean-anchor",
+    "elongation-corpus-seed586",
+    "internal_omission-corpus-seed586",
+    "partial_folding-corpus-seed586",
+    "full_folding_matched-corpus-seed586",
+    "elongation-corpus-seed587",
+    "internal_omission-corpus-seed587",
+    "partial_folding-corpus-seed587",
+    "full_folding_matched-corpus-seed587",
+    "elongation-corpus-seed588",
+    "internal_omission-corpus-seed588",
+    "partial_folding-corpus-seed588",
+    "full_folding_matched-corpus-seed588"
+  ],
+  "planned_forwards": 52,
+  "planned_cohort_scores": 104,
+  "scoring_enabled_by_default": false,
+  "progress_every_records": 2000,
+  "readiness_directory": "preparation/transfer-noise-v1/readiness-v1",
+  "validation": {
+    "archive": "inputs/validation-inputs-noise-v1.zip",
+    "archive_sha256": "579a6a6ff5969ce0406ef7bbd057a5fe56c5058ebb17e6cb4918e6dc360c97eb",
+    "source_prefix_rows": 512,
+    "probe_corruption_seed": 586,
+    "metrics_computed": false
+  },
+  "resume_policy": "reuse_only_matching_complete_marker_hashes_original_targets_and_runtime",
+  "output_directory": "artifacts/evaluations/transfer-noise-v1",
+  "published_checkpoint_files": {
+    "config.json": "a5b3c10ebfa9992d32e31549c3836d8b82e4739ed479734091bbdfd78856ef25",
+    "pytorch_model.bin": "c44184c34c50a01bd8546c232bcb33152b378a4c0d8355d13ae8a66f53aa0c70"
+  }
+}
